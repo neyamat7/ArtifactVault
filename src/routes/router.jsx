@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <h1>this is register</h1>,
+        element: <Register />,
       },
       {
         path: "add-task",
