@@ -1,8 +1,9 @@
+import Hero from "../../components/Hero/Hero";
+
 const Home = () => {
   return (
     <>
-      <h1> this is a home</h1>
-      {/* <Hero /> */}
+      <Hero />
     </>
   );
 };
