@@ -5,6 +5,7 @@ import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Update from "../pages/Update/Update";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "update/:taskId",
-        element: <h1>this is update task</h1>,
+        element: <Update />,
       },
     ],
   },
