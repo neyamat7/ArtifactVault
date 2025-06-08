@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts";
 import AddArtifact from "../pages/AddArtifact/AddArtifact";
+import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -36,8 +37,8 @@ export const router = createBrowserRouter([
         element: <h1>this is my tasks</h1>,
       },
       {
-        path: "details/:taskId",
-        element: <h1>this is task details</h1>,
+        path: "details/:artifactId",
+        element: <ArtifactDetails />,
       },
       {
         path: "update/:taskId",

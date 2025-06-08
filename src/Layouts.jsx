@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
+import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 
 const Layouts = () => {
@@ -14,6 +15,7 @@ const Layouts = () => {
     <div>
       <Navbar />
       <Outlet />
+      <Footer />
       <ToastContainer
         position="top-right"
         autoClose={2000}
