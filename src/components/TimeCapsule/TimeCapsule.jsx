@@ -11,7 +11,7 @@ export default function TimeCapsule() {
 
   return (
     <section className="py-20 text-white bg-gradient-to-br from-slate-900 to-slate-800">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
