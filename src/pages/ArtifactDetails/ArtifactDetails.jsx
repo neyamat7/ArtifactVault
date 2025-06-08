@@ -1,15 +1,10 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link, useParams } from "react-router";
-import Badge from "../../components/Badge/Badge";
-import Button from "../../components/Button/Button";
-
 import {
   HiArrowLeft,
   HiCalendar,
   HiClock,
+  HiCube,
   HiDocumentText,
   HiEye,
   HiGlobeAlt,
@@ -17,10 +12,16 @@ import {
   HiLocationMarker,
   HiOutlineHeart,
   HiPhotograph,
+  HiScale,
   HiShare,
+  HiShieldCheck,
+  HiSparkles,
   HiTag,
   HiUser,
 } from "react-icons/hi";
+import { Link, useParams } from "react-router";
+import Badge from "../../components/Badge/Badge";
+import Button from "../../components/Button/Button";
 
 // Mock artifact data - this would come from your database/API
 const mockArtifact = {
@@ -56,6 +57,7 @@ export default function ArtifactDetails() {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(artifact.likes);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
 
   const handleLike = () => {
     if (isLiked) {
@@ -111,235 +113,317 @@ export default function ArtifactDetails() {
     return styles[type] || styles.default;
   };
 
+  const tabs = [
+    { id: "overview", label: "Overview", icon: HiDocumentText },
+    { id: "details", label: "Details", icon: HiTag },
+    { id: "history", label: "History", icon: HiClock },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-amber-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-6"
-        >
-          <Link
-            to="/artifacts"
-            className="inline-flex items-center text-slate-600 hover:text-amber-600 transition-colors group"
-          >
-            <HiArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Artifacts
-          </Link>
-        </motion.div>
-
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
-          {/* Left Side - Image */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-800/80 to-transparent"></div>
+        <div className="container mx-auto px-4 py-16 relative z-10">
+          {/* Back Button */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="mb-8"
           >
-            {/* Main Image */}
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-white">
-              <div className="aspect-[4/3] relative">
-                {!imageLoaded && (
-                  <div className="absolute inset-0 bg-slate-200 animate-pulse flex items-center justify-center">
-                    <HiPhotograph className="h-16 w-16 text-slate-400" />
-                  </div>
-                )}
-                <img
-                  src={artifact.artifactImage || "/placeholder.svg"}
-                  alt={artifact.artifactName}
-                  className={`w-full h-full object-cover transition-opacity duration-500 ${
-                    imageLoaded ? "opacity-100" : "opacity-0"
-                  }`}
-                  onLoad={() => setImageLoaded(true)}
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge style={getTypeStyle(artifact.artifactType)}>
-                    {artifact.artifactType}
-                  </Badge>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <Badge
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.7)",
-                      color: "white",
-                    }}
-                  >
-                    {artifact.category}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl p-4 shadow-lg border border-slate-200">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-100 rounded-lg">
-                    <HiHeart className="h-5 w-5 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-slate-800">
-                      {likeCount.toLocaleString()}
-                    </p>
-                    <p className="text-sm text-slate-600">Likes</p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl p-4 shadow-lg border border-slate-200">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <HiEye className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-slate-800">
-                      {artifact.views.toLocaleString()}
-                    </p>
-                    <p className="text-sm text-slate-600">Views</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Link
+              to="/artifacts"
+              className="inline-flex items-center text-amber-300 hover:text-amber-200 transition-colors group"
+            >
+              <HiArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Artifacts
+            </Link>
           </motion.div>
 
-          {/* Right Side - Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
-          >
-            {/* Header */}
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
-                {artifact.artifactName}
-              </h1>
-              <p className="text-xl text-slate-600 leading-relaxed mb-6">
-                {artifact.shortDescription}
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex gap-4">
-                <Button
-                  onClick={handleLike}
-                  variant={isLiked ? "primary" : "outline"}
-                  className="flex items-center gap-2"
-                >
-                  {isLiked ? (
-                    <HiHeart className="h-5 w-5 fill-current" />
-                  ) : (
-                    <HiOutlineHeart className="h-5 w-5" />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                <div className="aspect-[4/3] relative">
+                  {!imageLoaded && (
+                    <div className="absolute inset-0 bg-slate-700 animate-pulse flex items-center justify-center">
+                      <HiPhotograph className="h-16 w-16 text-slate-500" />
+                    </div>
                   )}
-                  {isLiked ? "Liked" : "Like"} ({likeCount.toLocaleString()})
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleShare}
-                  className="flex items-center gap-2"
-                >
-                  <HiShare className="h-5 w-5" />
-                  Share
-                </Button>
+                  <img
+                    src={artifact.artifactImage || "/placeholder.svg"}
+                    alt={artifact.artifactName}
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${
+                      imageLoaded ? "opacity-100" : "opacity-0"
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
+                  />
+
+                  {/* Floating badges */}
+                  <div className="absolute top-6 left-6">
+                    <Badge
+                      style={getTypeStyle(artifact.artifactType)}
+                      className="backdrop-blur-sm bg-white/90 border border-white/30 shadow-lg"
+                    >
+                      {artifact.artifactType}
+                    </Badge>
+                  </div>
+                  <div className="absolute top-6 right-6">
+                    <Badge
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.8)",
+                        color: "white",
+                      }}
+                      className="backdrop-blur-sm border border-white/30 shadow-lg"
+                    >
+                      {artifact.category}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Glowing border effect */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/20 via-transparent to-amber-400/20 pointer-events-none"></div>
               </div>
+
+              {/* Floating stats */}
+              <div className="absolute -bottom-6 left-6 right-6 grid grid-cols-2 gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-red-500/20 rounded-xl">
+                      <HiHeart className="h-5 w-5 text-red-400" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-white">
+                        {likeCount.toLocaleString()}
+                      </p>
+                      <p className="text-sm text-slate-300">Likes</p>
+                    </div>
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-500/20 rounded-xl">
+                      <HiEye className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-white">
+                        {artifact.views.toLocaleString()}
+                      </p>
+                      <p className="text-sm text-slate-300">Views</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Right - Title and Actions */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-white space-y-8"
+            >
+              <div>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-amber-200 to-amber-400 bg-clip-text text-transparent"
+                >
+                  {artifact.artifactName}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-xl text-slate-300 leading-relaxed mb-8"
+                >
+                  {artifact.shortDescription}
+                </motion.p>
+
+                {/* Action Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="flex gap-4"
+                >
+                  <Button
+                    onClick={handleLike}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+                      isLiked
+                        ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/25"
+                        : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {isLiked ? (
+                      <HiHeart className="h-5 w-5 fill-current" />
+                    ) : (
+                      <HiOutlineHeart className="h-5 w-5" />
+                    )}
+                    {isLiked ? "Liked" : "Like"} ({likeCount.toLocaleString()})
+                  </Button>
+                  <Button
+                    onClick={handleShare}
+                    className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                  >
+                    <HiShare className="h-5 w-5" />
+                    Share
+                  </Button>
+                </motion.div>
+              </div>
+
+              {/* Quick Info Cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <HiCalendar className="h-4 w-4 text-amber-400" />
+                    <span className="text-sm text-slate-300">Created</span>
+                  </div>
+                  <p className="text-white font-semibold">
+                    {artifact.createdAt || "Unknown"}
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <HiLocationMarker className="h-4 w-4 text-amber-400" />
+                    <span className="text-sm text-slate-300">Location</span>
+                  </div>
+                  <p className="text-white font-semibold text-sm">
+                    {artifact.presentLocation || "Unknown"}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="container mx-auto px-4 py-16">
+        {/* Tab Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="flex justify-center mb-12"
+        >
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/20">
+            <div className="flex gap-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg"
+                      : "text-slate-300 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.label}
+                </button>
+              ))}
             </div>
+          </div>
+        </motion.div>
 
-            {/* Historical Context */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
-              <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <HiDocumentText className="h-6 w-6 text-amber-600" />
-                Historical Context
-              </h2>
-              <p className="text-slate-700 leading-relaxed">
-                {artifact.historicalContext}
-              </p>
+        {/* Tab Content */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-6xl mx-auto"
+        >
+          {activeTab === "overview" && (
+            <div className="space-y-8">
+              {/* Historical Context */}
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-amber-500/20 rounded-xl">
+                    <HiDocumentText className="h-6 w-6 text-amber-400" />
+                  </div>
+                  Historical Context
+                </h2>
+                <p className="text-slate-300 leading-relaxed text-lg">
+                  {artifact.historicalContext}
+                </p>
+              </div>
+
+              {/* Significance */}
+              {artifact.significance && (
+                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-md rounded-3xl p-8 border border-amber-400/30 shadow-2xl">
+                  <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <div className="p-2 bg-amber-500/30 rounded-xl">
+                      <HiSparkles className="h-5 w-5 text-amber-300" />
+                    </div>
+                    Historical Significance
+                  </h2>
+                  <p className="text-amber-100 leading-relaxed text-lg">
+                    {artifact.significance}
+                  </p>
+                </div>
+              )}
             </div>
+          )}
 
-            {/* Artifact Information */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
-              <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <HiTag className="h-6 w-6 text-amber-600" />
-                Artifact Information
-              </h2>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Created
-                    </label>
-                    <div className="flex items-center gap-2 text-slate-800">
-                      <HiCalendar className="h-4 w-4 text-slate-400" />
-                      <span>{artifact.createdAt || "Unknown"}</span>
-                    </div>
+          {activeTab === "details" && (
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Physical Properties */}
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-xl">
+                    <HiCube className="h-6 w-6 text-blue-400" />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Discovered
-                    </label>
-                    <div className="flex items-center gap-2 text-slate-800">
-                      <HiClock className="h-4 w-4 text-slate-400" />
-                      <span>{artifact.discoveredAt || "Unknown"}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Discovered By
-                    </label>
-                    <div className="flex items-center gap-2 text-slate-800">
-                      <HiUser className="h-4 w-4 text-slate-400" />
-                      <span>{artifact.discoveredBy || "Unknown"}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Material
-                    </label>
-                    <span className="text-slate-800">
+                  Physical Properties
+                </h3>
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                    <span className="text-slate-300">Material</span>
+                    <span className="text-white font-semibold">
                       {artifact.material || "Not specified"}
                     </span>
                   </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Present Location
-                    </label>
-                    <div className="flex items-center gap-2 text-slate-800">
-                      <HiLocationMarker className="h-4 w-4 text-slate-400" />
-                      <span>{artifact.presentLocation || "Unknown"}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
-                      Dimensions
-                    </label>
-                    <span className="text-slate-800">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                    <span className="text-slate-300">Dimensions</span>
+                    <span className="text-white font-semibold text-sm">
                       {artifact.dimensions || "Not specified"}
                     </span>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                    <span className="text-slate-300 flex items-center gap-2">
+                      <HiScale className="h-4 w-4" />
                       Weight
-                    </label>
-                    <span className="text-slate-800">
+                    </span>
+                    <span className="text-white font-semibold">
                       {artifact.weight || "Not specified"}
                     </span>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
+                    <span className="text-slate-300 flex items-center gap-2">
+                      <HiShieldCheck className="h-4 w-4" />
                       Condition
-                    </label>
+                    </span>
                     <Badge
                       style={{
-                        backgroundColor: "rgba(34, 197, 94, 0.2)",
-                        color: "rgb(34, 197, 94)",
+                        backgroundColor: "rgba(34, 197, 94, 0.3)",
+                        color: "rgb(74, 222, 128)",
                       }}
                     >
                       {artifact.condition || "Unknown"}
@@ -347,45 +431,127 @@ export default function ArtifactDetails() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Significance */}
-            {artifact.significance && (
-              <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-2xl p-6 border border-amber-200">
-                <h2 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                  <HiGlobeAlt className="h-5 w-5 text-amber-600" />
-                  Historical Significance
-                </h2>
-                <p className="text-slate-700 leading-relaxed">
-                  {artifact.significance}
-                </p>
-              </div>
-            )}
-
-            {/* Contributor Information */}
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-              <h2 className="text-xl font-bold text-slate-800 mb-4">
-                Contributed By
-              </h2>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center">
-                  <HiUser className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-800">
-                    {artifact.adderName}
-                  </p>
-                  <p className="text-slate-600 text-sm">
-                    {artifact.adderEmail}
-                  </p>
-                  <p className="text-slate-500 text-xs">
-                    Added on {new Date(artifact.dateAdded).toLocaleDateString()}
-                  </p>
+              {/* Discovery Information */}
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-green-500/20 rounded-xl">
+                    <HiGlobeAlt className="h-6 w-6 text-green-400" />
+                  </div>
+                  Discovery Information
+                </h3>
+                <div className="space-y-6">
+                  <div className="p-4 bg-white/5 rounded-2xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <HiClock className="h-4 w-4 text-slate-400" />
+                      <span className="text-slate-300 text-sm">Discovered</span>
+                    </div>
+                    <span className="text-white font-semibold">
+                      {artifact.discoveredAt || "Unknown"}
+                    </span>
+                  </div>
+                  <div className="p-4 bg-white/5 rounded-2xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <HiUser className="h-4 w-4 text-slate-400" />
+                      <span className="text-slate-300 text-sm">
+                        Discovered By
+                      </span>
+                    </div>
+                    <span className="text-white font-semibold">
+                      {artifact.discoveredBy || "Unknown"}
+                    </span>
+                  </div>
+                  <div className="p-4 bg-white/5 rounded-2xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <HiLocationMarker className="h-4 w-4 text-slate-400" />
+                      <span className="text-slate-300 text-sm">
+                        Current Location
+                      </span>
+                    </div>
+                    <span className="text-white font-semibold">
+                      {artifact.presentLocation || "Unknown"}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </motion.div>
-        </div>
+          )}
+
+          {activeTab === "history" && (
+            <div className="space-y-8">
+              {/* Timeline */}
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                  <div className="p-2 bg-purple-500/20 rounded-xl">
+                    <HiClock className="h-6 w-6 text-purple-400" />
+                  </div>
+                  Timeline
+                </h3>
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 p-6 bg-white/5 rounded-2xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+                      <HiCalendar className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Created</h4>
+                      <p className="text-slate-300">
+                        {artifact.createdAt || "Unknown period"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 p-6 bg-white/5 rounded-2xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                      <HiGlobeAlt className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Discovered</h4>
+                      <p className="text-slate-300">
+                        {artifact.discoveredAt || "Unknown"} by{" "}
+                        {artifact.discoveredBy || "Unknown"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 p-6 bg-white/5 rounded-2xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
+                      <HiUser className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">
+                        Added to Database
+                      </h4>
+                      <p className="text-slate-300">
+                        {new Date(artifact.dateAdded).toLocaleDateString()} by{" "}
+                        {artifact.adderName}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contributor Information */}
+              <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-md rounded-3xl p-8 border border-slate-600/30 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  Contributed By
+                </h3>
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center">
+                    <HiUser className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl font-semibold text-white">
+                      {artifact.adderName}
+                    </p>
+                    <p className="text-slate-300">{artifact.adderEmail}</p>
+                    <p className="text-slate-400 text-sm">
+                      Added on{" "}
+                      {new Date(artifact.dateAdded).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );

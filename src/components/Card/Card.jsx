@@ -35,7 +35,7 @@ const Card = ({ artifact }) => {
         </p>
       </div>
       <div className="p-6 pt-0">
-        <Link to={`/artifacts/${artifact.id}`} className="w-full">
+        <Link to={`/details/${artifact.id}`} className="w-full">
           <Button
             variant="secondary"
             className="w-full group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-amber-700 transition-all duration-300"
