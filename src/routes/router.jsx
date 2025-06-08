@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts";
+import AddArtifact from "../pages/AddArtifact/AddArtifact";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -23,8 +24,8 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "add-task",
-        element: <h1>this is add task</h1>,
+        path: "add-artifact",
+        element: <AddArtifact />,
       },
       {
         path: "browse-task",
