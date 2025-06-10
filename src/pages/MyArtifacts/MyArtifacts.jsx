@@ -130,9 +130,6 @@ export default function ArtifactsPage() {
                       src={artifact.artifactImage || "/placeholder.svg"}
                       alt={artifact.artifactName}
                       className="w-full h-48 md:h-full object-cover"
-                      onError={(e) => {
-                        e.target.src = "/placeholder.svg?height=200&width=300";
-                      }}
                     />
                   </div>
 

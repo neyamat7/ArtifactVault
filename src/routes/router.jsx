@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts";
 import AddArtifact from "../pages/AddArtifact/AddArtifact";
 import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
+import Artifacts from "../pages/Artifacts/Artifacts";
 import Home from "../pages/Home/Home";
 import LikedArtifacts from "../pages/LikedArtifacts/LikedArtifacts";
 import Login from "../pages/Login/Login";
@@ -32,8 +33,8 @@ export const router = createBrowserRouter([
         element: <AddArtifact />,
       },
       {
-        path: "browse-task",
-        element: <h1>this is browse task</h1>,
+        path: "artifacts",
+        element: <Artifacts />,
       },
       {
         path: "my-artifacts",
