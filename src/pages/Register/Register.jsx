@@ -10,11 +10,13 @@ import {
   HiPhotograph,
   HiUser,
 } from "react-icons/hi";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import registerLottie from "../../assets/lotties/register.json";
 import Button from "../../components/Button/Button";
+import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -33,6 +35,8 @@ export default function Register() {
     general: "",
   });
 
+  const { createUser, setUser, updateUser, googleSignIn } = useAuth();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -48,10 +52,23 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    // Form submission logic would go here
-    console.log("Register attempt:", formData);
+
+    const { name, email, password, photoURL } = formData;
+
+    // create new user
+    createUser(email, password).then((res) => {
+      const user = res.user;
+      updateUser({ displayName: name, photoURL: photoURL })
+        .then(() => {
+          setUser({ ...user, displayName: name, photoURL: photoURL });
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   };
 
   const handleGoogleRegister = () => {
@@ -142,7 +159,7 @@ export default function Register() {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleRegister} className="space-y-6">
               {/* Name Field */}
               <div>
                 <label

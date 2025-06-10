@@ -3,11 +3,13 @@ import Lottie from "lottie-react";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { HiEye, HiEyeOff, HiLockClosed, HiMail } from "react-icons/hi";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import loginLottie from "../../assets/lotties/login.json";
 import Button from "../../components/Button/Button";
+import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -18,6 +20,8 @@ export default function Login() {
     password: "",
     general: "",
   });
+
+  const { signInUser, googleSignIn, setLoading } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +38,24 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleLogIn = (e) => {
     e.preventDefault();
-    // Form submission logic would go here
+
+    const { email, password } = formData;
+
+    signInUser(email, password)
+      .then((res) => {
+        console.log("login success");
+        // navigate(location?.state || "/");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err.message);
+        // setLoading(false);
+        // setError(err?.message);
+        // notifyError(err?.message);
+      });
+
     console.log("Login attempt:", formData);
   };
 
@@ -128,7 +147,7 @@ export default function Login() {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleLogIn} className="space-y-6">
               {/* Email Field */}
               <div>
                 <label

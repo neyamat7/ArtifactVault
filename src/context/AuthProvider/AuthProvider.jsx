@@ -59,16 +59,17 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      console.log(currentUser);
 
-      if (currentUser) {
-        fetch(`https://task-tempo.vercel.app/users/${currentUser.email}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setBids(data.bids || []);
-          });
-      } else {
-        setBids([]);
-      }
+      // if (currentUser) {
+      //   fetch(`https://task-tempo.vercel.app/users/${currentUser.email}`)
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       setBids(data.bids || []);
+      //     });
+      // } else {
+      //   setBids([]);
+      // }
       setLoading(false);
     });
 
