@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router";
 import registerLottie from "../../assets/lotties/register.json";
 import Button from "../../components/Button/Button";
 import useAuth from "../../context/AuthContext/AuthContext";
+import { validateForm } from "../../utils/Validation";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function Register() {
     photoURL: "",
     password: "",
     confirmPassword: "",
+    terms: false,
   });
   const [errors, setErrors] = useState({
     name: "",
@@ -32,16 +34,16 @@ export default function Register() {
     photoURL: "",
     password: "",
     confirmPassword: "",
-    general: "",
+    terms: "",
   });
 
   const { createUser, setUser, updateUser, googleSignIn } = useAuth();
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "terms" ? checked : value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
@@ -54,8 +56,11 @@ export default function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     const { name, email, password, photoURL } = formData;
+
+    const isValid = validateForm(formData, setErrors);
+
+    if (!isValid) return;
 
     // create new user
     createUser(email, password).then((res) => {
@@ -223,15 +228,7 @@ export default function Register() {
                     placeholder="Enter your email"
                   />
                 </div>
-                {errors.email && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600"
-                  >
-                    {errors.email}
-                  </motion.p>
-                )}
+                {errors.email && errors.email}
               </div>
 
               {/* Photo URL Field */}
@@ -374,6 +371,7 @@ export default function Register() {
                   name="terms"
                   type="checkbox"
                   className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-slate-300 rounded mt-1"
+                  onChange={handleInputChange}
                 />
                 <label
                   htmlFor="terms"
@@ -395,6 +393,7 @@ export default function Register() {
                   </Link>
                 </label>
               </div>
+              <div>{errors.terms && errors.terms}</div>
 
               {/* Create Account Button */}
               <Button
