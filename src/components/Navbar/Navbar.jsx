@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiCollection, HiMenu, HiX } from "react-icons/hi";
 import { Link } from "react-router";
+import useAuth from "../../context/AuthContext/AuthContext.jsx";
 import Button from "../Button/Button.jsx";
 import { Avatar, AvatarImage } from "./Avatar.jsx";
 import {
@@ -13,11 +14,13 @@ import {
 } from "./Dropdown.jsx";
 
 export default function Navbar() {
+  const { user, signOutUser } = useAuth();
+  console.log(user);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const user = isLoggedIn
-    ? { name: "Sarah Johnson", image: "/placeholder.svg?height=40&width=40" }
-    : null;
+
+  const userEmail = user?.email || user?.providerData[0].email;
 
   const links = (
     <>
@@ -49,6 +52,18 @@ export default function Navbar() {
     </>
   );
 
+  const handleLogOut = () => {
+    console.log("sign out clicked");
+
+    signOutUser()
+      .then(() => {
+        console.log("signout success");
+      })
+      .catch((error) => {
+        console.error("Sign out error:", error);
+      });
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -76,7 +91,7 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center gap-8">
           {links}
 
-          {!isLoggedIn ? (
+          {!user ? (
             <div className="flex items-center gap-3">
               <Link to="/login">
                 <Button variant="outline" size="sm">
@@ -101,8 +116,8 @@ export default function Navbar() {
                       >
                         <Avatar className="h-10 w-10">
                           <AvatarImage
-                            src={user?.image || "/placeholder.svg"}
-                            alt={user?.name}
+                            src={user?.photoURL}
+                            alt={user?.displayName}
                           />
                         </Avatar>
                       </motion.button>
@@ -122,7 +137,7 @@ export default function Navbar() {
                         </Avatar> */}
                         <div className="flex flex-col space-y-1 leading-none">
                           <p className="font-medium text-slate-800">
-                            {user?.name}
+                            {user?.displayName}
                           </p>
                           <p className="text-xs text-slate-500">
                             Artifact Explorer
@@ -149,7 +164,7 @@ export default function Navbar() {
                       <DropdownMenuSeparator className="bg-amber-100" />
                       <DropdownMenuItem
                         onClick={() => {
-                          setIsLoggedIn(false);
+                          handleLogOut();
                           setIsOpen(false);
                         }}
                         className="text-red-600 hover:text-red-700 focus:text-red-700"
@@ -190,7 +205,7 @@ export default function Navbar() {
           <nav className="flex flex-col gap-4">
             {links}
 
-            {!isLoggedIn ? (
+            {!user ? (
               <div className="flex flex-col gap-2 pt-2">
                 <Link to="/login">
                   <Button variant="outline" className="w-full">
@@ -205,13 +220,12 @@ export default function Navbar() {
               <div className="border-t border-amber-100 pt-4 mt-2">
                 <div className="flex items-center gap-3 mb-4">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage
-                      src={user?.image || "/placeholder.svg"}
-                      alt={user?.name}
-                    />
+                    <AvatarImage src={user?.photoURL} alt={user?.displayName} />
                   </Avatar>
                   <div>
-                    <p className="font-medium text-slate-800">{user?.name}</p>
+                    <p className="font-medium text-slate-800">
+                      {user?.displayName}
+                    </p>
                     <p className="text-xs text-slate-500">Artifact Explorer</p>
                   </div>
                 </div>
@@ -232,7 +246,7 @@ export default function Navbar() {
                     variant="ghost"
                     className="justify-start p-0 text-red-600 hover:text-red-700 hover:bg-transparent"
                     onClick={() => {
-                      setIsLoggedIn(false);
+                      handleLogOut();
                       setIsMenuOpen(false);
                     }}
                   >
