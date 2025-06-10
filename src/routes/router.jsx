@@ -3,7 +3,9 @@ import Layouts from "../Layouts";
 import AddArtifact from "../pages/AddArtifact/AddArtifact";
 import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import Home from "../pages/Home/Home";
+import LikedArtifacts from "../pages/LikedArtifacts/LikedArtifacts";
 import Login from "../pages/Login/Login";
+import MyArtifacts from "../pages/MyArtifacts/MyArtifacts";
 import Register from "../pages/Register/Register";
 import Update from "../pages/Update/Update";
 
@@ -33,12 +35,16 @@ export const router = createBrowserRouter([
         path: "browse-task",
         element: <h1>this is browse task</h1>,
       },
+      // {
+      //   path: "my-artifacts",
+      //   element: <MyArtifacts />,
+      // },
       {
-        path: "my-tasks",
-        element: <h1>this is my tasks</h1>,
+        path: "liked-artifacts",
+        element: <LikedArtifacts />,
       },
       {
-        path: "details/:artifactId",
+        path: "artifacts/:artifactId",
         element: <ArtifactDetails />,
       },
       {
