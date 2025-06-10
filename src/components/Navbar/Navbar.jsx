@@ -39,6 +39,13 @@ export default function Navbar() {
       >
         Add Artifacts
       </Link>
+
+      <Link
+        to="/aboutUs"
+        className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
+      >
+        About Us
+      </Link>
     </>
   );
 
@@ -66,7 +73,7 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           {links}
 
           {!isLoggedIn ? (
@@ -82,14 +89,6 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsLoggedIn(false)}
-              >
-                Logout
-              </Button>
-
               {/* User Dropdown */}
               <DropdownMenu>
                 {({ isOpen, setIsOpen }) => (
@@ -169,7 +168,7 @@ export default function Navbar() {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden text-slate-700"
+          className="lg:hidden text-slate-700"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? (
@@ -186,7 +185,7 @@ export default function Navbar() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="container md:hidden py-4 border-t border-amber-200 bg-white"
+          className="container lg:hidden py-4 border-t border-amber-200 bg-white"
         >
           <nav className="flex flex-col gap-4">
             {links}

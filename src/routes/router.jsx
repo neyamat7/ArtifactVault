@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts";
+import AboutUs from "../pages/AboutUs/AboutUs";
 import AddArtifact from "../pages/AddArtifact/AddArtifact";
 import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import Artifacts from "../pages/Artifacts/Artifacts";
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "update/:taskId",
         element: <Update />,
+      },
+      {
+        path: "aboutUs",
+        element: <AboutUs />,
       },
     ],
   },
