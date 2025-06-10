@@ -35,10 +35,10 @@ export const router = createBrowserRouter([
         path: "browse-task",
         element: <h1>this is browse task</h1>,
       },
-      // {
-      //   path: "my-artifacts",
-      //   element: <MyArtifacts />,
-      // },
+      {
+        path: "my-artifacts",
+        element: <MyArtifacts />,
+      },
       {
         path: "liked-artifacts",
         element: <LikedArtifacts />,
