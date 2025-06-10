@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { HiClock, HiGlobeAlt, HiSparkles } from "react-icons/hi";

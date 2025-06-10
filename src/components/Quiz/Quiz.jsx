@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { HiAcademicCap, HiCheck, HiRefresh, HiStar, HiX } from "react-icons/hi";
 import Button from "../Button/Button";
-import Progress from "./progress";
+import Progress from "./Progress";
 
 const quizQuestions = [
   {

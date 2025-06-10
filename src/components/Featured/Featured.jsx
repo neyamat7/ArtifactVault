@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { HiChevronRight, HiHeart } from "react-icons/hi";
 import { Link } from "react-router";
@@ -92,7 +90,7 @@ export default function Featured() {
               key={artifact.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               whileHover={{ y: -10 }}
               className="group"
             >

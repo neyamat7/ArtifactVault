@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { HiPlay } from "react-icons/hi";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";

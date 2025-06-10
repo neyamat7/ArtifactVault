@@ -24,7 +24,7 @@ const Card = ({ artifact }) => {
           </span>
         </div>
       </div>
-      <div className="p-6 pb-0 pb-3 ">
+      <div className="p-6 pb-3 ">
         <h3 className="text-xl font-bold text-slate-800 group-hover:text-amber-600 transition-colors">
           {artifact.name}
         </h3>

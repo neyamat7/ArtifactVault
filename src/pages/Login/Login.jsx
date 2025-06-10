@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useState } from "react";

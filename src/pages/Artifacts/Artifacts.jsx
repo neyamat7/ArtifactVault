@@ -1,11 +1,9 @@
-"use client"
-
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { HiSearch, HiX } from "react-icons/hi"
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { HiSearch, HiX } from "react-icons/hi";
 
 // Icons
-import Card from "../../components/Card/Card"
+import Card from "../../components/Card/Card";
 
 // Mock artifacts data
 const mockArtifacts = [
@@ -17,7 +15,8 @@ const mockArtifacts = [
     createdAt: "196 BC",
     presentLocation: "British Museum, London",
     discoveredBy: "Pierre-François Bouchard",
-    description: "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
+    description:
+      "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
     likes: 1247,
     isLiked: false,
   },
@@ -29,7 +28,8 @@ const mockArtifacts = [
     createdAt: "1323 BC",
     presentLocation: "Egyptian Museum, Cairo",
     discoveredBy: "Howard Carter",
-    description: "Golden funeral mask of the Egyptian pharaoh Tutankhamun, one of the most famous artifacts.",
+    description:
+      "Golden funeral mask of the Egyptian pharaoh Tutankhamun, one of the most famous artifacts.",
     likes: 2156,
     isLiked: true,
   },
@@ -41,7 +41,8 @@ const mockArtifacts = [
     createdAt: "130-100 BC",
     presentLocation: "Louvre Museum, Paris",
     discoveredBy: "Yorgos Kentrotas",
-    description: "Ancient Greek sculpture believed to depict Aphrodite, the Greek goddess of love and beauty.",
+    description:
+      "Ancient Greek sculpture believed to depict Aphrodite, the Greek goddess of love and beauty.",
     likes: 892,
     isLiked: false,
   },
@@ -66,7 +67,8 @@ const mockArtifacts = [
     createdAt: "408 BC - 318 AD",
     presentLocation: "Various Museums",
     discoveredBy: "Bedouin shepherds",
-    description: "Ancient Jewish religious manuscripts found in the Qumran Caves near the Dead Sea.",
+    description:
+      "Ancient Jewish religious manuscripts found in the Qumran Caves near the Dead Sea.",
     likes: 743,
     isLiked: true,
   },
@@ -78,7 +80,8 @@ const mockArtifacts = [
     createdAt: "3100-1600 BC",
     presentLocation: "Wiltshire, England",
     discoveredBy: "Ancient discovery",
-    description: "Prehistoric monument consisting of a ring of standing stones, each around 13 feet high.",
+    description:
+      "Prehistoric monument consisting of a ring of standing stones, each around 13 feet high.",
     likes: 1456,
     isLiked: false,
   },
@@ -90,7 +93,8 @@ const mockArtifacts = [
     createdAt: "1503-1519",
     presentLocation: "Louvre Museum, Paris",
     discoveredBy: "Leonardo da Vinci",
-    description: "Half-length portrait painting by Leonardo da Vinci, considered an archetypal masterpiece.",
+    description:
+      "Half-length portrait painting by Leonardo da Vinci, considered an archetypal masterpiece.",
     likes: 3421,
     isLiked: true,
   },
@@ -102,87 +106,44 @@ const mockArtifacts = [
     createdAt: "1450 AD",
     presentLocation: "Cusco Region, Peru",
     discoveredBy: "Hiram Bingham III",
-    description: "15th-century Inca citadel located in the Eastern Cordillera of southern Peru.",
+    description:
+      "15th-century Inca citadel located in the Eastern Cordillera of southern Peru.",
     likes: 2087,
     isLiked: false,
   },
-]
+];
 
 export default function Artifacts() {
-  const [artifacts, setArtifacts] = useState(mockArtifacts)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filteredArtifacts, setFilteredArtifacts] = useState(mockArtifacts)
+  const [artifacts, setArtifacts] = useState(mockArtifacts);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredArtifacts, setFilteredArtifacts] = useState(mockArtifacts);
 
   // Handle search functionality
   const handleSearch = (value) => {
-    setSearchTerm(value)
+    setSearchTerm(value);
 
     if (value.trim() === "") {
-      setFilteredArtifacts(artifacts)
+      setFilteredArtifacts(artifacts);
     } else {
       const filtered = artifacts.filter(
         (artifact) =>
           artifact.name.toLowerCase().includes(value.toLowerCase()) ||
           artifact.category.toLowerCase().includes(value.toLowerCase()) ||
           artifact.description.toLowerCase().includes(value.toLowerCase()) ||
-          artifact.presentLocation.toLowerCase().includes(value.toLowerCase()) ||
-          artifact.discoveredBy.toLowerCase().includes(value.toLowerCase()),
-      )
-      setFilteredArtifacts(filtered)
+          artifact.presentLocation
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          artifact.discoveredBy.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredArtifacts(filtered);
     }
-  }
+  };
 
   // Clear search
   const clearSearch = () => {
-    setSearchTerm("")
-    setFilteredArtifacts(artifacts)
-  }
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  }
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  }
-
-  const searchVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        delay: 0.3,
-      },
-    },
-  }
+    setSearchTerm("");
+    setFilteredArtifacts(artifacts);
+  };
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -191,25 +152,30 @@ export default function Artifacts() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <motion.h1
-              variants={headerVariants}
-              initial="hidden"
-              animate="visible"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
               className="text-4xl md:text-5xl font-bold text-slate-800 mb-4"
             >
               Discover <span className="text-amber-600">Artifacts</span>
             </motion.h1>
             <motion.p
-              variants={headerVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl text-slate-600 max-w-2xl mx-auto mb-8"
             >
-              Explore our curated collection of historical artifacts from around the world
+              Explore our curated collection of historical artifacts from around
+              the world
             </motion.p>
 
             {/* Search Box */}
-            <motion.div variants={searchVariants} initial="hidden" animate="visible" className="max-w-md mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="max-w-md mx-auto"
+            >
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <HiSearch className="h-5 w-5 text-slate-400" />
@@ -255,12 +221,18 @@ export default function Artifacts() {
               <p className="text-slate-600">
                 {filteredArtifacts.length > 0 ? (
                   <>
-                    Found <span className="font-semibold text-amber-600">{filteredArtifacts.length}</span> artifact
-                    {filteredArtifacts.length !== 1 ? "s" : ""} matching "{searchTerm}"
+                    Found{" "}
+                    <span className="font-semibold text-amber-600">
+                      {filteredArtifacts.length}
+                    </span>{" "}
+                    artifact
+                    {filteredArtifacts.length !== 1 ? "s" : ""} matching "
+                    {searchTerm}"
                   </>
                 ) : (
                   <>
-                    No artifacts found matching "<span className="font-semibold">{searchTerm}</span>"
+                    No artifacts found matching "
+                    <span className="font-semibold">{searchTerm}</span>"
                   </>
                 )}
               </p>
@@ -273,17 +245,25 @@ export default function Artifacts() {
       <div className="container mx-auto px-4 py-8">
         <AnimatePresence mode="wait">
           {filteredArtifacts.length > 0 ? (
-            <motion.div key="artifacts-grid" initial="hidden" animate="visible" variants={containerVariants}>
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                variants={containerVariants}
-              >
+            <motion.div
+              key="artifacts-grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredArtifacts.map((artifact, index) => (
-                  <motion.div key={artifact.id} variants={itemVariants} custom={index}>
+                  <motion.div
+                    key={artifact.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group"
+                  >
                     <Card artifact={artifact} />
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
 
               {/* Load More Button - Only show if not searching */}
               {!searchTerm && (
@@ -362,18 +342,30 @@ export default function Artifacts() {
           >
             <div className="container mx-auto px-4 py-12">
               <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
                 className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
               >
-                <motion.div variants={itemVariants}>
+                {/* Individual stat items */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   <div className="text-3xl font-bold text-amber-600 mb-2">
                     {searchTerm ? filteredArtifacts.length : artifacts.length}
                   </div>
-                  <div className="text-slate-600">{searchTerm ? "Found" : "Total"} Artifacts</div>
+                  <div className="text-slate-600">
+                    {searchTerm ? "Found" : "Total"} Artifacts
+                  </div>
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <div className="text-3xl font-bold text-amber-600 mb-2">
                     {(searchTerm ? filteredArtifacts : artifacts)
                       .reduce((sum, artifact) => sum + artifact.likes, 0)
@@ -381,15 +373,35 @@ export default function Artifacts() {
                   </div>
                   <div className="text-slate-600">Total Likes</div>
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {new Set((searchTerm ? filteredArtifacts : artifacts).map((a) => a.category)).size}
+                    {
+                      new Set(
+                        (searchTerm ? filteredArtifacts : artifacts).map(
+                          (a) => a.category
+                        )
+                      ).size
+                    }
                   </div>
                   <div className="text-slate-600">Categories</div>
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
                   <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {new Set((searchTerm ? filteredArtifacts : artifacts).map((a) => a.presentLocation)).size}
+                    {
+                      new Set(
+                        (searchTerm ? filteredArtifacts : artifacts).map(
+                          (a) => a.presentLocation
+                        )
+                      ).size
+                    }
                   </div>
                   <div className="text-slate-600">Locations</div>
                 </motion.div>
@@ -399,5 +411,5 @@ export default function Artifacts() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
