@@ -11,87 +11,8 @@ import {
   HiUser,
 } from "react-icons/hi";
 import { Link } from "react-router";
+import registerLottie from "../../assets/lotties/register.json";
 import Button from "../../components/Button/Button";
-
-// Simple animation data for register page
-const registerAnimationData = {
-  v: "5.7.4",
-  fr: 30,
-  ip: 0,
-  op: 120,
-  w: 400,
-  h: 400,
-  nm: "Ancient Book",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Book",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 0,
-              s: [0],
-            },
-            { t: 120, s: [10] },
-          ],
-        },
-        p: { a: 0, k: [200, 200, 0] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 0,
-              s: [90, 90, 100],
-            },
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 60,
-              s: [110, 110, 100],
-            },
-            { t: 120, s: [90, 90, 100] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "rc",
-              d: 1,
-              s: { a: 0, k: [120, 160] },
-              p: { a: 0, k: [0, 0] },
-              r: { a: 0, k: 8 },
-            },
-            {
-              ty: "fl",
-              c: { a: 0, k: [0.65, 0.4, 0.1, 1] },
-              o: { a: 0, k: 100 },
-            },
-          ],
-        },
-      ],
-      ip: 0,
-      op: 120,
-      st: 0,
-    },
-  ],
-};
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -148,9 +69,9 @@ export default function Register() {
           transition={{ duration: 0.8 }}
           className="hidden lg:flex flex-col items-center justify-center text-center p-8"
         >
-          <div className="w-80 h-80 mb-8 border">
+          <div className="w-80 h-80 mb-8">
             <Lottie
-              animationData={registerAnimationData}
+              animationData={registerLottie}
               loop={true}
               autoplay={true}
               className="w-full h-full"

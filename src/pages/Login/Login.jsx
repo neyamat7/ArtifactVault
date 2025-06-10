@@ -4,70 +4,8 @@ import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { HiEye, HiEyeOff, HiLockClosed, HiMail } from "react-icons/hi";
 import { Link } from "react-router";
+import loginLottie from "../../assets/lotties/login.json";
 import Button from "../../components/Button/Button";
-
-// You can replace this with any free Lottie animation URL
-const animationData = {
-  v: "5.7.4",
-  fr: 30,
-  ip: 0,
-  op: 120,
-  w: 400,
-  h: 400,
-  nm: "Ancient Scroll",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Scroll",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 0,
-              s: [0],
-            },
-            { t: 120, s: [360] },
-          ],
-        },
-        p: { a: 0, k: [200, 200, 0] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: { a: 0, k: [100, 100, 100] },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "rc",
-              d: 1,
-              s: { a: 0, k: [100, 150] },
-              p: { a: 0, k: [0, 0] },
-              r: { a: 0, k: 10 },
-            },
-            {
-              ty: "fl",
-              c: { a: 0, k: [0.92, 0.7, 0.2, 1] },
-              o: { a: 0, k: 100 },
-            },
-          ],
-        },
-      ],
-      ip: 0,
-      op: 120,
-      st: 0,
-    },
-  ],
-};
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -117,9 +55,9 @@ export default function Login() {
           transition={{ duration: 0.8 }}
           className="hidden lg:flex flex-col items-center justify-center text-center p-8"
         >
-          <div className="w-80 h-80 mb-8 border">
+          <div className="w-80 h-80 mb-8">
             <Lottie
-              animationData={animationData}
+              animationData={loginLottie}
               loop={true}
               autoplay={true}
               className="w-full h-full"
