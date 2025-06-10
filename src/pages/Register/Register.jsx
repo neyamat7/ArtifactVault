@@ -27,6 +27,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     terms: false,
+    general: "",
   });
   const [errors, setErrors] = useState({
     name: "",
@@ -77,7 +78,16 @@ export default function Register() {
   };
 
   const handleGoogleRegister = () => {
-    // Google register logic would go here
+    googleSignIn()
+      .then((res) => {
+        console.log("your account has been created");
+      })
+      .then((err) => {
+        setErrors((prev) => ({
+          ...prev,
+          general: err?.message,
+        }));
+      });
     console.log("Google register attempt");
   };
 

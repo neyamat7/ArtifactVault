@@ -15,11 +15,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    general: "",
-  });
+  const [errors, setErrors] = useState("");
 
   const { signInUser, googleSignIn, setLoading } = useAuth();
 
@@ -30,11 +26,8 @@ export default function Login() {
       [name]: value,
     }));
     // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
+    if (errors) {
+      setErrors("");
     }
   };
 
@@ -50,17 +43,23 @@ export default function Login() {
         navigate("/");
       })
       .catch((err) => {
+        setLoading(false);
         console.error(err.message);
-        // setLoading(false);
-        // setError(err?.message);
-        // notifyError(err?.message);
+        setErrors(err?.message);
       });
-
-    console.log("Login attempt:", formData);
   };
 
   const handleGoogleLogin = () => {
-    // Google login logic would go here
+    googleSignIn()
+      .then((result) => {
+        console.log("google login success");
+        // navigate(location?.state || "/");
+        navigate("/");
+      })
+      .catch((error) => {
+        setErrors(error?.message);
+      });
+
     console.log("Google login attempt");
   };
 
@@ -137,13 +136,13 @@ export default function Login() {
             </div>
 
             {/* General Error */}
-            {errors.general && (
+            {errors && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
               >
-                <p className="text-red-600 text-sm">{errors.general}</p>
+                <p className="text-red-600 text-sm">{errors}</p>
               </motion.div>
             )}
 
@@ -166,23 +165,10 @@ export default function Login() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
-                      errors.email
-                        ? "border-red-300 bg-red-50"
-                        : "border-slate-300 bg-white"
-                    }`}
+                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors`}
                     placeholder="Enter your email"
                   />
                 </div>
-                {errors.email && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600"
-                  >
-                    {errors.email}
-                  </motion.p>
-                )}
               </div>
 
               {/* Password Field */}
@@ -203,11 +189,7 @@ export default function Login() {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className={`block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
-                      errors.password
-                        ? "border-red-300 bg-red-50"
-                        : "border-slate-300 bg-white"
-                    }`}
+                    className={`block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors`}
                     placeholder="Enter your password"
                   />
                   <button
@@ -222,15 +204,6 @@ export default function Login() {
                     )}
                   </button>
                 </div>
-                {errors.password && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600"
-                  >
-                    {errors.password}
-                  </motion.p>
-                )}
               </div>
 
               {/* Forgot Password Link */}

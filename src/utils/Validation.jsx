@@ -63,6 +63,36 @@ export const validateForm = (formData, setErrors) => {
     return false;
   }
 
+  if (!password) {
+    setErrors((prev) => ({
+      ...prev,
+      password: errorMsg("Please provide your Password!"),
+    }));
+    return false;
+  } else if (!charLengthCheck.test(password)) {
+    setErrors((prev) => ({
+      ...prev,
+      password: errorMsg("Password must be at least 6 characters long!"),
+    }));
+    return false;
+  } else if (!uppercaseCheck.test(password)) {
+    setErrors((prev) => ({
+      ...prev,
+      password: errorMsg(
+        "Password must contain at least one uppercase letter!"
+      ),
+    }));
+    return false;
+  } else if (!lowercaseCheck.test(password)) {
+    setErrors((prev) => ({
+      ...prev,
+      password: errorMsg(
+        "Password must contain at least one lowercase letter!"
+      ),
+    }));
+    return false;
+  }
+
   if (!confirmPassword) {
     setErrors((prev) => ({
       ...prev,
