@@ -127,3 +127,21 @@ export const getLikedArtifacts = async (userEmail) => {
     throw error;
   }
 };
+
+// delete an artifact
+export const deleteArtifact = async (artifactId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/artifacts/${artifactId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete artifact");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting artifact:", error);
+    throw error;
+  }
+};

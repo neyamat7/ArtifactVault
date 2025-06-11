@@ -10,7 +10,8 @@ import {
   HiPlus,
   HiTrash,
 } from "react-icons/hi";
-import { getArtifacts } from "../../api/artifactApi";
+import Swal from "sweetalert2";
+import { deleteArtifact, getArtifacts } from "../../api/artifactApi";
 import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function ArtifactsPage() {
@@ -33,6 +34,29 @@ export default function ArtifactsPage() {
 
     fetchMyArtifacts();
   }, [user?.email]);
+
+  const handleDelete = async (artifactId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        await deleteArtifact(artifactId);
+        setArtifacts((prev) => prev.filter((art) => art._id !== artifactId));
+        Swal.fire("Deleted!", "Artifact has been deleted.", "success");
+      } catch (error) {
+        console.error("Error deleting artifact:", error);
+        Swal.fire("Error", "Failed to delete artifact.", "error");
+      }
+    }
+  };
 
   if (loading || !user) {
     return (
@@ -154,7 +178,7 @@ export default function ArtifactsPage() {
                           Update
                         </Link>
                         <button
-                          // onClick={() => confirmDelete(artifact.id)}
+                          onClick={() => handleDelete(artifact._id)}
                           className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                         >
                           <HiTrash className="mr-2 h-4 w-4" />
