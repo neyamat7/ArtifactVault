@@ -11,16 +11,19 @@ import {
   HiTrash,
 } from "react-icons/hi";
 import { getArtifacts } from "../../api/artifactApi";
+import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function ArtifactsPage() {
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { user } = useAuth();
+
   useEffect(() => {
     // getArtifacts()
     const fetchMyArtifacts = async () => {
       try {
-        const data = await getArtifacts();
+        const data = await getArtifacts(user?.email);
         setArtifacts(data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
@@ -30,7 +33,20 @@ export default function ArtifactsPage() {
     };
 
     fetchMyArtifacts();
-  }, []);
+  }, [user?.email]);
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <HiCollection className="mx-auto h-16 w-16 text-slate-400 mb-4" />
+          <h3 className="text-xl font-semibold text-slate-600 mb-2">
+            Loading your artifacts...
+          </h3>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -47,7 +63,7 @@ export default function ArtifactsPage() {
               </p>
             </div>
             <Link
-              to="/artifacts/add"
+              to="/add-artifact"
               className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-colors"
             >
               <HiPlus className="mr-2 h-5 w-5" />
