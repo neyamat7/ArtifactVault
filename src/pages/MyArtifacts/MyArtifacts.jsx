@@ -19,12 +19,14 @@ export default function ArtifactsPage() {
   const [loading, setLoading] = useState(true);
 
   const { user } = useAuth();
+  console.log("token", user?.accessToken);
 
   useEffect(() => {
     const fetchMyArtifacts = async () => {
       try {
         const data = await getArtifacts(
-          user?.email ? `email=${user?.email}` : ""
+          user?.email ? `email=${user?.email}` : null,
+          user?.accessToken || ""
         );
         setArtifacts(data);
       } catch (error) {
@@ -35,7 +37,7 @@ export default function ArtifactsPage() {
     };
 
     fetchMyArtifacts();
-  }, [user?.email]);
+  }, [user?.email, user?.accessToken]);
 
   const handleDelete = async (artifactId) => {
     const confirm = await Swal.fire({

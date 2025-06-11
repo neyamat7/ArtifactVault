@@ -46,10 +46,16 @@ export const updateArtifact = async (artifactId, artifactData) => {
 };
 
 // get all artifacts
-export const getArtifacts = async (query) => {
+export const getArtifacts = async (query, token = "") => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/artifacts?${query ? query : ""}`
+      `${API_BASE_URL}/artifacts?${query ? query : null}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
     );
     if (!response.ok) {
       throw new Error("Failed to fetch artifacts");
