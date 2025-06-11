@@ -129,12 +129,6 @@ export default function Navbar() {
                       className="w-56 border-amber-200"
                     >
                       <div className="flex items-center justify-start gap-2 p-3">
-                        {/* <Avatar className="h-8 w-8">
-                          <AvatarImage
-                            src={user?.image || "/placeholder.svg"}
-                            alt={user?.name}
-                          />
-                        </Avatar> */}
                         <div className="flex flex-col space-y-1 leading-none">
                           <p className="font-medium text-slate-800">
                             {user?.displayName}
@@ -148,7 +142,7 @@ export default function Navbar() {
                       <DropdownMenuItem onClick={() => setIsOpen(false)}>
                         <Link
                           to="/my-artifacts"
-                          className="text-slate-700 hover:text-amber-600 w-full"
+                          className="text-slate-700 hover:text-amber-600 w-full  py-1"
                         >
                           My Artifacts
                         </Link>
@@ -156,7 +150,7 @@ export default function Navbar() {
                       <DropdownMenuItem onClick={() => setIsOpen(false)}>
                         <Link
                           to="/liked-artifacts"
-                          className="text-slate-700 hover:text-amber-600 w-full"
+                          className="text-slate-700 hover:text-amber-600 w-full py-1"
                         >
                           Liked Artifacts
                         </Link>

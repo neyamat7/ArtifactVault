@@ -20,7 +20,6 @@ export default function ArtifactsPage() {
   const { user } = useAuth();
 
   useEffect(() => {
-    // getArtifacts()
     const fetchMyArtifacts = async () => {
       try {
         const data = await getArtifacts(user?.email);
@@ -148,7 +147,7 @@ export default function ArtifactsPage() {
                       {/* Actions */}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4 border-t border-slate-200">
                         <Link
-                          to={`/artifacts/${artifact.id}/update`}
+                          to={`/update/${artifact._id}`}
                           className="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                         >
                           <HiPencil className="mr-2 h-4 w-4" />

@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
         element: <ArtifactDetails />,
       },
       {
-        path: "update/:taskId",
+        path: "update/:artifactId",
         element: <Update />,
       },
       {

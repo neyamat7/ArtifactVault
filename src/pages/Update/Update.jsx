@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 // Icons
 import {
@@ -18,6 +18,7 @@ import {
   HiTag,
   HiUser,
 } from "react-icons/hi";
+import { getArtifactById, updateArtifact } from "../../api/artifactApi";
 
 const artifactTypes = [
   "Tools",
@@ -35,25 +36,9 @@ const artifactTypes = [
   "Other",
 ];
 
-// Mock existing artifact data
-const mockExistingArtifact = {
-  id: 1,
-  artifactName: "Rosetta Stone",
-  artifactImage: "/placeholder.svg?height=600&width=800",
-  artifactType: "Documents",
-  historicalContext:
-    "The Rosetta Stone is a granodiorite stele inscribed with three versions of a decree issued in Memphis, Egypt in 196 BC during the Ptolemaic dynasty on behalf of King Ptolemy V Epiphanes.",
-  shortDescription:
-    "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
-  createdAt: "196 BC",
-  discoveredAt: "1799",
-  discoveredBy: "Pierre-François Bouchard",
-  presentLocation: "British Museum, London",
-  adderName: "Dr. Sarah Johnson",
-  adderEmail: "sarah.johnson@archaeology.edu",
-};
-
 export default function Update() {
+  const { artifactId } = useParams();
+
   const [formData, setFormData] = useState({
     artifactName: "",
     artifactImage: "",
@@ -70,17 +55,26 @@ export default function Update() {
 
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState(null); // 'success', 'error', null
+  const [saveStatus, setSaveStatus] = useState(null);
 
   // Simulate loading existing data
   useEffect(() => {
-    setTimeout(() => {
-      setFormData(mockExistingArtifact);
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+    const fetchExistingArtifact = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getArtifactById(artifactId);
+        setFormData(data);
+      } catch (error) {
+        console.error("Error fetching existing artifact:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchExistingArtifact();
+  }, [artifactId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -116,12 +110,23 @@ export default function Update() {
     setSaving(true);
     setSaveStatus(null);
 
-    // Simulate API call
-    setTimeout(() => {
-      setSaving(false);
+    const { _id, ...updatedFormData } = formData;
+
+    
+    // update existing artifact to the database
+    try {
+      const updatedSingleArtifact = await updateArtifact(
+        artifactId,
+        updatedFormData
+      );
       setSaveStatus("success");
-      setTimeout(() => setSaveStatus(null), 3000);
-    }, 2000);
+      console.log("Artifact updated successfully:", updatedSingleArtifact);
+    } catch (error) {
+      setSaveStatus("error");
+      console.error("Error updating artifact:", error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (isLoading) {

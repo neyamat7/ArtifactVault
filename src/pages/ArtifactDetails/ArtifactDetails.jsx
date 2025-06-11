@@ -370,6 +370,20 @@ export default function ArtifactDetails() {
                   {artifact.historicalContext}
                 </p>
               </div>
+
+              {/* Description */}
+              {/* Historical Context */}
+              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-amber-500/20 rounded-xl">
+                    <HiDocumentText className="h-6 w-6 text-amber-400" />
+                  </div>
+                  Description
+                </h2>
+                <p className="text-slate-300 leading-relaxed text-lg">
+                  {artifact.shortDescription}
+                </p>
+              </div>
             </div>
           )}
 

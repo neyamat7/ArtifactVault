@@ -22,6 +22,29 @@ export const addArtifact = async (artifactData) => {
   }
 };
 
+// update an artifact
+export const updateArtifact = async (artifactId, artifactData) => {
+  console.log(artifactData);
+  try {
+    const response = await fetch(`${API_BASE_URL}/artifacts/${artifactId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(artifactData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update artifact");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating artifact:", error);
+    throw error;
+  }
+};
+
 // get all artifacts
 export const getArtifacts = async (userEmail) => {
   try {
