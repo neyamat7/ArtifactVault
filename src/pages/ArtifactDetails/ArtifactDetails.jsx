@@ -16,9 +16,10 @@ import {
   HiUser,
 } from "react-icons/hi";
 import { Link, useParams } from "react-router";
-import { getArtifactById } from "../../api/artifactApi";
+import { getArtifactById, likeAndDislikeArtifact } from "../../api/artifactApi";
 import Badge from "../../components/Badge/Badge";
 import Button from "../../components/Button/Button";
+import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function ArtifactDetails() {
   const { artifactId } = useParams();
@@ -28,11 +29,16 @@ export default function ArtifactDetails() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchArtifact = async () => {
       try {
         const data = await getArtifactById(artifactId);
+        // Check if the user has liked this artifact
+        const userLiked = data.likes.includes(user?.email);
+        setIsLiked(userLiked);
+        // Set the artifact data
         setArtifact(data);
         console.log(data);
       } catch (error) {
@@ -43,14 +49,20 @@ export default function ArtifactDetails() {
     };
 
     fetchArtifact();
-  }, [artifactId]);
+  }, [artifactId, isLiked, user?.email]);
 
   const handleLike = () => {
-    if (isLiked) {
-      setIsLiked(false);
-    } else {
-      setIsLiked(true);
-    }
+    setIsLiked((prev) => !prev);
+
+    //  like and dislike logic
+    const action = isLiked ? "dislike" : "like";
+    likeAndDislikeArtifact(artifactId, action, user.email)
+      .then((data) => {
+        console.log("Artifact liked/disliked:", data);
+      })
+      .catch((error) => {
+        console.error("Error liking/disliking artifact:", error);
+      });
   };
 
   const handleShare = () => {
@@ -103,10 +115,11 @@ export default function ArtifactDetails() {
     { id: "history", label: "History", icon: HiClock },
   ];
 
-  if (isLoading) {
+  if (isLoading || !user) {
+    console.log("Loading artifact details...");
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-white text-2xl">Loading...</div>
+        <div className="text-red text-2xl">Loading...</div>
       </div>
     );
   }
@@ -268,7 +281,7 @@ export default function ArtifactDetails() {
                     ) : (
                       <HiOutlineHeart className="h-5 w-5" />
                     )}
-                    {isLiked ? "Liked" : "Like"} ({artifact.likes.length})
+                    {isLiked ? "Liked" : "Like"}
                   </Button>
                   <Button
                     onClick={handleShare}

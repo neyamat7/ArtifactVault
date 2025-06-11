@@ -46,3 +46,25 @@ export const getArtifactById = async (id) => {
     throw error;
   }
 };
+
+//  like and dislike an artifact
+export const likeAndDislikeArtifact = async (artifactId, action, userEmail) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/artifacts/${artifactId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action, userEmail }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to ${action} artifact`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Error ${action} artifact:`, error);
+    throw error;
+  }
+};
