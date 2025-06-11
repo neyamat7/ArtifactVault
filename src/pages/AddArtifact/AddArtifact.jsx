@@ -15,103 +15,16 @@ import {
   HiTag,
   HiUser,
 } from "react-icons/hi";
+import useAuth from "../../context/AuthContext/AuthContext";
+import { artifactTypes } from "../../data/artifactTypes";
 
-// Lottie animation for artifact discovery theme
-const artifactAnimationData = {
-  v: "5.7.4",
-  fr: 30,
-  ip: 0,
-  op: 120,
-  w: 400,
-  h: 400,
-  nm: "Artifact Discovery",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Artifact",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 0,
-              s: [0],
-            },
-            { t: 120, s: [360] },
-          ],
-        },
-        p: { a: 0, k: [200, 200, 0] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 0,
-              s: [80, 80, 100],
-            },
-            {
-              i: { x: [0.833], y: [0.833] },
-              o: { x: [0.167], y: [0.167] },
-              t: 60,
-              s: [120, 120, 100],
-            },
-            { t: 120, s: [80, 80, 100] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "el",
-              d: 1,
-              s: { a: 0, k: [80, 80] },
-              p: { a: 0, k: [0, 0] },
-            },
-            {
-              ty: "fl",
-              c: { a: 0, k: [0.92, 0.7, 0.2, 1] },
-              o: { a: 0, k: 100 },
-            },
-          ],
-        },
-      ],
-      ip: 0,
-      op: 120,
-      st: 0,
-    },
-  ],
-};
-
-const artifactTypes = [
-  "Tools",
-  "Weapons",
-  "Documents",
-  "Writings",
-  "Pottery",
-  "Jewelry",
-  "Coins",
-  "Sculptures",
-  "Religious Items",
-  "Household Items",
-  "Art",
-  "Textiles",
-  "Other",
-];
+import { useEffect } from "react";
+import { addArtifact } from "../../api/artifactApi";
+import artifactAnimationData from "../../assets/lotties/addArtifact.json";
 
 export default function AddArtifact() {
+  const { user } = useAuth();
+  console.log("User:", user);
   const [formData, setFormData] = useState({
     artifactName: "",
     artifactImage: "",
@@ -122,9 +35,17 @@ export default function AddArtifact() {
     discoveredAt: "",
     discoveredBy: "",
     presentLocation: "",
-    adderName: "Sarah Johnson", // This would come from user context
-    adderEmail: "sarah.johnson@email.com", // This would come from user context
+    adderName: user?.displayName,
+    adderEmail: user?.email || user?.providerData[0]?.email,
   });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      adderName: user?.displayName,
+      adderEmail: user?.email || user?.providerData[0]?.email,
+    }));
+  }, [user]);
 
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -161,6 +82,34 @@ export default function AddArtifact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Form submission logic would go here
+
+    const newArtifact = {
+      ...formData,
+      likes: [],
+    };
+
+    addArtifact(newArtifact)
+      .then((response) => {
+        console.log("Artifact added successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error adding artifact:", error);
+      });
+    // Reset form after submission
+    setFormData({
+      artifactName: "",
+      artifactImage: "",
+      artifactType: "",
+      historicalContext: "",
+      shortDescription: "",
+      createdAt: "",
+      discoveredAt: "",
+      discoveredBy: "",
+      presentLocation: "",
+      adderName: user?.displayName,
+      adderEmail: user?.email || user?.providerData[0]?.email,
+    });
+    setErrors({});
     console.log("Add artifact:", formData);
   };
 
@@ -195,7 +144,7 @@ export default function AddArtifact() {
               </p>
             </div>
 
-            <div className="w-full max-w-md mx-auto lg:mx-0 mb-8 border">
+            <div className="w-full max-w-md mx-auto lg:mx-0 mb-8">
               <Lottie
                 animationData={artifactAnimationData}
                 loop={true}
@@ -243,7 +192,7 @@ export default function AddArtifact() {
                     htmlFor="artifactName"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Artifact Name *
+                    Artifact Name
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -280,7 +229,7 @@ export default function AddArtifact() {
                     htmlFor="artifactImage"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Artifact Image URL *
+                    Artifact Image URL
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -317,7 +266,7 @@ export default function AddArtifact() {
                     htmlFor="artifactType"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Artifact Type *
+                    Artifact Type
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -386,7 +335,7 @@ export default function AddArtifact() {
                     htmlFor="historicalContext"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Historical Context *
+                    Historical Context
                   </label>
                   <textarea
                     id="historicalContext"
@@ -418,7 +367,7 @@ export default function AddArtifact() {
                     htmlFor="shortDescription"
                     className="block text-sm font-medium text-slate-700 mb-2"
                   >
-                    Short Description *
+                    Short Description
                   </label>
                   <div className="relative">
                     <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
@@ -562,7 +511,7 @@ export default function AddArtifact() {
                         </div>
                         <input
                           type="text"
-                          value={formData.adderName}
+                          value={formData.adderName || ""}
                           readOnly
                           className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-lg bg-slate-100 text-slate-600 cursor-not-allowed"
                         />
@@ -579,7 +528,7 @@ export default function AddArtifact() {
                         </div>
                         <input
                           type="email"
-                          value={formData.adderEmail}
+                          value={formData.adderEmail || ""}
                           readOnly
                           className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-lg bg-slate-100 text-slate-600 cursor-not-allowed"
                         />

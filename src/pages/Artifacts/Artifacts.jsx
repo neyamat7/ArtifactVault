@@ -3,6 +3,8 @@ import { useState } from "react";
 import { HiSearch, HiX } from "react-icons/hi";
 
 // Icons
+import { useEffect } from "react";
+import { getArtifacts } from "../../api/artifactApi";
 import Card from "../../components/Card/Card";
 
 // Mock artifacts data
@@ -20,103 +22,31 @@ const mockArtifacts = [
     likes: 1247,
     isLiked: false,
   },
-  {
-    id: 2,
-    name: "Tutankhamun's Mask",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Jewelry",
-    createdAt: "1323 BC",
-    presentLocation: "Egyptian Museum, Cairo",
-    discoveredBy: "Howard Carter",
-    description:
-      "Golden funeral mask of the Egyptian pharaoh Tutankhamun, one of the most famous artifacts.",
-    likes: 2156,
-    isLiked: true,
-  },
-  {
-    id: 3,
-    name: "Venus de Milo",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Sculptures",
-    createdAt: "130-100 BC",
-    presentLocation: "Louvre Museum, Paris",
-    discoveredBy: "Yorgos Kentrotas",
-    description:
-      "Ancient Greek sculpture believed to depict Aphrodite, the Greek goddess of love and beauty.",
-    likes: 892,
-    isLiked: false,
-  },
-  {
-    id: 4,
-    name: "Terracotta Army",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Sculptures",
-    createdAt: "210-209 BC",
-    presentLocation: "Xi'an, China",
-    discoveredBy: "Local farmers",
-    description:
-      "Collection of terracotta sculptures depicting the armies of Qin Shi Huang, the first Emperor of China.",
-    likes: 1834,
-    isLiked: false,
-  },
-  {
-    id: 5,
-    name: "Dead Sea Scrolls",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Documents",
-    createdAt: "408 BC - 318 AD",
-    presentLocation: "Various Museums",
-    discoveredBy: "Bedouin shepherds",
-    description:
-      "Ancient Jewish religious manuscripts found in the Qumran Caves near the Dead Sea.",
-    likes: 743,
-    isLiked: true,
-  },
-  {
-    id: 6,
-    name: "Stonehenge",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Religious Items",
-    createdAt: "3100-1600 BC",
-    presentLocation: "Wiltshire, England",
-    discoveredBy: "Ancient discovery",
-    description:
-      "Prehistoric monument consisting of a ring of standing stones, each around 13 feet high.",
-    likes: 1456,
-    isLiked: false,
-  },
-  {
-    id: 7,
-    name: "Mona Lisa",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Art",
-    createdAt: "1503-1519",
-    presentLocation: "Louvre Museum, Paris",
-    discoveredBy: "Leonardo da Vinci",
-    description:
-      "Half-length portrait painting by Leonardo da Vinci, considered an archetypal masterpiece.",
-    likes: 3421,
-    isLiked: true,
-  },
-  {
-    id: 8,
-    name: "Machu Picchu",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Religious Items",
-    createdAt: "1450 AD",
-    presentLocation: "Cusco Region, Peru",
-    discoveredBy: "Hiram Bingham III",
-    description:
-      "15th-century Inca citadel located in the Eastern Cordillera of southern Peru.",
-    likes: 2087,
-    isLiked: false,
-  },
 ];
 
 export default function Artifacts() {
   const [artifacts, setArtifacts] = useState(mockArtifacts);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredArtifacts, setFilteredArtifacts] = useState(mockArtifacts);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchArtifacts = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getArtifacts();
+        console.log(data);
+        setArtifacts(data);
+        setFilteredArtifacts(data);
+      } catch (error) {
+        console.error("Error fetching artifacts:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtifacts();
+  }, []);
 
   // Handle search functionality
   const handleSearch = (value) => {
@@ -144,6 +74,22 @@ export default function Artifacts() {
     setSearchTerm("");
     setFilteredArtifacts(artifacts);
   };
+
+  // If loading, show a simple loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-amber-600 text-3xl"
+        >
+          Loading...
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100">
