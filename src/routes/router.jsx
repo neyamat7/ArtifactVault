@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import ErrorPage from "../components/ErrorsPage/ErrorsPage";
 import Layouts from "../Layouts";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import AddArtifact from "../pages/AddArtifact/AddArtifact";
@@ -10,12 +11,13 @@ import Login from "../pages/Login/Login";
 import MyArtifacts from "../pages/MyArtifacts/MyArtifacts";
 import Register from "../pages/Register/Register";
 import Update from "../pages/Update/Update";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Layouts,
-    errorElement: <h1>this is an error</h1>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -31,7 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-artifact",
-        element: <AddArtifact />,
+        element: (
+          <PrivateRoutes>
+            <AddArtifact />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "artifacts",
@@ -39,19 +45,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-artifacts",
-        element: <MyArtifacts />,
+        element: (
+          <PrivateRoutes>
+            <MyArtifacts />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "liked-artifacts",
-        element: <LikedArtifacts />,
+        element: (
+          <PrivateRoutes>
+            <LikedArtifacts />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "artifacts/:artifactId",
-        element: <ArtifactDetails />,
+        element: (
+          <PrivateRoutes>
+            <ArtifactDetails />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "update/:artifactId",
-        element: <Update />,
+        element: (
+          <PrivateRoutes>
+            <Update />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "aboutUs",

@@ -8,7 +8,12 @@ const PrivateRoutes = ({ children }) => {
 
   if (loading) {
     return (
-      <h1 className="text-center mt-20 text-3xl font-bold">loading....</h1>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-700 text-xl">Loading...</p>
+        </div>
+      </div>
     );
   }
 
