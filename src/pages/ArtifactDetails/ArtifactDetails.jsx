@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HiArrowLeft,
   HiCalendar,
   HiClock,
-  HiCube,
   HiDocumentText,
   HiEye,
   HiGlobeAlt,
@@ -12,14 +11,12 @@ import {
   HiLocationMarker,
   HiOutlineHeart,
   HiPhotograph,
-  HiScale,
   HiShare,
-  HiShieldCheck,
-  HiSparkles,
   HiTag,
   HiUser,
 } from "react-icons/hi";
 import { Link, useParams } from "react-router";
+import { getArtifactById } from "../../api/artifactApi";
 import Badge from "../../components/Badge/Badge";
 import Button from "../../components/Button/Button";
 
@@ -52,12 +49,29 @@ const mockArtifact = {
 };
 
 export default function ArtifactDetails() {
-  const { id } = useParams();
-  const [artifact] = useState(mockArtifact); // In real app, fetch based on id
+  const { artifactId } = useParams();
+  const [artifact, setArtifact] = useState(mockArtifact); // In real app, fetch based on id
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(artifact.likes);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArtifact = async () => {
+      try {
+        const data = await getArtifactById(artifactId);
+        setArtifact(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching artifact:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtifact();
+  }, [artifactId]);
 
   const handleLike = () => {
     if (isLiked) {
@@ -118,6 +132,14 @@ export default function ArtifactDetails() {
     { id: "details", label: "Details", icon: HiTag },
     { id: "history", label: "History", icon: HiClock },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
@@ -222,7 +244,7 @@ export default function ArtifactDetails() {
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">
-                        {artifact.views.toLocaleString()}
+                        {artifact?.views}
                       </p>
                       <p className="text-sm text-slate-300">Views</p>
                     </div>
@@ -365,113 +387,48 @@ export default function ArtifactDetails() {
                   {artifact.historicalContext}
                 </p>
               </div>
-
-              {/* Significance */}
-              {artifact.significance && (
-                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-md rounded-3xl p-8 border border-amber-400/30 shadow-2xl">
-                  <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                    <div className="p-2 bg-amber-500/30 rounded-xl">
-                      <HiSparkles className="h-5 w-5 text-amber-300" />
-                    </div>
-                    Historical Significance
-                  </h2>
-                  <p className="text-amber-100 leading-relaxed text-lg">
-                    {artifact.significance}
-                  </p>
-                </div>
-              )}
             </div>
           )}
 
           {activeTab === "details" && (
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Physical Properties */}
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <div className="p-2 bg-blue-500/20 rounded-xl">
-                    <HiCube className="h-6 w-6 text-blue-400" />
-                  </div>
-                  Physical Properties
-                </h3>
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
-                    <span className="text-slate-300">Material</span>
-                    <span className="text-white font-semibold">
-                      {artifact.material || "Not specified"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
-                    <span className="text-slate-300">Dimensions</span>
-                    <span className="text-white font-semibold text-sm">
-                      {artifact.dimensions || "Not specified"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
-                    <span className="text-slate-300 flex items-center gap-2">
-                      <HiScale className="h-4 w-4" />
-                      Weight
-                    </span>
-                    <span className="text-white font-semibold">
-                      {artifact.weight || "Not specified"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl">
-                    <span className="text-slate-300 flex items-center gap-2">
-                      <HiShieldCheck className="h-4 w-4" />
-                      Condition
-                    </span>
-                    <Badge
-                      style={{
-                        backgroundColor: "rgba(34, 197, 94, 0.3)",
-                        color: "rgb(74, 222, 128)",
-                      }}
-                    >
-                      {artifact.condition || "Unknown"}
-                    </Badge>
-                  </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <div className="p-2 bg-green-500/20 rounded-xl">
+                  <HiGlobeAlt className="h-6 w-6 text-green-400" />
                 </div>
-              </div>
-
-              {/* Discovery Information */}
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <div className="p-2 bg-green-500/20 rounded-xl">
-                    <HiGlobeAlt className="h-6 w-6 text-green-400" />
+                Discovery Information
+              </h3>
+              <div className="space-y-6">
+                <div className="p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <HiClock className="h-4 w-4 text-slate-400" />
+                    <span className="text-slate-300 text-sm">Discovered</span>
                   </div>
-                  Discovery Information
-                </h3>
-                <div className="space-y-6">
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <div className="flex items-center gap-2 mb-2">
-                      <HiClock className="h-4 w-4 text-slate-400" />
-                      <span className="text-slate-300 text-sm">Discovered</span>
-                    </div>
-                    <span className="text-white font-semibold">
-                      {artifact.discoveredAt || "Unknown"}
+                  <span className="text-white font-semibold">
+                    {artifact.discoveredAt || "Unknown"}
+                  </span>
+                </div>
+                <div className="p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <HiUser className="h-4 w-4 text-slate-400" />
+                    <span className="text-slate-300 text-sm">
+                      Discovered By
                     </span>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <div className="flex items-center gap-2 mb-2">
-                      <HiUser className="h-4 w-4 text-slate-400" />
-                      <span className="text-slate-300 text-sm">
-                        Discovered By
-                      </span>
-                    </div>
-                    <span className="text-white font-semibold">
-                      {artifact.discoveredBy || "Unknown"}
+                  <span className="text-white font-semibold">
+                    {artifact.discoveredBy || "Unknown"}
+                  </span>
+                </div>
+                <div className="p-4 bg-white/5 rounded-2xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <HiLocationMarker className="h-4 w-4 text-slate-400" />
+                    <span className="text-slate-300 text-sm">
+                      Current Location
                     </span>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-2xl">
-                    <div className="flex items-center gap-2 mb-2">
-                      <HiLocationMarker className="h-4 w-4 text-slate-400" />
-                      <span className="text-slate-300 text-sm">
-                        Current Location
-                      </span>
-                    </div>
-                    <span className="text-white font-semibold">
-                      {artifact.presentLocation || "Unknown"}
-                    </span>
-                  </div>
+                  <span className="text-white font-semibold">
+                    {artifact.presentLocation || "Unknown"}
+                  </span>
                 </div>
               </div>
             </div>

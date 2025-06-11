@@ -21,7 +21,6 @@ export const addArtifact = async (artifactData) => {
   }
 };
 
-
 export const getArtifacts = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/artifacts`);
@@ -31,6 +30,19 @@ export const getArtifacts = async () => {
     return await response.json();
   } catch (error) {
     console.error("Error fetching artifacts:", error);
+    throw error;
+  }
+};
+
+export const getArtifactById = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/artifacts/${id}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch artifact");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching artifact:", error);
     throw error;
   }
 };

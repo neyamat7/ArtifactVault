@@ -7,27 +7,10 @@ import { useEffect } from "react";
 import { getArtifacts } from "../../api/artifactApi";
 import Card from "../../components/Card/Card";
 
-// Mock artifacts data
-const mockArtifacts = [
-  {
-    id: 1,
-    name: "Rosetta Stone",
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Documents",
-    createdAt: "196 BC",
-    presentLocation: "British Museum, London",
-    discoveredBy: "Pierre-François Bouchard",
-    description:
-      "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
-    likes: 1247,
-    isLiked: false,
-  },
-];
-
 export default function Artifacts() {
-  const [artifacts, setArtifacts] = useState(mockArtifacts);
+  const [artifacts, setArtifacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredArtifacts, setFilteredArtifacts] = useState(mockArtifacts);
+  const [filteredArtifacts, setFilteredArtifacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
