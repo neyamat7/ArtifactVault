@@ -23,7 +23,9 @@ export default function ArtifactsPage() {
   useEffect(() => {
     const fetchMyArtifacts = async () => {
       try {
-        const data = await getArtifacts(user?.email);
+        const data = await getArtifacts(
+          user?.email ? `email=${user?.email}` : ""
+        );
         setArtifacts(data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);

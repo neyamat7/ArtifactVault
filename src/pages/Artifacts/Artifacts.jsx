@@ -10,17 +10,16 @@ import Card from "../../components/Card/Card";
 export default function Artifacts() {
   const [artifacts, setArtifacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredArtifacts, setFilteredArtifacts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchArtifacts = async () => {
-      setIsLoading(true);
       try {
-        const data = await getArtifacts();
+        const data = await getArtifacts(
+          searchTerm ? `searchParams=${searchTerm}` : ""
+        );
         console.log(data);
         setArtifacts(data);
-        setFilteredArtifacts(data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
       } finally {
@@ -29,33 +28,12 @@ export default function Artifacts() {
     };
 
     fetchArtifacts();
-  }, []);
-
-  // Handle search functionality
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-
-    if (value.trim() === "") {
-      setFilteredArtifacts(artifacts);
-    } else {
-      const filtered = artifacts.filter(
-        (artifact) =>
-          artifact.name.toLowerCase().includes(value.toLowerCase()) ||
-          artifact.category.toLowerCase().includes(value.toLowerCase()) ||
-          artifact.description.toLowerCase().includes(value.toLowerCase()) ||
-          artifact.presentLocation
-            .toLowerCase()
-            .includes(value.toLowerCase()) ||
-          artifact.discoveredBy.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredArtifacts(filtered);
-    }
-  };
+  }, [searchTerm]);
 
   // Clear search
   const clearSearch = () => {
     setSearchTerm("");
-    setFilteredArtifacts(artifacts);
+    // setFilteredArtifacts(artifacts);
   };
 
   // If loading, show a simple loading state
@@ -112,7 +90,7 @@ export default function Artifacts() {
                 <input
                   type="text"
                   value={searchTerm}
-                  onChange={(e) => handleSearch(e.target.value)}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="block w-full pl-10 pr-10 py-3 border border-slate-300 rounded-lg bg-white text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                   placeholder="Search artifacts, categories, locations..."
                 />
@@ -148,15 +126,14 @@ export default function Artifacts() {
           >
             <div className="text-center">
               <p className="text-slate-600">
-                {filteredArtifacts.length > 0 ? (
+                {artifacts.length > 0 ? (
                   <>
                     Found{" "}
                     <span className="font-semibold text-amber-600">
-                      {filteredArtifacts.length}
+                      {artifacts.length}
                     </span>{" "}
                     artifact
-                    {filteredArtifacts.length !== 1 ? "s" : ""} matching "
-                    {searchTerm}"
+                    {artifacts.length !== 1 ? "s" : ""} matching "{searchTerm}"
                   </>
                 ) : (
                   <>
@@ -173,7 +150,7 @@ export default function Artifacts() {
       {/* Artifacts Grid */}
       <div className="container mx-auto px-4 py-8">
         <AnimatePresence mode="wait">
-          {filteredArtifacts.length > 0 ? (
+          {artifacts.length > 0 ? (
             <motion.div
               key="artifacts-grid"
               initial={{ opacity: 0 }}
@@ -181,7 +158,7 @@ export default function Artifacts() {
               transition={{ duration: 0.5 }}
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredArtifacts.map((artifact, index) => (
+                {artifacts.map((artifact, index) => (
                   <motion.div
                     key={artifact.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -258,87 +235,6 @@ export default function Artifacts() {
           )}
         </AnimatePresence>
       </div>
-
-      {/* Stats Section - Only show when not searching or when search has results */}
-      <AnimatePresence>
-        {(!searchTerm || filteredArtifacts.length > 0) && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-white border-t border-slate-200 mt-16"
-          >
-            <div className="container mx-auto px-4 py-12">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-              >
-                {/* Individual stat items */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {searchTerm ? filteredArtifacts.length : artifacts.length}
-                  </div>
-                  <div className="text-slate-600">
-                    {searchTerm ? "Found" : "Total"} Artifacts
-                  </div>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {(searchTerm ? filteredArtifacts : artifacts)
-                      .reduce((sum, artifact) => sum + artifact.likes, 0)
-                      .toLocaleString()}
-                  </div>
-                  <div className="text-slate-600">Total Likes</div>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {
-                      new Set(
-                        (searchTerm ? filteredArtifacts : artifacts).map(
-                          (a) => a.category
-                        )
-                      ).size
-                    }
-                  </div>
-                  <div className="text-slate-600">Categories</div>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <div className="text-3xl font-bold text-amber-600 mb-2">
-                    {
-                      new Set(
-                        (searchTerm ? filteredArtifacts : artifacts).map(
-                          (a) => a.presentLocation
-                        )
-                      ).size
-                    }
-                  </div>
-                  <div className="text-slate-600">Locations</div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

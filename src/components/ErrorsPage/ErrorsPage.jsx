@@ -123,67 +123,6 @@ export default function ErrorPage() {
             </Link>
           </div>
 
-          {/* Help Section */}
-          {/* <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-8 border border-amber-200">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <HiSupport className="h-6 w-6 text-amber-600" />
-              <h3 className="text-xl font-semibold text-slate-800">
-                Need Help?
-              </h3>
-            </div>
-            <p className="text-slate-600 mb-6">
-              If you continue to experience issues, our support team is here to
-              help you navigate through any problems.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-white rounded-lg p-4 border border-amber-200 hover:shadow-md transition-shadow">
-                <h4 className="font-semibold text-slate-800 mb-2">
-                  Search Artifacts
-                </h4>
-                <p className="text-sm text-slate-600 mb-3">
-                  Browse our collection of historical artifacts
-                </p>
-                <Link
-                  to="/search"
-                  className="text-amber-600 hover:text-amber-700 text-sm font-medium"
-                >
-                  Start Searching →
-                </Link>
-              </div>
-
-              <div className="bg-white rounded-lg p-4 border border-amber-200 hover:shadow-md transition-shadow">
-                <h4 className="font-semibold text-slate-800 mb-2">
-                  Contact Support
-                </h4>
-                <p className="text-sm text-slate-600 mb-3">
-                  Get help from our technical team
-                </p>
-                <Link
-                  to="/support"
-                  className="text-amber-600 hover:text-amber-700 text-sm font-medium"
-                >
-                  Get Support →
-                </Link>
-              </div>
-
-              <div className="bg-white rounded-lg p-4 border border-amber-200 hover:shadow-md transition-shadow">
-                <h4 className="font-semibold text-slate-800 mb-2">
-                  Report Issue
-                </h4>
-                <p className="text-sm text-slate-600 mb-3">
-                  Help us improve by reporting problems
-                </p>
-                <Link
-                  to="/report"
-                  className="text-amber-600 hover:text-amber-700 text-sm font-medium"
-                >
-                  Report Bug →
-                </Link>
-              </div>
-            </div>
-          </div> */}
-
           {/* Footer Message */}
           <div className="text-center mt-20">
             <p className="text-slate-500 text-sm">

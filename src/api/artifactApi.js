@@ -46,10 +46,10 @@ export const updateArtifact = async (artifactId, artifactData) => {
 };
 
 // get all artifacts
-export const getArtifacts = async (userEmail) => {
+export const getArtifacts = async (query) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/artifacts${userEmail ? `?email=${userEmail}` : ""}`
+      `${API_BASE_URL}/artifacts?${query ? query : ""}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch artifacts");
