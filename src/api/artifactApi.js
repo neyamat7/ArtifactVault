@@ -1,5 +1,6 @@
 const API_BASE_URL = "http://localhost:3000";
 
+// add an artifact
 export const addArtifact = async (artifactData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/artifacts`, {
@@ -21,6 +22,7 @@ export const addArtifact = async (artifactData) => {
   }
 };
 
+// get all artifacts
 export const getArtifacts = async (userEmail) => {
   try {
     const response = await fetch(
@@ -36,6 +38,22 @@ export const getArtifacts = async (userEmail) => {
   }
 };
 
+// get featured artifacts
+
+export const getFeaturedArtifacts = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/artifacts/featured`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch featured artifacts");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching featured artifacts:", error);
+    throw error;
+  }
+};
+
+//get artifacts by id
 export const getArtifactById = async (id) => {
   try {
     const response = await fetch(`${API_BASE_URL}/artifacts/${id}`);
@@ -74,7 +92,9 @@ export const likeAndDislikeArtifact = async (artifactId, action, userEmail) => {
 // get liked artifacts by user email
 export const getLikedArtifacts = async (userEmail) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/artifacts/liked?email=${userEmail}`);
+    const response = await fetch(
+      `${API_BASE_URL}/artifacts/liked?email=${userEmail}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch liked artifacts");
     }

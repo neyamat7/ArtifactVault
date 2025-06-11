@@ -1,67 +1,43 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { HiChevronRight, HiHeart } from "react-icons/hi";
 import { Link } from "react-router";
+import { getFeaturedArtifacts } from "../../api/artifactApi";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
 
-const featuredArtifacts = [
-  {
-    id: 1,
-    name: "Rosetta Stone",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
-    likes: 2453,
-    category: "Ancient Egypt",
-  },
-  {
-    id: 2,
-    name: "Antikythera Mechanism",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Ancient Greek analog computer used to predict astronomical positions and eclipses.",
-    likes: 1872,
-    category: "Ancient Greece",
-  },
-  {
-    id: 3,
-    name: "Dead Sea Scrolls",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Ancient Jewish religious manuscripts found in the Qumran Caves near the Dead Sea.",
-    likes: 1654,
-    category: "Ancient Judaism",
-  },
-  {
-    id: 4,
-    name: "Terracotta Army",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Collection of terracotta sculptures depicting the armies of Qin Shi Huang, the first Emperor of China.",
-    likes: 1432,
-    category: "Ancient China",
-  },
-  {
-    id: 5,
-    name: "Nebra Sky Disc",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Bronze Age disc featuring gold symbols representing astronomical phenomena and cosmic concepts.",
-    likes: 1287,
-    category: "Bronze Age",
-  },
-  {
-    id: 6,
-    name: "Baghdad Battery",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Ancient clay jars containing copper cylinders and iron rods, possibly used as galvanic cells.",
-    likes: 1156,
-    category: "Ancient Mesopotamia",
-  },
-];
-
 export default function Featured() {
+  const [featured, setFeatured] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchFeaturedArtifacts = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getFeaturedArtifacts();
+        setFeatured(data);
+      } catch (error) {
+        console.error("Error fetching featured artifacts:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchFeaturedArtifacts();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-700 text-xl">
+            Loading featured artifacts...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-slate-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -85,9 +61,9 @@ export default function Featured() {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredArtifacts.map((artifact, index) => (
+          {featured.map((artifact) => (
             <motion.div
-              key={artifact.id}
+              key={artifact._id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
