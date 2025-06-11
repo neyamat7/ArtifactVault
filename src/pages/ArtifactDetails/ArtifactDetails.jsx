@@ -20,39 +20,11 @@ import { getArtifactById } from "../../api/artifactApi";
 import Badge from "../../components/Badge/Badge";
 import Button from "../../components/Button/Button";
 
-// Mock artifact data - this would come from your database/API
-const mockArtifact = {
-  id: 1,
-  artifactName: "Rosetta Stone",
-  artifactImage: "/placeholder.svg?height=600&width=800",
-  artifactType: "Documents",
-  historicalContext:
-    "The Rosetta Stone is a granodiorite stele inscribed with three versions of a decree issued in Memphis, Egypt in 196 BC during the Ptolemaic dynasty on behalf of King Ptolemy V Epiphanes. The top and middle texts are in Ancient Egyptian using hieroglyphic and Demotic scripts respectively, while the bottom is in Ancient Greek. The decree has only minor differences between the three versions, making the Rosetta Stone key to deciphering Egyptian hieroglyphs, thereby opening a window into ancient Egyptian history.",
-  shortDescription:
-    "The key to deciphering Egyptian hieroglyphics, discovered in 1799 near the town of Rosetta.",
-  createdAt: "196 BC",
-  discoveredAt: "1799",
-  discoveredBy: "Pierre-François Bouchard",
-  presentLocation: "British Museum, London",
-  adderName: "Dr. Sarah Johnson",
-  adderEmail: "sarah.johnson@archaeology.edu",
-  likes: 2453,
-  views: 15672,
-  dateAdded: "2024-01-15",
-  category: "Ancient Egypt",
-  material: "Granodiorite",
-  dimensions: "114 cm × 72 cm × 28 cm",
-  weight: "760 kg",
-  condition: "Good",
-  significance:
-    "Critical breakthrough in understanding ancient Egyptian writing systems",
-};
-
 export default function ArtifactDetails() {
   const { artifactId } = useParams();
-  const [artifact, setArtifact] = useState(mockArtifact); // In real app, fetch based on id
+  const [artifact, setArtifact] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(artifact.likes);
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(true);
@@ -75,10 +47,8 @@ export default function ArtifactDetails() {
 
   const handleLike = () => {
     if (isLiked) {
-      setLikeCount((prev) => prev - 1);
       setIsLiked(false);
     } else {
-      setLikeCount((prev) => prev + 1);
       setIsLiked(true);
     }
   };
@@ -226,7 +196,7 @@ export default function ArtifactDetails() {
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">
-                        {likeCount.toLocaleString()}
+                        {artifact.likes.length}
                       </p>
                       <p className="text-sm text-slate-300">Likes</p>
                     </div>
@@ -298,7 +268,7 @@ export default function ArtifactDetails() {
                     ) : (
                       <HiOutlineHeart className="h-5 w-5" />
                     )}
-                    {isLiked ? "Liked" : "Like"} ({likeCount.toLocaleString()})
+                    {isLiked ? "Liked" : "Like"} ({artifact.likes.length})
                   </Button>
                   <Button
                     onClick={handleShare}

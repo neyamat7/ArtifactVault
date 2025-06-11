@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 // Icons
@@ -10,67 +10,27 @@ import {
   HiPlus,
   HiTrash,
 } from "react-icons/hi";
-
-// Mock artifacts data
-const mockArtifacts = [
-  {
-    id: 1,
-    artifactName: "Rosetta Stone",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Documents",
-    createdAt: "196 BC",
-    presentLocation: "British Museum, London",
-    discoveredBy: "Pierre-François Bouchard",
-  },
-  {
-    id: 2,
-    artifactName: "Tutankhamun's Mask",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Jewelry",
-    createdAt: "1323 BC",
-    presentLocation: "Egyptian Museum, Cairo",
-    discoveredBy: "Howard Carter",
-  },
-  {
-    id: 3,
-    artifactName: "Venus de Milo",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Sculptures",
-    createdAt: "130-100 BC",
-    presentLocation: "Louvre Museum, Paris",
-    discoveredBy: "Yorgos Kentrotas",
-  },
-  {
-    id: 4,
-    artifactName: "Terracotta Army",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Sculptures",
-    createdAt: "210-209 BC",
-    presentLocation: "Xi'an, China",
-    discoveredBy: "Local farmers",
-  },
-  {
-    id: 5,
-    artifactName: "Dead Sea Scrolls",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Documents",
-    createdAt: "408 BC - 318 AD",
-    presentLocation: "Various Museums",
-    discoveredBy: "Bedouin shepherds",
-  },
-  {
-    id: 6,
-    artifactName: "Stonehenge",
-    artifactImage: "/placeholder.svg?height=200&width=300",
-    artifactType: "Religious Items",
-    createdAt: "3100-1600 BC",
-    presentLocation: "Wiltshire, England",
-    discoveredBy: "Ancient discovery",
-  },
-];
+import { getArtifacts } from "../../api/artifactApi";
 
 export default function ArtifactsPage() {
-  const [artifacts, setArtifacts] = useState(mockArtifacts);
+  const [artifacts, setArtifacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // getArtifacts()
+    const fetchMyArtifacts = async () => {
+      try {
+        const data = await getArtifacts();
+        setArtifacts(data);
+      } catch (error) {
+        console.error("Error fetching artifacts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyArtifacts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -99,7 +59,7 @@ export default function ArtifactsPage() {
 
       {/* Artifacts List */}
       <div className="container mx-auto px-4 py-8">
-        {artifacts.length === 0 ? (
+        {artifacts.length < 1 ? (
           <div className="text-center py-16">
             <HiCollection className="mx-auto h-16 w-16 text-slate-400 mb-4" />
             <h3 className="text-xl font-semibold text-slate-600 mb-2">
@@ -120,16 +80,16 @@ export default function ArtifactsPage() {
           <div className="grid gap-4 sm:gap-6">
             {artifacts.map((artifact) => (
               <div
-                key={artifact.id}
+                key={artifact._id}
                 className="bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Image */}
-                  <div className="md:w-48 md:flex-shrink-0">
+                  <div className="md:w-64 md:flex-shrink-0">
                     <img
-                      src={artifact.artifactImage || "/placeholder.svg"}
+                      src={artifact.artifactImage}
                       alt={artifact.artifactName}
-                      className="w-full h-48 md:h-full object-cover"
+                      className="w-full h-48 md:h-full object-fill"
                     />
                   </div>
 
@@ -179,7 +139,7 @@ export default function ArtifactsPage() {
                           Update
                         </Link>
                         <button
-                          onClick={() => confirmDelete(artifact.id)}
+                          // onClick={() => confirmDelete(artifact.id)}
                           className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                         >
                           <HiTrash className="mr-2 h-4 w-4" />
