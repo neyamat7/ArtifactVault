@@ -23,6 +23,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function ArtifactDetails() {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   const { artifactId } = useParams();
   const [artifact, setArtifact] = useState([]);
@@ -31,7 +32,6 @@ export default function ArtifactDetails() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth();
 
   useEffect(() => {
     const fetchArtifact = async () => {
@@ -56,9 +56,7 @@ export default function ArtifactDetails() {
     fetchArtifact();
   }, [artifactId, isLiked, user?.email, axiosSecure]);
 
-  const handleLike = () => {
-    setIsLiked((prev) => !prev);
-
+  const handleLike = async () => {
     //  like and dislike logic
     const action = isLiked ? "dislike" : "like";
 
@@ -68,11 +66,20 @@ export default function ArtifactDetails() {
         userEmail: user?.email,
       })
       .then((response) => {
+        setIsLiked((prev) => !prev);
         console.log("Artifact liked/disliked:", response.data);
       })
       .catch((error) => {
         console.error("Error liking/disliking artifact:", error);
       });
+
+    // await likeAndDislikeArtifact(artifactId, action, user?.email, user)
+    //   .then((response) => {
+    //     console.log("Artifact liked/disliked:", response);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error liking/disliking artifact:", error);
+    //   });
   };
 
   const handleShare = () => {

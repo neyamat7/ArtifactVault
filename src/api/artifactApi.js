@@ -97,12 +97,18 @@ export const getArtifactById = async (id) => {
 };
 
 //  like and dislike an artifact
-export const likeAndDislikeArtifact = async (artifactId, action, userEmail) => {
+export const likeAndDislikeArtifact = async (
+  artifactId,
+  action,
+  userEmail,
+  user
+) => {
   try {
     const response = await fetch(`${API_BASE_URL}/artifacts/${artifactId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${user?.accessToken}`,
       },
       body: JSON.stringify({ action, userEmail }),
     });
