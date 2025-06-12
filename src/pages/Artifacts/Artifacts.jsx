@@ -4,10 +4,14 @@ import { HiSearch, HiX } from "react-icons/hi";
 
 // Icons
 import { useEffect } from "react";
-import { getArtifacts } from "../../api/artifactApi";
 import Card from "../../components/Card/Card";
+import useAuth from "../../context/AuthContext/AuthContext";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function Artifacts() {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
   const [artifacts, setArtifacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -15,9 +19,11 @@ export default function Artifacts() {
   useEffect(() => {
     const fetchArtifacts = async () => {
       try {
-        const data = await getArtifacts(
-          searchTerm ? `searchParams=${searchTerm}` : ""
-        );
+        const searchParams = searchTerm ? `searchParams=${searchTerm}` : null;
+
+        const response = await axiosSecure.get(`/artifacts?${searchParams}`);
+
+        const data = response.data;
         console.log(data);
         setArtifacts(data);
       } catch (error) {
@@ -28,7 +34,7 @@ export default function Artifacts() {
     };
 
     fetchArtifacts();
-  }, [searchTerm]);
+  }, [searchTerm, user?.accessToken, axiosSecure]);
 
   // Clear search
   const clearSearch = () => {

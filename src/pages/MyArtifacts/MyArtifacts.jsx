@@ -11,10 +11,11 @@ import {
   HiTrash,
 } from "react-icons/hi";
 import Swal from "sweetalert2";
-import { deleteArtifact, getArtifacts } from "../../api/artifactApi";
 import useAuth from "../../context/AuthContext/AuthContext";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function ArtifactsPage() {
+  const axiosSecure = useAxiosSecure();
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,10 +25,12 @@ export default function ArtifactsPage() {
   useEffect(() => {
     const fetchMyArtifacts = async () => {
       try {
-        const data = await getArtifacts(
-          user?.email ? `email=${user?.email}` : null,
-          user?.accessToken || ""
-        );
+        const email = user?.email ? `email=${user?.email}` : null;
+
+        // const data = await getArtifacts( email);
+        const response = await axiosSecure.get(`/artifacts?${email}`);
+
+        const data = response.data;
         setArtifacts(data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
@@ -37,7 +40,7 @@ export default function ArtifactsPage() {
     };
 
     fetchMyArtifacts();
-  }, [user?.email, user?.accessToken]);
+  }, [user?.email, axiosSecure]);
 
   const handleDelete = async (artifactId) => {
     const confirm = await Swal.fire({
@@ -52,7 +55,7 @@ export default function ArtifactsPage() {
 
     if (confirm.isConfirmed) {
       try {
-        await deleteArtifact(artifactId);
+        await axiosSecure.delete(`/artifacts/${artifactId}`);
         setArtifacts((prev) => prev.filter((art) => art._id !== artifactId));
         Swal.fire("Deleted!", "Artifact has been deleted.", "success");
       } catch (error) {

@@ -119,20 +119,20 @@ export const likeAndDislikeArtifact = async (artifactId, action, userEmail) => {
 };
 
 // get liked artifacts by user email
-export const getLikedArtifacts = async (userEmail) => {
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/artifacts/liked?email=${userEmail}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch liked artifacts");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching liked artifacts:", error);
-    throw error;
-  }
-};
+// export const getLikedArtifacts = async (userEmail) => {
+//   try {
+//     const response = await fetch(
+//       `${API_BASE_URL}/artifacts/liked?email=${userEmail}`
+//     );
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch liked artifacts");
+//     }
+//     return await response.json();
+//   } catch (error) {
+//     console.error("Error fetching liked artifacts:", error);
+//     throw error;
+//   }
+// };
 
 // delete an artifact
 export const deleteArtifact = async (artifactId) => {

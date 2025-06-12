@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { HiCalendar, HiHeart, HiLocationMarker, HiUser } from "react-icons/hi";
 import { Link } from "react-router";
-import { getLikedArtifacts } from "../../api/artifactApi";
 import useAuth from "../../context/AuthContext/AuthContext";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function LikedArtifacts() {
+  const axiosSecure = useAxiosSecure();
+
   const [artifacts, setArtifacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
@@ -14,7 +16,10 @@ export default function LikedArtifacts() {
     const fetchLikedArtifacts = async () => {
       setIsLoading(true);
       try {
-        const data = await getLikedArtifacts(user?.email);
+        const response = await axiosSecure.get(
+          `/artifacts/liked?email=${user?.email}`
+        );
+        const data = response.data;
         setArtifacts(data);
       } catch (error) {
         console.error("Error fetching liked artifacts:", error);
@@ -24,7 +29,7 @@ export default function LikedArtifacts() {
     };
 
     fetchLikedArtifacts();
-  }, [user?.email]);
+  }, [user?.email, axiosSecure]);
 
   if (isLoading || !user) {
     return (

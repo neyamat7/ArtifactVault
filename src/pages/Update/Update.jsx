@@ -18,7 +18,7 @@ import {
   HiTag,
   HiUser,
 } from "react-icons/hi";
-import { getArtifactById, updateArtifact } from "../../api/artifactApi";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const artifactTypes = [
   "Tools",
@@ -37,6 +37,8 @@ const artifactTypes = [
 ];
 
 export default function Update() {
+  const axiosSecure = useAxiosSecure();
+
   const { artifactId } = useParams();
 
   const [formData, setFormData] = useState({
@@ -64,8 +66,8 @@ export default function Update() {
     const fetchExistingArtifact = async () => {
       try {
         setIsLoading(true);
-        const data = await getArtifactById(artifactId);
-        setFormData(data);
+        const response = await axiosSecure.get(`/artifacts/${artifactId}`);
+        setFormData(response.data);
       } catch (error) {
         console.error("Error fetching existing artifact:", error);
       } finally {
@@ -74,7 +76,7 @@ export default function Update() {
     };
 
     fetchExistingArtifact();
-  }, [artifactId]);
+  }, [artifactId, axiosSecure]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -112,15 +114,12 @@ export default function Update() {
 
     const { _id, ...updatedFormData } = formData;
 
-    
     // update existing artifact to the database
     try {
-      const updatedSingleArtifact = await updateArtifact(
-        artifactId,
-        updatedFormData
-      );
+      axiosSecure.put(`/artifacts/${artifactId}`, updatedFormData);
+
       setSaveStatus("success");
-      console.log("Artifact updated successfully:", updatedSingleArtifact);
+      console.log("Artifact updated successfully:", updatedFormData);
     } catch (error) {
       setSaveStatus("error");
       console.error("Error updating artifact:", error);

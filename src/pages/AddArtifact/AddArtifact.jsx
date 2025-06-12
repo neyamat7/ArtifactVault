@@ -19,10 +19,11 @@ import useAuth from "../../context/AuthContext/AuthContext";
 import { artifactTypes } from "../../data/artifactTypes";
 
 import { useEffect } from "react";
-import { addArtifact } from "../../api/artifactApi";
 import artifactAnimationData from "../../assets/lotties/addArtifact.json";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function AddArtifact() {
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   console.log("User:", user);
   const [formData, setFormData] = useState({
@@ -39,6 +40,9 @@ export default function AddArtifact() {
     adderEmail: user?.email || user?.providerData[0]?.email,
   });
 
+  const [errors, setErrors] = useState({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -46,9 +50,6 @@ export default function AddArtifact() {
       adderEmail: user?.email || user?.providerData[0]?.email,
     }));
   }, [user]);
-
-  const [errors, setErrors] = useState({});
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -88,13 +89,15 @@ export default function AddArtifact() {
       likes: [],
     };
 
-    addArtifact(newArtifact)
+    axiosSecure
+      .post("/add-artifact", newArtifact)
       .then((response) => {
-        console.log("Artifact added successfully:", response);
+        console.log("Artifact added successfully:", response.data);
       })
       .catch((error) => {
         console.error("Error adding artifact:", error);
       });
+
     // Reset form after submission
     setFormData({
       artifactName: "",

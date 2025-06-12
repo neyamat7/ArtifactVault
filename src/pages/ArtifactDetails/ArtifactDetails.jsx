@@ -16,12 +16,14 @@ import {
   HiUser,
 } from "react-icons/hi";
 import { Link, useParams } from "react-router";
-import { getArtifactById, likeAndDislikeArtifact } from "../../api/artifactApi";
 import Badge from "../../components/Badge/Badge";
 import Button from "../../components/Button/Button";
 import useAuth from "../../context/AuthContext/AuthContext";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function ArtifactDetails() {
+  const axiosSecure = useAxiosSecure();
+
   const { artifactId } = useParams();
   const [artifact, setArtifact] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
@@ -34,13 +36,16 @@ export default function ArtifactDetails() {
   useEffect(() => {
     const fetchArtifact = async () => {
       try {
-        const data = await getArtifactById(artifactId);
+        const response = await axiosSecure.get(`/artifacts/${artifactId}`);
+
+        const data = response.data;
+
         // Check if the user has liked this artifact
         const userLiked = data.likes.includes(user?.email);
         setIsLiked(userLiked);
+
         // Set the artifact data
         setArtifact(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching artifact:", error);
       } finally {
@@ -49,16 +54,21 @@ export default function ArtifactDetails() {
     };
 
     fetchArtifact();
-  }, [artifactId, isLiked, user?.email]);
+  }, [artifactId, isLiked, user?.email, axiosSecure]);
 
   const handleLike = () => {
     setIsLiked((prev) => !prev);
 
     //  like and dislike logic
     const action = isLiked ? "dislike" : "like";
-    likeAndDislikeArtifact(artifactId, action, user.email)
-      .then((data) => {
-        console.log("Artifact liked/disliked:", data);
+
+    axiosSecure
+      .patch(`/artifacts/${artifactId}`, {
+        action,
+        userEmail: user?.email,
+      })
+      .then((response) => {
+        console.log("Artifact liked/disliked:", response.data);
       })
       .catch((error) => {
         console.error("Error liking/disliking artifact:", error);

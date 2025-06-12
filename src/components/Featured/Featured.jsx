@@ -1,8 +1,8 @@
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { HiChevronRight, HiHeart } from "react-icons/hi";
 import { Link } from "react-router";
-import { getFeaturedArtifacts } from "../../api/artifactApi";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
 
@@ -14,8 +14,10 @@ export default function Featured() {
     const fetchFeaturedArtifacts = async () => {
       setIsLoading(true);
       try {
-        const data = await getFeaturedArtifacts();
-        setFeatured(data);
+        const response = await axios.get(
+          "http://localhost:3000/artifacts/featured"
+        );
+        setFeatured(response.data);
       } catch (error) {
         console.error("Error fetching featured artifacts:", error);
       } finally {

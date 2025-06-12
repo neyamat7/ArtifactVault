@@ -14,7 +14,7 @@ import {
 } from "./Dropdown.jsx";
 
 export default function Navbar() {
-  const { user, signOutUser } = useAuth();
+  const { user, signOutUser, setUser } = useAuth();
   console.log(user);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,6 +57,7 @@ export default function Navbar() {
 
     signOutUser()
       .then(() => {
+        setUser(null);
         console.log("signout success");
       })
       .catch((error) => {
