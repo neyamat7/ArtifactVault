@@ -54,11 +54,21 @@ export default function ArtifactDetails() {
     };
 
     fetchArtifact();
-  }, [artifactId, isLiked, user?.email, axiosSecure]);
+  }, [artifactId, user?.email, axiosSecure]);
 
   const handleLike = async () => {
-    //  like and dislike logic
+    const previousLikedState = isLiked;
+    const previousArtifact = artifact;
+
     const action = isLiked ? "dislike" : "like";
+
+    setIsLiked((prev) => !prev);
+    setArtifact((prev) => ({
+      ...prev,
+      likes: isLiked
+        ? prev.likes.filter((email) => email !== user?.email)
+        : [...prev.likes, user?.email],
+    }));
 
     axiosSecure
       .patch(`/artifacts/${artifactId}`, {
@@ -66,20 +76,13 @@ export default function ArtifactDetails() {
         userEmail: user?.email,
       })
       .then((response) => {
-        setIsLiked((prev) => !prev);
         console.log("Artifact liked/disliked:", response.data);
       })
       .catch((error) => {
         console.error("Error liking/disliking artifact:", error);
+        setIsLiked(previousLikedState);
+        setArtifact(previousArtifact);
       });
-
-    // await likeAndDislikeArtifact(artifactId, action, user?.email, user)
-    //   .then((response) => {
-    //     console.log("Artifact liked/disliked:", response);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error liking/disliking artifact:", error);
-    //   });
   };
 
   const handleShare = () => {
