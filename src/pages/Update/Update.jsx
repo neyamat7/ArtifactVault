@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 
 // Icons
+import { Helmet } from "react-helmet";
 import {
   HiArrowLeft,
   HiCalendar,
@@ -141,6 +142,9 @@ export default function Update() {
 
   return (
     <div className="min-h-screen bg-slate-100 relative overflow-hidden">
+      <Helmet>
+        <title>Update | ArtifactVault</title>
+      </Helmet>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400"></div>

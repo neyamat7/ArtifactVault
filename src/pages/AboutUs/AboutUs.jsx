@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 import {
   HiArrowRight,
   HiOutlineAcademicCap,
@@ -40,6 +41,9 @@ export default function AboutUs() {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <Helmet>
+        <title>About Us | ArtifactVault</title>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-amber-500 to-orange-600 text-white overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">

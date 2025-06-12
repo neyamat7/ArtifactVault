@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   HiArrowLeft,
   HiCalendar,
@@ -146,6 +147,9 @@ export default function ArtifactDetails() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
+      <Helmet>
+        <title>Details | ArtifactVault</title>
+      </Helmet>
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-800/80 to-transparent"></div>

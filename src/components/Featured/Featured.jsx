@@ -1,6 +1,7 @@
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { HiChevronRight, HiHeart } from "react-icons/hi";
 import { Link } from "react-router";
 import Button from "../Button/Button";
@@ -42,6 +43,9 @@ export default function Featured() {
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-slate-50">
+      <Helmet>
+        <title>Home | ArtifactVault</title>
+      </Helmet>
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

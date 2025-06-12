@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 // Icons
+import { Helmet } from "react-helmet";
 import {
   HiCalendar,
   HiCollection,
@@ -80,6 +81,9 @@ export default function ArtifactsPage() {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <Helmet>
+        <title>MyArtifacts | ArtifactVault</title>
+      </Helmet>
       {/* Header */}
       <div className="bg-white border-b border-slate-200 shadow-sm">
         <div className="container mx-auto px-4 py-6">

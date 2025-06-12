@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { FaGoogle } from "react-icons/fa";
 import {
   HiEye,
@@ -93,6 +94,9 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 flex items-center justify-center p-4">
+      <Helmet>
+        <title>Register | ArtifactVault</title>
+      </Helmet>
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
         {/* Left Side - Animation and Branding */}
         <motion.div

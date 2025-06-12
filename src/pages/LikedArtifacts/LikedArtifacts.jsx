@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { AiFillLike } from "react-icons/ai";
 import { HiCalendar, HiHeart, HiLocationMarker, HiUser } from "react-icons/hi";
 import { Link } from "react-router";
@@ -46,6 +47,9 @@ export default function LikedArtifacts() {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <Helmet>
+        <title>Liked Artifacts | ArtifactVault</title>
+      </Helmet>
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-500 to-orange-500 py-12 px-4">
         <div className="container mx-auto max-w-7xl">

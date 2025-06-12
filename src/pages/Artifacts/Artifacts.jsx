@@ -4,6 +4,7 @@ import { HiSearch, HiX } from "react-icons/hi";
 
 // Icons
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import Card from "../../components/Card/Card";
 import useAuth from "../../context/AuthContext/AuthContext";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -60,6 +61,9 @@ export default function Artifacts() {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <Helmet>
+        <title>All Artifacts | ArtifactVault</title>
+      </Helmet>
       {/* Header */}
       <div className="bg-white border-b border-slate-200 shadow-sm">
         <div className="container mx-auto px-4 py-8">
