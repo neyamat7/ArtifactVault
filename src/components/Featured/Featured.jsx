@@ -15,7 +15,7 @@ export default function Featured() {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:3000/artifacts/featured"
+          "https://server-alpha-livid.vercel.app/artifacts/featured"
         );
         setFeatured(response.data);
       } catch (error) {

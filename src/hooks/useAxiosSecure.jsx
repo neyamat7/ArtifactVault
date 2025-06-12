@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useAuth from "../context/AuthContext/AuthContext";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://server-alpha-livid.vercel.app",
 });
 
 const useAxiosSecure = () => {
