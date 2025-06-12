@@ -33,7 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-artifact",
-        element: <AddArtifact />,
+        element: (
+          <PrivateRoutes>
+            <AddArtifact />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "artifacts",
