@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiCollection, HiMenu, HiX } from "react-icons/hi";
-import { Link } from "react-router";
+import { IoIosLogOut } from "react-icons/io";
+import { Link, NavLink, useLocation } from "react-router";
 import useAuth from "../../context/AuthContext/AuthContext.jsx";
 import Button from "../Button/Button.jsx";
+import CrossIcon from "../Icons/CrossIcon.jsx";
 import { Avatar, AvatarImage } from "./Avatar.jsx";
 import {
   DropdownMenu,
@@ -14,41 +16,34 @@ import {
 } from "./Dropdown.jsx";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   const { user, signOutUser, setUser } = useAuth();
-  console.log(user);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const userEmail = user?.email || user?.providerData[0].email;
+  const navLinks = [
+    { id: 1, to: "/", text: "Home" },
+    { id: 2, to: "/artifacts", text: "All Artifacts" },
+    { id: 3, to: "/add-artifact", text: "Add Artifacts" },
+    { id: 4, to: "/aboutUs", text: "About Us" },
+  ];
 
   const links = (
     <>
-      <Link
-        to="/"
-        className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
-      >
-        Home
-      </Link>
-      <Link
-        to="/artifacts"
-        className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
-      >
-        All Artifacts
-      </Link>
-      <Link
-        to="/add-artifact"
-        className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
-      >
-        Add Artifacts
-      </Link>
-
-      <Link
-        to="/aboutUs"
-        className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
-      >
-        About Us
-      </Link>
+      {navLinks.map((link) => (
+        <NavLink
+          key={link.id}
+          to={link.to}
+          className={({ isActive }) =>
+            ` hover:text-amber-600 transition-colors text-sm font-medium ${
+              isActive ? "text-amber-600" : "text-slate-600"
+            }`
+          }
+        >
+          {link.text}
+        </NavLink>
+      ))}
     </>
   );
 
@@ -80,9 +75,9 @@ export default function Navbar() {
             <div className="rounded-full p-2 shadow-lg bg-gradient-to-br from-amber-600 to-amber-700">
               <HiCollection className="h-6 w-6 text-white" />
             </div>
-            <div className="hidden sm:block">
+            <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                Historical Artifacts
+                ArtifactVault
               </h1>
             </div>
           </Link>
@@ -95,12 +90,12 @@ export default function Navbar() {
           {!user ? (
             <div className="flex items-center gap-3">
               <Link to="/login">
-                <Button variant="outline" size="sm">
+                <Button
+                  variant={pathname === "/login" ? "primary" : "outline"}
+                  size="sm"
+                >
                   Login
                 </Button>
-              </Link>
-              <Link to="/register">
-                <Button size="sm">Register</Button>
               </Link>
             </div>
           ) : (
@@ -141,20 +136,28 @@ export default function Navbar() {
                       </div>
                       <DropdownMenuSeparator className="bg-amber-100" />
                       <DropdownMenuItem onClick={() => setIsOpen(false)}>
-                        <Link
+                        <NavLink
                           to="/my-artifacts"
-                          className="text-slate-700 hover:text-amber-600 w-full  py-1"
+                          className={({ isActive }) =>
+                            ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
+                              isActive ? "text-amber-600" : "text-slate-600"
+                            }`
+                          }
                         >
                           My Artifacts
-                        </Link>
+                        </NavLink>
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setIsOpen(false)}>
-                        <Link
+                        <NavLink
                           to="/liked-artifacts"
-                          className="text-slate-700 hover:text-amber-600 w-full py-1"
+                          className={({ isActive }) =>
+                            ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
+                              isActive ? "text-amber-600" : "text-slate-600"
+                            }`
+                          }
                         >
                           Liked Artifacts
-                        </Link>
+                        </NavLink>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator className="bg-amber-100" />
                       <DropdownMenuItem
@@ -162,7 +165,7 @@ export default function Navbar() {
                           handleLogOut();
                           setIsOpen(false);
                         }}
-                        className="text-red-600 hover:text-red-700 focus:text-red-700"
+                        className="text-slate-800 hover:text-red-700 focus:text-red-700"
                       >
                         Logout
                       </DropdownMenuItem>
@@ -190,12 +193,12 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Navigation */}
-      {isMenuOpen && (
+      {/* {isMenuOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="container lg:hidden py-4 border-t border-amber-200 bg-white"
+          className="container lg:hidden py-4 px-4 border-t border-amber-200 bg-white"
         >
           <nav className="flex flex-col gap-4">
             {links}
@@ -206,9 +209,6 @@ export default function Navbar() {
                   <Button variant="outline" className="w-full">
                     Login
                   </Button>
-                </Link>
-                <Link to="/register">
-                  <Button className="w-full">Register</Button>
                 </Link>
               </div>
             ) : (
@@ -225,18 +225,26 @@ export default function Navbar() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Link
+                  <NavLink
                     to="/my-artifacts"
-                    className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
+                    className={({ isActive }) =>
+                      ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
+                        isActive ? "text-amber-600" : "text-slate-600"
+                      }`
+                    }
                   >
                     My Artifacts
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/liked-artifacts"
-                    className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors"
+                    className={({ isActive }) =>
+                      ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
+                        isActive ? "text-amber-600" : "text-slate-600"
+                      }`
+                    }
                   >
                     Liked Artifacts
-                  </Link>
+                  </NavLink>
                   <Button
                     variant="ghost"
                     className="justify-start p-0 text-red-600 hover:text-red-700 hover:bg-transparent"
@@ -252,7 +260,138 @@ export default function Navbar() {
             )}
           </nav>
         </motion.div>
+      )} */}
+
+      {/* new sytles */}
+
+      {isMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => setIsMenuOpen(false)}
+          />
+
+          {/* Sidebar */}
+          <motion.div
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 left-0 h-auto max-h-screen w-80 bg-white shadow-2xl z-50 lg:hidden rounded-r-3xl"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/20">
+              <div className="flex items-center gap-3">
+                <h2 className="font-bold text-xl">ArtifactVault</h2>
+              </div>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              >
+                <CrossIcon />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col">
+              <nav className="p-6">
+                <div className="space-y-2 flex flex-col gap-5">{links}</div>
+
+                {!user ? (
+                  <div className="pt-6 border-t border-white/20">
+                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline">Login</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="mt-2 border-t border-white/20">
+                    {/* User Profile */}
+                    <div className="flex items-center gap-4 my-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                      <Avatar className="h-12 w-12 ring-2 ring-amber-400/50">
+                        <AvatarImage
+                          src={user?.photoURL}
+                          alt={user?.displayName}
+                        />
+                      </Avatar>
+                      <div className="flex-1">
+                        <p className="font-semibold text-black text-base">
+                          {user?.displayName}
+                        </p>
+                        <p className="text-sm text-amber-400 font-medium">
+                          Artifact Explorer
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <div className="space-y-2">
+                      <NavLink
+                        to="/my-artifacts"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 w-full py-1 rounded-xl font-medium transition-all duration-200 ${
+                            isActive
+                              ? "text-amber-500 borde"
+                              : "text-slate-500 hover:text-amber-600"
+                          }`
+                        }
+                      >
+                        My Artifacts
+                      </NavLink>
+
+                      <NavLink
+                        to="/liked-artifacts"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 w-full rounded-xl font-medium transition-all duration-200 py-1 ${
+                            isActive
+                              ? "text-amber-400  "
+                              : "text-slate-500  hover:text-amber-600"
+                          }`
+                        }
+                      >
+                        Liked Artifacts
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+              </nav>
+
+              {/* Footer */}
+              {user && (
+                <div className="border-t border-white/20 pl-6 pb-6">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      handleLogOut();
+                      setIsMenuOpen(false);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <IoIosLogOut className="mr-1" />
+                    Logout
+                  </Button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </>
       )}
+
+      {/* Add overlay when menu is open */}
+      {/* {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black z-40 lg:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )} */}
     </motion.header>
   );
 }

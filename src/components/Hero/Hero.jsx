@@ -4,6 +4,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../Button/Button.jsx";
 
+import { Link } from "react-router";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -11,6 +12,7 @@ import "swiper/css/pagination";
 import { slides } from "../../data/slidesData.js";
 import LeftArrow from "../Icons/LeftArrow.jsx";
 import RightArrow from "../Icons/RightArrow.jsx";
+import SliderButton from "./SliderButton.jsx";
 
 export default function Hero() {
   return (
@@ -86,16 +88,17 @@ export default function Hero() {
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ delay: 0.6 }}
                         >
-                          <Button
-                            size="lg"
-                            className="px-8 py-3 text-lg font-semibold shadow-xl hover:shadow-2xl"
-                            onClick={() => (window.location.href = slide.link)}
-                          >
-                            <span className="flex items-center">
-                              {slide.cta}
-                              <HiPlay className="ml-2 h-5 w-5" />
-                            </span>
-                          </Button>
+                          <Link to="/artifacts">
+                            <Button
+                              size="lg"
+                              className="px-8 py-3 text-lg font-semibold shadow-xl hover:shadow-2xl"
+                            >
+                              <span className="flex items-center">
+                                {slide.cta}
+                                <HiPlay className="ml-2 h-5 w-5" />
+                              </span>
+                            </Button>
+                          </Link>
                         </motion.div>
                       </motion.div>
                     </div>
@@ -107,12 +110,13 @@ export default function Hero() {
         </Swiper>
 
         {/* Navigation Arrows */}
-        <button className="hidden md:block swiper-button-prev-custom absolute left-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white transition-all duration-300 hover:bg-white/30">
+        <SliderButton classes="swiper-button-prev-custom  left-4">
           <LeftArrow />
-        </button>
-        <button className="hidden md:block swiper-button-next-custom absolute right-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white transition-all duration-300 hover:bg-white/30">
+        </SliderButton>
+
+        <SliderButton classes="swiper-button-next-custom absolute right-4">
           <RightArrow />
-        </button>
+        </SliderButton>
       </section>
     </>
   );

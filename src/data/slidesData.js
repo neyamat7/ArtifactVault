@@ -1,52 +1,51 @@
 export const slides = [
   {
     id: 1,
-    title: "Discover Ancient Mysteries",
-    subtitle: "Uncover the secrets of civilizations past",
+    title: "Echoes of Ancient Empires",
+    subtitle: "Relics That Shaped History",
     description:
-      "Explore the world's most fascinating historical artifacts and their untold stories.",
-    image: "/placeholder.svg?height=800&width=1600",
-    cta: "Start Exploring",
-    link: "/artifacts",
+      "Step into the past and uncover artifacts that tell tales of power, glory, and mystery.",
+    image: "https://i.postimg.cc/hvxw2G8H/pexels-photo-2289484-1.jpg",
+    cta: "Discover Now",
   },
   {
     id: 2,
-    title: "The Rosetta Stone",
-    subtitle: "Key to Ancient Egypt",
+    title: "The Sumerian Cuneiform Tablets",
+    subtitle: "Birth of Writing",
     description:
-      "The breakthrough that unlocked the mysteries of Egyptian hieroglyphics.",
-    image: "/placeholder.svg?height=800&width=1600",
-    cta: "Learn More",
-    link: "/artifacts/rosetta-stone",
+      "Explore the world’s earliest written records, etched in clay over 5,000 years ago.",
+    image:
+      "https://i.postimg.cc/tCBdLjrf/photo-1679383900387-5572e2e0f07a.avif",
+    cta: "Read the Past",
   },
   {
     id: 3,
-    title: "Antikythera Mechanism",
-    subtitle: "Ancient Computer",
+    title: "The Nazca Lines",
+    subtitle: "Mysteries in the Desert",
     description:
-      "A 2,000-year-old analog computer that predicted astronomical positions.",
-    image: "/placeholder.svg?height=800&width=1600",
-    cta: "View Details",
-    link: "/artifacts/antikythera-mechanism",
+      "Marvel at massive geoglyphs carved into Peru’s sands, visible only from the skies.",
+    image:
+      "https://i.postimg.cc/WzWDf22w/premium-photo-1713089907875-87367a992698-1.avif",
+    cta: "Unravel Secrets",
   },
   {
     id: 4,
-    title: "Contribute to History",
-    subtitle: "Share Your Discoveries",
+    title: "The Terracotta Army",
+    subtitle: "Guardians of Eternity",
     description:
-      "Join our community of researchers and history enthusiasts worldwide.",
-    image: "/placeholder.svg?height=800&width=1600",
-    cta: "Add Artifact",
-    link: "/add-artifact",
+      "Marvel at the silent sentinels of China's first emperor, crafted over 2,200 years ago.",
+    image:
+      "https://i.postimg.cc/jdB2W3C2/photo-1623775729370-5ae73734b870.avif",
+    cta: "Explore Now",
   },
   {
     id: 5,
-    title: "Interactive Timeline",
-    subtitle: "Journey Through Time",
+    title: "The Mask of Tutankhamun",
+    subtitle: "Golden Legacy of a Pharaoh",
     description:
-      "Navigate through millennia of human history and archaeological discoveries.",
-    image: "/placeholder.svg?height=800&width=1600",
-    cta: "Explore Timeline",
-    link: "/timeline",
+      "Behold the iconic golden mask that embodies the splendor of ancient Egyptian royalty.",
+    image:
+      "https://i.postimg.cc/26Xms3Zy/photo-1739323147345-938763189f9f.avif",
+    cta: "See the Glory",
   },
 ];

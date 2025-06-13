@@ -17,7 +17,7 @@ const errorMsg = (text) => (
 export const validateForm = (formData, setErrors) => {
   const { name, email, password, confirmPassword, photoURL, terms } = formData;
 
-  if (!name) {
+  if (!name.trim()) {
     setErrors((prev) => ({
       ...prev,
       name: errorMsg("Required!"),
@@ -33,32 +33,10 @@ export const validateForm = (formData, setErrors) => {
     return false;
   }
 
-  if (!password) {
+  if (!photoURL) {
     setErrors((prev) => ({
       ...prev,
-      password: errorMsg("Please provide your Password!"),
-    }));
-    return false;
-  } else if (!charLengthCheck.test(password)) {
-    setErrors((prev) => ({
-      ...prev,
-      password: errorMsg("Password must be at least 6 characters long!"),
-    }));
-    return false;
-  } else if (!uppercaseCheck.test(password)) {
-    setErrors((prev) => ({
-      ...prev,
-      password: errorMsg(
-        "Password must contain at least one uppercase letter!"
-      ),
-    }));
-    return false;
-  } else if (!lowercaseCheck.test(password)) {
-    setErrors((prev) => ({
-      ...prev,
-      password: errorMsg(
-        "Password must contain at least one lowercase letter!"
-      ),
+      photoURL: errorMsg("Oops! Don’t forget to add your photo URL!"),
     }));
     return false;
   }
@@ -107,14 +85,6 @@ export const validateForm = (formData, setErrors) => {
     return false;
   }
 
-  if (!photoURL) {
-    setErrors((prev) => ({
-      ...prev,
-      photoURL: errorMsg("Oops! Don’t forget to add your photo URL!"),
-    }));
-    return false;
-  }
-
   if (!terms) {
     setErrors((prev) => ({
       ...prev,
@@ -123,5 +93,92 @@ export const validateForm = (formData, setErrors) => {
     return false;
   }
 
+  return true;
+};
+
+export const validateAddArtifactForm = (formData, setErrors) => {
+  const {
+    artifactName,
+    artifactImage,
+    artifactType,
+    historicalContext,
+    shortDescription,
+    createdAt,
+    discoveredAt,
+    discoveredBy,
+    presentLocation,
+  } = formData;
+
+  if (!artifactName.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      artifactName: errorMsg("Please enter the artifact's name"),
+    }));
+    return false;
+  }
+
+  if (!artifactImage.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      artifactImage: errorMsg("Please upload an image of the artifact"),
+    }));
+    return false;
+  }
+
+  if (!artifactType.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      artifactType: errorMsg("Please select the artifact type"),
+    }));
+    return false;
+  }
+
+  if (!historicalContext.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      historicalContext: errorMsg("Please provide historical context"),
+    }));
+    return false;
+  }
+
+  if (!shortDescription.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      shortDescription: errorMsg("Please write a brief description"),
+    }));
+    return false;
+  }
+
+  if (!createdAt.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      createdAt: errorMsg("Please estimate when this was created"),
+    }));
+    return false;
+  }
+
+  if (!discoveredAt.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      discoveredAt: errorMsg("Please provide discovery date"),
+    }));
+    return false;
+  }
+
+  if (!discoveredBy.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      discoveredBy: errorMsg("Please name the discoverer"),
+    }));
+    return false;
+  }
+
+  if (!presentLocation.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      presentLocation: errorMsg("Please specify current location"),
+    }));
+    return false;
+  }
   return true;
 };

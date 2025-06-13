@@ -19,13 +19,17 @@ import useAuth from "../../context/AuthContext/AuthContext";
 import { artifactTypes } from "../../data/artifactTypes";
 
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import artifactAnimationData from "../../assets/lotties/addArtifact.json";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { validateAddArtifactForm } from "../../utils/Validation";
 
 export default function AddArtifact() {
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  console.log("User:", user);
   const [formData, setFormData] = useState({
     artifactName: "",
     artifactImage: "",
@@ -40,7 +44,18 @@ export default function AddArtifact() {
     adderEmail: user?.email || user?.providerData[0]?.email,
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    artifactName: "",
+    artifactImage: "",
+    artifactType: "",
+    historicalContext: "",
+    shortDescription: "",
+    createdAt: "",
+    discoveredAt: "",
+    discoveredBy: "",
+    presentLocation: "",
+  });
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -84,6 +99,10 @@ export default function AddArtifact() {
     e.preventDefault();
     // Form submission logic would go here
 
+    const isValid = validateAddArtifactForm(formData, setErrors);
+
+    if (!isValid) return;
+
     const newArtifact = {
       ...formData,
       likes: [],
@@ -91,10 +110,12 @@ export default function AddArtifact() {
 
     axiosSecure
       .post("/add-artifact", newArtifact)
-      .then((response) => {
-        console.log("Artifact added successfully:", response.data);
+      .then((res) => {
+        toast.success("New Artifact added successfully!");
+        navigate("/my-artifacts");
       })
       .catch((error) => {
+        toast.error("Failed to add new artifact!");
         console.error("Error adding artifact:", error);
       });
 
@@ -112,8 +133,6 @@ export default function AddArtifact() {
       adderName: user?.displayName,
       adderEmail: user?.email || user?.providerData[0]?.email,
     });
-    setErrors({});
-    console.log("Add artifact:", formData);
   };
 
   return (
@@ -218,15 +237,7 @@ export default function AddArtifact() {
                       placeholder="Enter artifact name"
                     />
                   </div>
-                  {errors.artifactName && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-2 text-sm text-red-600"
-                    >
-                      {errors.artifactName}
-                    </motion.p>
-                  )}
+                  {errors.artifactName && errors.artifactName}
                 </div>
 
                 {/* Artifact Image */}
@@ -255,15 +266,7 @@ export default function AddArtifact() {
                       placeholder="https://example.com/artifact-image.jpg"
                     />
                   </div>
-                  {errors.artifactImage && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-2 text-sm text-red-600"
-                    >
-                      {errors.artifactImage}
-                    </motion.p>
-                  )}
+                  {errors.artifactImage && errors.artifactImage}
                 </div>
 
                 {/* Artifact Type Dropdown */}
@@ -324,15 +327,7 @@ export default function AddArtifact() {
                       </motion.div>
                     )}
                   </div>
-                  {errors.artifactType && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-2 text-sm text-red-600"
-                    >
-                      {errors.artifactType}
-                    </motion.p>
-                  )}
+                  {errors.artifactType && errors.artifactType}
                 </div>
 
                 {/* Historical Context */}
@@ -393,15 +388,7 @@ export default function AddArtifact() {
                       placeholder="Brief description of the artifact..."
                     />
                   </div>
-                  {errors.shortDescription && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-2 text-sm text-red-600"
-                    >
-                      {errors.shortDescription}
-                    </motion.p>
-                  )}
+                  {errors.shortDescription && errors.shortDescription}
                 </div>
 
                 {/* Created At & Discovered At Row */}
@@ -427,6 +414,7 @@ export default function AddArtifact() {
                         placeholder="e.g., 100 BC"
                       />
                     </div>
+                    {errors.createdAt && errors.createdAt}
                   </div>
 
                   <div>
@@ -450,6 +438,7 @@ export default function AddArtifact() {
                         placeholder="e.g., 1799"
                       />
                     </div>
+                    {errors.discoveredAt && errors.discoveredAt}
                   </div>
                 </div>
 
@@ -475,6 +464,7 @@ export default function AddArtifact() {
                       placeholder="Name of discoverer or expedition"
                     />
                   </div>
+                  {errors.discoveredBy && errors.discoveredBy}
                 </div>
 
                 {/* Present Location */}
@@ -499,6 +489,7 @@ export default function AddArtifact() {
                       placeholder="Current museum or location"
                     />
                   </div>
+                  {errors.presentLocation && errors.presentLocation}
                 </div>
 
                 {/* Adder Information (Read-only) */}

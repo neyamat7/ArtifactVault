@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useState } from "react";
-import { Helmet } from "react-helmet";
 import { FaGoogle } from "react-icons/fa";
-import { HiEye, HiEyeOff, HiLockClosed, HiMail } from "react-icons/hi";
-import { Link, useNavigate } from "react-router";
+import {
+  HiEye,
+  HiEyeOff,
+  HiLockClosed,
+  HiMail,
+  HiOutlineCollection,
+} from "react-icons/hi";
+import { Link, useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import loginLottie from "../../assets/lotties/login.json";
 import Button from "../../components/Button/Button";
 import useAuth from "../../context/AuthContext/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -39,9 +46,8 @@ export default function Login() {
 
     signInUser(email, password)
       .then((res) => {
-        console.log("login success");
-        // navigate(location?.state || "/");
-        navigate("/");
+        toast.success("Login successful! Welcome back.");
+        navigate(location?.state || "/");
       })
       .catch((err) => {
         setLoading(false);
@@ -53,22 +59,17 @@ export default function Login() {
   const handleGoogleLogin = () => {
     googleSignIn()
       .then((result) => {
-        console.log("google login success");
-        // navigate(location?.state || "/");
-        navigate("/");
+        toast.success("Login successful! Welcome back.");
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         setErrors(error?.message);
       });
-
-    console.log("Google login attempt");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 flex items-center justify-center p-4">
-      <Helmet>
-        <title>Login | ArtifactVault</title>
-      </Helmet>
+      <title>Login | ArtifactVault</title>
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
         {/* Left Side - Animation and Branding */}
         <motion.div
@@ -95,7 +96,7 @@ export default function Login() {
               Welcome Back to
             </h1>
             <h2 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-amber-700 bg-clip-text text-transparent mb-6">
-              Historical Artifacts Tracker
+              ArtifactVault
             </h2>
             <p className="text-lg text-slate-600 max-w-md leading-relaxed">
               Continue your journey through history. Discover, catalog, and
@@ -116,16 +117,10 @@ export default function Login() {
             <div className="lg:hidden text-center mb-8">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="rounded-full p-2 shadow-lg bg-gradient-to-br from-amber-600 to-amber-700">
-                  <svg
-                    className="h-6 w-6 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <HiOutlineCollection color="white" />
                 </div>
                 <h1 className="text-xl font-bold text-slate-800">
-                  Historical Artifacts
+                  ArtifactVault
                 </h1>
               </div>
             </div>
@@ -211,21 +206,7 @@ export default function Login() {
               </div>
 
               {/* Forgot Password Link */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-slate-300 rounded"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-slate-700"
-                  >
-                    Remember me
-                  </label>
-                </div>
+              <div className="flex items-center justify-end">
                 <Link
                   to="/forgot-password"
                   className="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors"
@@ -273,7 +254,7 @@ export default function Login() {
                     to="/register"
                     className="text-amber-600 hover:text-amber-700 font-semibold transition-colors"
                   >
-                    Create one here
+                    Register here
                   </Link>
                 </p>
               </div>
@@ -284,16 +265,13 @@ export default function Login() {
           <div className="text-center mt-8">
             <p className="text-sm text-slate-500">
               By signing in, you agree to our{" "}
-              <Link to="/terms" className="text-amber-600 hover:text-amber-700">
+              <span className="text-amber-600 hover:text-amber-700">
                 Terms of Service
-              </Link>{" "}
+              </span>{" "}
               and{" "}
-              <Link
-                to="/privacy"
-                className="text-amber-600 hover:text-amber-700"
-              >
+              <span className="text-amber-600 hover:text-amber-700">
                 Privacy Policy
-              </Link>
+              </span>
             </p>
           </div>
         </motion.div>
