@@ -5,7 +5,7 @@ export default function Button({
   size = "md",
   className = "",
   disabled = false,
-  asChild = false,
+
   ...props
 }) {
   const baseClasses =
@@ -32,14 +32,6 @@ export default function Button({
   const disabledClasses = disabled ? "opacity-50 cursor-not-allowed" : "";
 
   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${disabledClasses} ${className}`;
-
-  if (asChild && children?.type === "a") {
-    return (
-      <a {...children.props} className={classes}>
-        {children.props.children}
-      </a>
-    );
-  }
 
   return (
     <button

@@ -19,7 +19,6 @@ import useAuth from "../../context/AuthContext/AuthContext";
 import { artifactTypes } from "../../data/artifactTypes";
 
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import artifactAnimationData from "../../assets/lotties/addArtifact.json";
@@ -137,9 +136,8 @@ export default function AddArtifact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100">
-      <Helmet>
-        <title>Add | ArtifactVault</title>
-      </Helmet>
+      <title>Add | ArtifactVault</title>
+
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
           {/* Left Side - Animation and Info */}

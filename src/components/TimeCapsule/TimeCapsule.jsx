@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 
 export default function TimeCapsule() {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
+  console.log(selectedPeriod);
 
   return (
     <section className="py-20 text-white bg-gradient-to-br from-slate-900 to-slate-800">
@@ -40,19 +41,13 @@ export default function TimeCapsule() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div
-                  className={`bg-white rounded-lg border border-slate-200 shadow-sm cursor-pointer transition-all duration-300 border-0 ${
+                  className={`rounded-lg border border-slate-200 shadow-sm cursor-pointer transition-all duration-300 ${
                     selectedPeriod === index ? "shadow-xl" : ""
+                  }  ${
+                    selectedPeriod === index
+                      ? "bg-amber-500/20 border-amber-500/50 shadow-xl"
+                      : "bg-slate-800/50 border-transparent"
                   }`}
-                  style={{
-                    backgroundColor:
-                      selectedPeriod === index
-                        ? "rgba(217, 119, 6, 0.2)"
-                        : "rgba(30, 41, 59, 0.5)",
-                    border:
-                      selectedPeriod === index
-                        ? "1px solid rgba(217, 119, 6, 0.5)"
-                        : "1px solid transparent",
-                  }}
                   onClick={() => setSelectedPeriod(index)}
                 >
                   <div className="p-6">

@@ -1,49 +1,16 @@
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
-import {
-  HiArrowRight,
-  HiOutlineAcademicCap,
-  HiOutlineGlobe,
-  HiOutlineHeart,
-  HiOutlineLightBulb,
-  HiOutlineMail,
-  HiOutlineUserGroup,
-} from "react-icons/hi";
+import { HiArrowRight } from "react-icons/hi";
 import { Link } from "react-router";
+import involvementData from "../../data/involvementData";
+import { missions } from "../../data/missionData";
+import statsData from "../../data/statsData";
+import { teamMembers } from "../../data/teamMembers";
 
 export default function AboutUs() {
-  const teamMembers = [
-    {
-      name: "Dr. Sarah Johnson",
-      role: "Founder & Lead Archaeologist",
-      image: "/placeholder.svg?height=300&width=300",
-      bio: "Ph.D in Archaeology with over 15 years of experience in field research and artifact preservation.",
-    },
-    {
-      name: "Michael Chen",
-      role: "Digital Curator",
-      image: "/placeholder.svg?height=300&width=300",
-      bio: "Specializes in digital preservation and creating immersive experiences for historical artifacts.",
-    },
-    {
-      name: "Amara Okafor",
-      role: "Historical Researcher",
-      image: "/placeholder.svg?height=300&width=300",
-      bio: "Expert in ancient civilizations with a focus on cultural context and artifact significance.",
-    },
-    {
-      name: "James Rodriguez",
-      role: "Technology Director",
-      image: "/placeholder.svg?height=300&width=300",
-      bio: "Leads our digital initiatives and ensures artifacts are presented with cutting-edge technology.",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-slate-100">
-      <Helmet>
-        <title>About Us | ArtifactVault</title>
-      </Helmet>
+      <title>About Us | ArtifactVault</title>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-amber-500 to-orange-600 text-white overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
@@ -125,81 +92,23 @@ export default function AboutUs() {
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
-              >
-                <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
-                  <HiOutlineGlobe className="h-7 w-7 text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">
-                  Global Preservation
-                </h3>
-                <p className="text-slate-600">
-                  We work with museums and institutions worldwide to document
-                  artifacts that tell the story of human civilization, ensuring
-                  they're preserved digitally for future generations.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
-              >
-                <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
-                  <HiOutlineLightBulb className="h-7 w-7 text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">
-                  Educational Access
-                </h3>
-                <p className="text-slate-600">
-                  We believe knowledge should be accessible to all. Our platform
-                  provides detailed information about historical artifacts to
-                  students, researchers, and curious minds everywhere.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
-              >
-                <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
-                  <HiOutlineHeart className="h-7 w-7 text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">
-                  Cultural Appreciation
-                </h3>
-                <p className="text-slate-600">
-                  By showcasing artifacts from diverse cultures and time
-                  periods, we foster greater understanding and appreciation of
-                  our shared human heritage and unique cultural differences.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
-              >
-                <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
-                  <HiOutlineAcademicCap className="h-7 w-7 text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">
-                  Research Support
-                </h3>
-                <p className="text-slate-600">
-                  Our detailed documentation and high-quality imagery support
-                  academic research, enabling scholars to study artifacts
-                  remotely and make new historical connections.
-                </p>
-              </motion.div>
+              {missions.map((mission) => (
+                <motion.div
+                  key={mission.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
+                >
+                  <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                    <mission.icon className="h-7 w-7 text-amber-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-3">
+                    {mission.title}
+                  </h3>
+                  <p className="text-slate-600">{mission.description}</p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -255,14 +164,14 @@ export default function AboutUs() {
               >
                 <div className="aspect-square bg-amber-100 rounded-lg overflow-hidden">
                   <img
-                    src="/placeholder.svg?height=600&width=600"
+                    src="https://i.postimg.cc/bJqWM9Jp/premium-photo-1718146018236-d2a279125136-1.avif"
                     alt="Team at work"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-2/3 aspect-video bg-orange-100 rounded-lg overflow-hidden border-4 border-white shadow-xl">
                   <img
-                    src="/placeholder.svg?height=300&width=500"
+                    src="https://i.postimg.cc/26j9Tjc5/photo-1693328397193-b858f1b38c60.avif"
                     alt="Artifact documentation"
                     className="w-full h-full object-cover"
                   />
@@ -373,32 +282,13 @@ export default function AboutUs() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="grid md:grid-cols-3 gap-6 mb-12"
             >
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                <HiOutlineUserGroup className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
-                <h3 className="text-xl font-bold mb-2">Volunteer</h3>
-                <p className="text-amber-100">
-                  Join our team of volunteers helping with research,
-                  documentation, and community outreach.
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                <HiOutlineAcademicCap className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
-                <h3 className="text-xl font-bold mb-2">Contribute</h3>
-                <p className="text-amber-100">
-                  Share your expertise or submit information about artifacts in
-                  your region.
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                <HiOutlineMail className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
-                <h3 className="text-xl font-bold mb-2">Partner</h3>
-                <p className="text-amber-100">
-                  Museums and institutions can partner with us to document their
-                  collections.
-                </p>
-              </div>
+              {involvementData.map((data) => (
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
+                  <data.icon className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
+                  <h3 className="text-xl font-bold mb-2">{data.title}</h3>
+                  <p className="text-amber-100">{data.description}</p>
+                </div>
+              ))}
             </motion.div>
 
             <motion.div
@@ -406,10 +296,7 @@ export default function AboutUs() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <Link
-                to="/contact"
-                className="inline-flex items-center bg-white text-amber-600 px-8 py-4 rounded-lg font-semibold hover:bg-amber-50 transition-colors"
-              >
+              <Link className="inline-flex items-center bg-white text-amber-600 px-8 py-4 rounded-lg font-semibold hover:bg-amber-50 transition-colors">
                 Get In Touch
                 <HiArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -429,42 +316,17 @@ export default function AboutUs() {
             className="max-w-6xl mx-auto"
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <div className="text-4xl font-bold text-amber-600 mb-2">
-                  10,000+
+              {statsData.map((stat) => (
+                <div>
+                  <div
+                    key={stat.id}
+                    className="text-4xl font-bold text-amber-600 mb-2"
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-slate-600">{stat.label}</div>
                 </div>
-                <div className="text-slate-600">Artifacts Documented</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <div className="text-4xl font-bold text-amber-600 mb-2">42</div>
-                <div className="text-slate-600">Partner Museums</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <div className="text-4xl font-bold text-amber-600 mb-2">6</div>
-                <div className="text-slate-600">Continents</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                <div className="text-4xl font-bold text-amber-600 mb-2">
-                  1.2M
-                </div>
-                <div className="text-slate-600">Monthly Visitors</div>
-              </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>

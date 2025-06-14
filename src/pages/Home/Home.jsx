@@ -7,6 +7,7 @@ import TimeCapsule from "../../components/TimeCapsule/TimeCapsule";
 const Home = () => {
   return (
     <>
+      <title>Home | ArtifactVault</title>
       <Hero />
       <Featured />
       <TimeCapsule />

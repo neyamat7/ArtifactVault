@@ -38,23 +38,4 @@ export const timelineData = [
     color: "from-red-400 to-red-600",
     icon: "⚔️",
   },
-  {
-    period: "800 CE",
-    civilization: "Viking Age",
-    title: "Norse Expansion",
-    description: "Vikings explore, trade, and settle across Europe and beyond.",
-    artifacts: 78,
-    color: "from-slate-400 to-slate-600",
-    icon: "🛡️",
-  },
-  {
-    period: "1400 CE",
-    civilization: "Renaissance",
-    title: "Cultural Rebirth",
-    description:
-      "Art, science, and exploration flourish in Renaissance Europe.",
-    artifacts: 134,
-    color: "from-purple-400 to-purple-600",
-    icon: "🎨",
-  },
 ];

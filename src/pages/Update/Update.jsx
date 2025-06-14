@@ -1,44 +1,28 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 // Icons
-import { Helmet } from "react-helmet";
 import {
   HiArrowLeft,
   HiCalendar,
-  HiCheckCircle,
   HiChevronDown,
   HiCollection,
   HiDocumentText,
-  HiExclamationCircle,
   HiLocationMarker,
   HiMail,
   HiPencil,
-  HiRefresh,
   HiSave,
   HiTag,
   HiUser,
 } from "react-icons/hi";
+import { toast } from "react-toastify";
+import Loading from "../../components/Loading/Loading";
+import { artifactTypes } from "../../data/artifactTypes";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-
-const artifactTypes = [
-  "Tools",
-  "Weapons",
-  "Documents",
-  "Writings",
-  "Pottery",
-  "Jewelry",
-  "Coins",
-  "Sculptures",
-  "Religious Items",
-  "Household Items",
-  "Art",
-  "Textiles",
-  "Other",
-];
 
 export default function Update() {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { artifactId } = useParams();
 
@@ -58,15 +42,12 @@ export default function Update() {
 
   const [errors, setErrors] = useState({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Simulate loading existing data
   useEffect(() => {
     const fetchExistingArtifact = async () => {
       try {
-        setIsLoading(true);
         const response = await axiosSecure.get(`/artifacts/${artifactId}`);
         setFormData(response.data);
       } catch (error) {
@@ -110,41 +91,28 @@ export default function Update() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSaving(true);
-    setSaveStatus(null);
 
     const { _id, ...updatedFormData } = formData;
 
     // update existing artifact to the database
     try {
       axiosSecure.put(`/artifacts/${artifactId}`, updatedFormData);
-
-      setSaveStatus("success");
-      console.log("Artifact updated successfully:", updatedFormData);
+      toast.success("Artifact updated successfully");
+      navigate("/my-artifacts");
     } catch (error) {
-      setSaveStatus("error");
+      toast.error("Error updating artifact!");
       console.error("Error updating artifact:", error);
-    } finally {
-      setSaving(false);
     }
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-slate-200 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-600/30 border-t-amber-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-700 text-xl">Loading artifact data...</p>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
     <div className="min-h-screen bg-slate-100 relative overflow-hidden">
-      <Helmet>
-        <title>Update | ArtifactVault</title>
-      </Helmet>
+      <title>Update | ArtifactVault</title>
+
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400"></div>
@@ -156,17 +124,19 @@ export default function Update() {
       <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
-          <Link
-            to={`/artifacts/${formData.id}`}
-            className="inline-flex items-center text-amber-600 hover:text-amber-700 transition-colors group mb-6"
-          >
-            <HiArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Artifact Details
-          </Link>
+          <div className="flex flex-col items-center justify-center gap-3 min-[500px]:flex-row">
+            <Link
+              to={`/artifacts/${formData._id}`}
+              className="inline-flex items-center text-amber-600 hover:text-amber-700 transition-colors group mb-6"
+            >
+              <HiArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Artifact Details
+            </Link>
 
-          <div className="inline-flex items-center rounded-md px-4 py-2 text-white text-sm font-medium mb-6 bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg shadow-orange-500/20">
-            <HiPencil className="mr-2 h-4 w-4" />
-            Update Artifact
+            <div className="inline-flex items-center rounded-md px-4 py-2 text-white text-sm font-medium mb-6 bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg shadow-orange-500/20">
+              <HiPencil className="mr-2 h-4 w-4" />
+              Update Artifact
+            </div>
           </div>
 
           <h1 className="text-5xl md:text-6xl font-bold mb-4 text-slate-800">
@@ -445,57 +415,16 @@ export default function Update() {
               {/* Save Actions */}
               <div className="flex justify-end items-center gap-4 pt-6">
                 <button
-                  type="button"
-                  className="bg-transparent hover:bg-slate-100 text-slate-600 border border-slate-400 px-6 py-3 rounded transition-colors flex items-center"
-                >
-                  <HiRefresh className="mr-2 h-4 w-4" />
-                  Reset
-                </button>
-                <button
                   type="submit"
-                  disabled={isSaving}
                   className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded font-semibold shadow-lg disabled:opacity-50 transition-all flex items-center"
                 >
-                  {isSaving ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <HiSave className="mr-2 h-4 w-4" />
-                      Save Changes
-                    </>
-                  )}
+                  <HiSave className="mr-2 h-4 w-4" />
+                  Save Changes
                 </button>
               </div>
             </div>
           </form>
         </div>
-
-        {/* Save Status Notification */}
-        {saveStatus && (
-          <div className="fixed bottom-8 right-8 z-50 animate-fade-in-up">
-            <div
-              className={`flex items-center gap-3 px-6 py-4 rounded shadow-lg ${
-                saveStatus === "success"
-                  ? "bg-green-600 text-white"
-                  : "bg-red-600 text-white"
-              }`}
-            >
-              {saveStatus === "success" ? (
-                <HiCheckCircle className="h-6 w-6 text-green-400" />
-              ) : (
-                <HiExclamationCircle className="h-6 w-6 text-red-400" />
-              )}
-              <span className="font-medium">
-                {saveStatus === "success"
-                  ? "Artifact updated successfully!"
-                  : "Failed to update artifact"}
-              </span>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

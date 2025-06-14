@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { HiCollection, HiMenu, HiX } from "react-icons/hi";
+import { HiMenu, HiX } from "react-icons/hi";
 import { IoIosLogOut } from "react-icons/io";
 import { Link, NavLink, useLocation } from "react-router";
 import useAuth from "../../context/AuthContext/AuthContext.jsx";
 import Button from "../Button/Button.jsx";
 import CrossIcon from "../Icons/CrossIcon.jsx";
+import Logo from "../Logo/Logo.jsx";
 import { Avatar, AvatarImage } from "./Avatar.jsx";
 import {
   DropdownMenu,
@@ -71,16 +72,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.05 }}
           className="flex items-center gap-3"
         >
-          <Link to="/" className="flex items-center gap-3">
-            <div className="rounded-full p-2 shadow-lg bg-gradient-to-br from-amber-600 to-amber-700">
-              <HiCollection className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                ArtifactVault
-              </h1>
-            </div>
-          </Link>
+          <Logo />
         </motion.div>
 
         {/* Desktop Navigation */}
@@ -277,14 +269,14 @@ export default function Navbar() {
 
           {/* Sidebar */}
           <motion.div
-            initial={{ x: "-100%", opacity: 0 }}
+            initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
+            exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 left-0 h-auto max-h-screen w-80 bg-white shadow-2xl z-50 lg:hidden rounded-r-3xl"
+            className="fixed top-0 right-0 h-auto max-h-screen w-80 bg-white shadow-2xl z-50 lg:hidden rounded-l-3xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/20">
+            <div className="flex items-center justify-between p-6 py-4 border-b border-black/20">
               <div className="flex items-center gap-3">
                 <h2 className="font-bold text-xl">ArtifactVault</h2>
               </div>

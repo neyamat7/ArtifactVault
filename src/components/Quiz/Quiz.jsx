@@ -1,41 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { HiAcademicCap, HiCheck, HiRefresh, HiStar, HiX } from "react-icons/hi";
+import { quizQuestions } from "../../data/quizData";
 import Button from "../Button/Button";
 import Progress from "./Progress";
-
-const quizQuestions = [
-  {
-    id: 1,
-    question: "Which ancient artifact helped decode Egyptian hieroglyphics?",
-    options: [
-      "Rosetta Stone",
-      "Dead Sea Scrolls",
-      "Nebra Sky Disc",
-      "Antikythera Mechanism",
-    ],
-    correct: 0,
-    explanation:
-      "The Rosetta Stone, discovered in 1799, contained the same text in three scripts, allowing scholars to decode hieroglyphics.",
-  },
-  {
-    id: 2,
-    question:
-      "The Antikythera Mechanism is often called the world's first what?",
-    options: ["Clock", "Computer", "Calendar", "Compass"],
-    correct: 1,
-    explanation:
-      "The Antikythera Mechanism is considered the world's first analog computer, used to predict astronomical positions.",
-  },
-  {
-    id: 3,
-    question: "In which country were the Terracotta Army warriors discovered?",
-    options: ["Japan", "India", "China", "Mongolia"],
-    correct: 2,
-    explanation:
-      "The Terracotta Army was discovered in China in 1974, near the tomb of Emperor Qin Shi Huang.",
-  },
-];
 
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -157,7 +125,7 @@ export default function Quiz() {
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm border-0 shadow-xl bg-white">
+          <div className="bg-white rounded-lg border border-slate-200 shadow-xl">
             <div className="p-6 pb-4">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm font-medium text-slate-600">

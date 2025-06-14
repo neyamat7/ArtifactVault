@@ -39,7 +39,7 @@ const Card = ({ artifact }) => {
         <Link to={`/artifacts/${artifact._id}`} className="w-full">
           <Button
             variant="secondary"
-            className="w-full group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-amber-700 transition-all duration-300"
+            className="w-full group-hover:bg-gradient-to-r group-hover:from-amber-600 group-hover:to-amber-700 transition-all duration-300 cursor-pointer"
           >
             <HiEye className="mr-2 h-4 w-4" />
             View Details

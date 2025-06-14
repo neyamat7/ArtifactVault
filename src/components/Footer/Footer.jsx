@@ -1,19 +1,9 @@
 import { motion } from "framer-motion";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
-import {
-  HiCollection,
-  HiLocationMarker,
-  HiMail,
-  HiPhone,
-} from "react-icons/hi";
+import { HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
 import { Link } from "react-router";
+import { socialLinks } from "../../data/SocialLinks";
 import Button from "../Button/Button";
+import Logo from "../Logo/Logo";
 
 export default function Footer() {
   return (
@@ -27,31 +17,18 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-1"
           >
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="rounded-full p-2 shadow-lg bg-gradient-to-br from-amber-600 to-amber-700">
-                <HiCollection className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">Historical Artifacts</h3>
-                <p className="text-sm text-slate-400 -mt-1">Tracker</p>
-              </div>
-            </Link>
-            <p className="text-slate-300 mb-6 leading-relaxed">
+            <Logo privateClasses="text-white" />
+            <p className="text-slate-300 my-6 leading-relaxed">
               Preserving history through digital cataloging and community
               collaboration. Discover, share, and explore the world's most
               fascinating artifacts.
             </p>
             <div className="flex space-x-4">
-              {[
-                { icon: FaFacebook, href: "#", label: "Facebook" },
-                { icon: FaTwitter, href: "#", label: "Twitter" },
-                { icon: FaInstagram, href: "#", label: "Instagram" },
-                { icon: FaYoutube, href: "#", label: "YouTube" },
-                { icon: FaLinkedin, href: "#", label: "LinkedIn" },
-              ].map((social, index) => (
+              {socialLinks.map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
                   whileHover={{ scale: 1.2, y: -2 }}
                   className="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-600 flex items-center justify-center transition-colors duration-300"
                   aria-label={social.label}
@@ -74,11 +51,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "All Artifacts", to: "/artifacts" },
-                { name: "Featured Collection", to: "/featured" },
-                { name: "Timeline Explorer", to: "/timeline" },
-                { name: "Mystery Artifacts", to: "/mysteries" },
-                { name: "Discovery Map", to: "/map" },
-                { name: "Categories", to: "/categories" },
+                { name: "Featured Collection", to: "/" },
+                { name: "Timeline Explorer", to: "/" },
+                { name: "Mystery Artifacts", to: "/" },
+                { name: "Discovery Map", to: "/" },
+                { name: "Categories", to: "/" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -106,11 +83,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "Add Artifact", to: "/add-artifact" },
-                { name: "Discussion Forum", to: "/forum" },
-                { name: "Research Papers", to: "/research" },
-                { name: "Events & Webinars", to: "/events" },
-                { name: "Blog", to: "/blog" },
-                { name: "Newsletter", to: "/newsletter" },
+                { name: "Discussion Forum", to: "/" },
+                { name: "Research Papers", to: "/" },
+                { name: "Events & Webinars", to: "/" },
+                { name: "Blog", to: "/" },
+                { name: "Newsletter", to: "/" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -139,22 +116,22 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <HiMail className="h-5 w-5 text-amber-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-300">info@historicalartifacts.com</p>
+                  <p className="text-slate-300">info@artifactVault.com</p>
                   <p className="text-slate-400 text-sm">General inquiries</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <HiPhone className="h-5 w-5 text-amber-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-300">+1 (555) 123-4567</p>
+                  <p className="text-slate-300">+88 01316-350853</p>
                   <p className="text-slate-400 text-sm">Support hotline</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <HiLocationMarker className="h-5 w-5 text-amber-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-300">123 History Lane</p>
-                  <p className="text-slate-400 text-sm">New York, NY 10001</p>
+                  <p className="text-slate-300">House 12, Road 5</p>
+                  <p className="text-slate-400 text-sm">Mirpur, Dhaka 1216</p>
                 </div>
               </div>
             </div>
@@ -181,30 +158,29 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm">
-              © {new Date().getFullYear()} Historical Artifacts Tracker. All
-              rights reserved.
+              © {new Date().getFullYear()} ArtifactVault. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
               <Link
-                to="/privacy"
+                to="/"
                 className="text-slate-400 hover:text-amber-400 transition-colors"
               >
                 Privacy Policy
               </Link>
               <Link
-                to="/terms"
+                to="/"
                 className="text-slate-400 hover:text-amber-400 transition-colors"
               >
                 Terms of Service
               </Link>
               <Link
-                to="/cookies"
+                to="/"
                 className="text-slate-400 hover:text-amber-400 transition-colors"
               >
                 Cookie Policy
               </Link>
               <Link
-                to="/accessibility"
+                to="/"
                 className="text-slate-400 hover:text-amber-400 transition-colors"
               >
                 Accessibility

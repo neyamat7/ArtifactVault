@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 // Icons
-import { Helmet } from "react-helmet";
+import { AiFillLike } from "react-icons/ai";
 import {
   HiCalendar,
   HiCollection,
@@ -12,10 +12,12 @@ import {
   HiTrash,
 } from "react-icons/hi";
 import Swal from "sweetalert2";
+import Loading from "../../components/Loading/Loading";
 import useAuth from "../../context/AuthContext/AuthContext";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function ArtifactsPage() {
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,6 @@ export default function ArtifactsPage() {
       try {
         const email = user?.email ? `email=${user?.email}` : null;
 
-        // const data = await getArtifacts( email);
         const response = await axiosSecure.get(`/artifacts?${email}`);
 
         const data = response.data;
@@ -59,6 +60,7 @@ export default function ArtifactsPage() {
         await axiosSecure.delete(`/artifacts/${artifactId}`);
         setArtifacts((prev) => prev.filter((art) => art._id !== artifactId));
         Swal.fire("Deleted!", "Artifact has been deleted.", "success");
+        navigate("/artifacts");
       } catch (error) {
         console.error("Error deleting artifact:", error);
         Swal.fire("Error", "Failed to delete artifact.", "error");
@@ -67,23 +69,13 @@ export default function ArtifactsPage() {
   };
 
   if (loading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <HiCollection className="mx-auto h-16 w-16 text-slate-400 mb-4" />
-          <h3 className="text-xl font-semibold text-slate-600 mb-2">
-            Loading your artifacts...
-          </h3>
-        </div>
-      </div>
-    );
+    return <Loading message="we're organizing your collection!" />;
   }
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <Helmet>
-        <title>MyArtifacts | ArtifactVault</title>
-      </Helmet>
+      <title>MyArtifacts | ArtifactVault</title>
+
       {/* Header */}
       <div className="bg-white border-b border-slate-200 shadow-sm">
         <div className="container mx-auto px-4 py-6">
@@ -119,7 +111,7 @@ export default function ArtifactsPage() {
               Start building your collection by adding your first artifact.
             </p>
             <Link
-              to="/artifacts/add"
+              to="/add-artifact"
               className="inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
               <HiPlus className="mr-2 h-5 w-5" />
@@ -175,6 +167,11 @@ export default function ArtifactsPage() {
                               Discovered by:
                             </span>
                             <span>{artifact.discoveredBy}</span>
+                          </div>
+                          <div className="flex items-start text-sm text-slate-600">
+                            <AiFillLike className="h-4 w-4 mr-2 mt-0.5 text-amber-500 flex-shrink-0" />
+                            <span className="font-medium mr-2">Likes:</span>
+                            <span>{artifact.likes?.length}</span>
                           </div>
                         </div>
                       </div>

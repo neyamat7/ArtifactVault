@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import {
   HiArrowLeft,
   HiCalendar,
   HiClock,
   HiDocumentText,
-  HiEye,
   HiGlobeAlt,
   HiHeart,
   HiLocationMarker,
@@ -17,8 +15,10 @@ import {
   HiUser,
 } from "react-icons/hi";
 import { Link, useParams } from "react-router";
+import { toast } from "react-toastify";
 import Badge from "../../components/Badge/Badge";
 import Button from "../../components/Button/Button";
+import Loading from "../../components/Loading/Loading";
 import useAuth from "../../context/AuthContext/AuthContext";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -96,38 +96,8 @@ export default function ArtifactDetails() {
     } else {
       // Fallback - copy to clipboard
       navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
+      toast.info("Link copied to clipboard!");
     }
-  };
-
-  const getTypeStyle = (type) => {
-    const styles = {
-      Documents: {
-        backgroundColor: "rgba(59, 130, 246, 0.2)",
-        color: "rgb(59, 130, 246)",
-      },
-      Weapons: {
-        backgroundColor: "rgba(239, 68, 68, 0.2)",
-        color: "rgb(239, 68, 68)",
-      },
-      Tools: {
-        backgroundColor: "rgba(34, 197, 94, 0.2)",
-        color: "rgb(34, 197, 94)",
-      },
-      Pottery: {
-        backgroundColor: "rgba(245, 158, 11, 0.2)",
-        color: "rgb(245, 158, 11)",
-      },
-      Jewelry: {
-        backgroundColor: "rgba(147, 51, 234, 0.2)",
-        color: "rgb(147, 51, 234)",
-      },
-      default: {
-        backgroundColor: "rgba(100, 116, 139, 0.2)",
-        color: "rgb(100, 116, 139)",
-      },
-    };
-    return styles[type] || styles.default;
   };
 
   const tabs = [
@@ -137,19 +107,13 @@ export default function ArtifactDetails() {
   ];
 
   if (isLoading || !user) {
-    console.log("Loading artifact details...");
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red text-2xl">Loading...</div>
-      </div>
-    );
+    return <Loading message="Loading Details..." />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
-      <Helmet>
-        <title>Details | ArtifactVault</title>
-      </Helmet>
+      <title>Details | ArtifactVault</title>
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-800/80 to-transparent"></div>
@@ -185,7 +149,7 @@ export default function ArtifactDetails() {
                     </div>
                   )}
                   <img
-                    src={artifact.artifactImage || "/placeholder.svg"}
+                    src={artifact.artifactImage}
                     alt={artifact.artifactName}
                     className={`w-full h-full object-cover transition-opacity duration-500 ${
                       imageLoaded ? "opacity-100" : "opacity-0"
@@ -195,22 +159,8 @@ export default function ArtifactDetails() {
 
                   {/* Floating badges */}
                   <div className="absolute top-6 left-6">
-                    <Badge
-                      style={getTypeStyle(artifact.artifactType)}
-                      className="backdrop-blur-sm bg-white/90 border border-white/30 shadow-lg"
-                    >
+                    <Badge className="backdrop-blur-sm bg-white/90 border border-white/30 shadow-lg">
                       {artifact.artifactType}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-6 right-6">
-                    <Badge
-                      style={{
-                        backgroundColor: "rgba(0, 0, 0, 0.8)",
-                        color: "white",
-                      }}
-                      className="backdrop-blur-sm border border-white/30 shadow-lg"
-                    >
-                      {artifact.category}
                     </Badge>
                   </div>
                 </div>
@@ -220,40 +170,22 @@ export default function ArtifactDetails() {
               </div>
 
               {/* Floating stats */}
-              <div className="absolute -bottom-6 left-6 right-6 grid grid-cols-2 gap-4">
+              <div className="absolute -bottom-6 left-6 gap-4">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl"
+                  className="bg-gray-800/60 backdrop-blur-lg rounded-2xl p-4 border border-white/20 shadow-xl"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-red-500/20 rounded-xl">
-                      <HiHeart className="h-5 w-5 text-red-400" />
+                      <HiHeart className="h-5 w-5 text-red-500" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">
                         {artifact.likes.length}
                       </p>
-                      <p className="text-sm text-slate-300">Likes</p>
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500/20 rounded-xl">
-                      <HiEye className="h-5 w-5 text-blue-400" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-white">
-                        {artifact?.views}
-                      </p>
-                      <p className="text-sm text-slate-300">Views</p>
+                      <p className="text-sm text-slate-200">Likes</p>
                     </div>
                   </div>
                 </motion.div>
@@ -296,7 +228,7 @@ export default function ArtifactDetails() {
                     onClick={handleLike}
                     className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
                       isLiked
-                        ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/25"
+                        ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/25 hover:from-red-600 hover:to-pink-600"
                         : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                     }`}
                   >
@@ -423,7 +355,9 @@ export default function ArtifactDetails() {
                 <div className="p-4 bg-white/5 rounded-2xl">
                   <div className="flex items-center gap-2 mb-2">
                     <HiClock className="h-4 w-4 text-slate-400" />
-                    <span className="text-slate-300 text-sm">Discovered</span>
+                    <span className="text-slate-300 text-sm">
+                      Discovered At
+                    </span>
                   </div>
                   <span className="text-white font-semibold">
                     {artifact.discoveredAt || "Unknown"}
@@ -489,20 +423,6 @@ export default function ArtifactDetails() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 p-6 bg-white/5 rounded-2xl">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                      <HiUser className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">
-                        Added to Database
-                      </h4>
-                      <p className="text-slate-300">
-                        {new Date(artifact.dateAdded).toLocaleDateString()} by{" "}
-                        {artifact.adderName}
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -520,10 +440,6 @@ export default function ArtifactDetails() {
                       {artifact.adderName}
                     </p>
                     <p className="text-slate-300">{artifact.adderEmail}</p>
-                    <p className="text-slate-400 text-sm">
-                      Added on{" "}
-                      {new Date(artifact.dateAdded).toLocaleDateString()}
-                    </p>
                   </div>
                 </div>
               </div>

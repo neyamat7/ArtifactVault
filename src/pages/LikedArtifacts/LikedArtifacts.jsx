@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { AiFillLike } from "react-icons/ai";
 import { HiCalendar, HiHeart, HiLocationMarker, HiUser } from "react-icons/hi";
 import { Link } from "react-router";
+import Loading from "../../components/Loading/Loading";
 import useAuth from "../../context/AuthContext/AuthContext";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -10,12 +10,11 @@ export default function LikedArtifacts() {
   const axiosSecure = useAxiosSecure();
 
   const [artifacts, setArtifacts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
     const fetchLikedArtifacts = async () => {
-      setIsLoading(true);
       try {
         const response = await axiosSecure.get(
           `/artifacts/liked?email=${user?.email}`
@@ -33,23 +32,13 @@ export default function LikedArtifacts() {
   }, [user?.email, axiosSecure]);
 
   if (isLoading || !user) {
-    return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-700 text-xl">
-            Loading your liked artifacts...
-          </p>
-        </div>
-      </div>
-    );
+    return <Loading message="Loading your liked artifacts..." />;
   }
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <Helmet>
-        <title>Liked Artifacts | ArtifactVault</title>
-      </Helmet>
+      <title>Liked Artifacts | ArtifactVault</title>
+
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-500 to-orange-500 py-12 px-4">
         <div className="container mx-auto max-w-7xl">
