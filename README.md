@@ -82,7 +82,7 @@ ArtifactVault is a modern web application that brings history to life by allowin
 For questions, suggestions, or collaboration opportunities, please reach out:
 
 - **Email**: neyamat7.ullah@gmail.com
-- **GitHub**: [@yourusername](https://github.com/neyemat7)
+- **GitHub**: [@neyemat7](https://github.com/neyemat7)
 
 ---
 
