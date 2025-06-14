@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
 import { Link } from "react-router";
-import { socialLinks } from "../../data/SocialLinks";
+import { socialLinks } from "../../data/socialLinks";
 import Button from "../Button/Button";
 import Logo from "../Logo/Logo";
 
