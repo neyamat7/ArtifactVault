@@ -6,7 +6,6 @@ import Button from "../Button/Button";
 
 export default function TimeCapsule() {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
-  console.log(selectedPeriod);
 
   return (
     <section className="py-20 text-white bg-gradient-to-br from-slate-900 to-slate-800">

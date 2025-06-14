@@ -76,9 +76,6 @@ export default function ArtifactDetails() {
         action,
         userEmail: user?.email,
       })
-      .then((response) => {
-        console.log("Artifact liked/disliked:", response.data);
-      })
       .catch((error) => {
         console.error("Error liking/disliking artifact:", error);
         setIsLiked(previousLikedState);
@@ -226,7 +223,7 @@ export default function ArtifactDetails() {
                 >
                   <Button
                     onClick={handleLike}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 cursor-pointer ${
                       isLiked
                         ? "bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/25 hover:from-red-600 hover:to-pink-600"
                         : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
@@ -241,7 +238,7 @@ export default function ArtifactDetails() {
                   </Button>
                   <Button
                     onClick={handleShare}
-                    className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                    className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300 cursor-pointer"
                   >
                     <HiShare className="h-5 w-5" />
                     Share

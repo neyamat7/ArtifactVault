@@ -536,7 +536,7 @@ export default function AddArtifact() {
                 <div className="pt-6">
                   <Button
                     type="submit"
-                    className="w-full py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300"
+                    className="w-full py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer"
                   >
                     <HiPlus className="mr-2 h-5 w-5" />
                     Add Artifact

@@ -283,7 +283,10 @@ export default function AboutUs() {
               className="grid md:grid-cols-3 gap-6 mb-12"
             >
               {involvementData.map((data) => (
-                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
+                <div
+                  key={data.id}
+                  className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20"
+                >
                   <data.icon className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
                   <h3 className="text-xl font-bold mb-2">{data.title}</h3>
                   <p className="text-amber-100">{data.description}</p>
@@ -317,7 +320,7 @@ export default function AboutUs() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {statsData.map((stat) => (
-                <div>
+                <div key={stat.id}>
                   <div
                     key={stat.id}
                     className="text-4xl font-bold text-amber-600 mb-2"

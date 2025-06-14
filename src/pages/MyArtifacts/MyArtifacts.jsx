@@ -23,7 +23,6 @@ export default function ArtifactsPage() {
   const [loading, setLoading] = useState(true);
 
   const { user } = useAuth();
-  console.log("token", user?.accessToken);
 
   useEffect(() => {
     const fetchMyArtifacts = async () => {

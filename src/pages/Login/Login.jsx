@@ -218,7 +218,7 @@ export default function Login() {
               {/* Sign In Button */}
               <Button
                 type="submit"
-                className="w-full py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 Sign In
               </Button>

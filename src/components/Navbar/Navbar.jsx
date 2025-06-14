@@ -3,6 +3,7 @@ import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { IoIosLogOut } from "react-icons/io";
 import { Link, NavLink, useLocation } from "react-router";
+import { toast } from "react-toastify";
 import useAuth from "../../context/AuthContext/AuthContext.jsx";
 import Button from "../Button/Button.jsx";
 import CrossIcon from "../Icons/CrossIcon.jsx";
@@ -36,6 +37,7 @@ export default function Navbar() {
         <NavLink
           key={link.id}
           to={link.to}
+          end
           className={({ isActive }) =>
             ` hover:text-amber-600 transition-colors text-sm font-medium ${
               isActive ? "text-amber-600" : "text-slate-600"
@@ -49,12 +51,10 @@ export default function Navbar() {
   );
 
   const handleLogOut = () => {
-    console.log("sign out clicked");
-
     signOutUser()
       .then(() => {
         setUser(null);
-        console.log("signout success");
+        toast.success("successfully signed out");
       })
       .catch((error) => {
         console.error("Sign out error:", error);
@@ -185,76 +185,6 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Navigation */}
-      {/* {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="container lg:hidden py-4 px-4 border-t border-amber-200 bg-white"
-        >
-          <nav className="flex flex-col gap-4">
-            {links}
-
-            {!user ? (
-              <div className="flex flex-col gap-2 pt-2">
-                <Link to="/login">
-                  <Button variant="outline" className="w-full">
-                    Login
-                  </Button>
-                </Link>
-              </div>
-            ) : (
-              <div className="border-t border-amber-100 pt-4 mt-2">
-                <div className="flex items-center gap-3 mb-4">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={user?.photoURL} alt={user?.displayName} />
-                  </Avatar>
-                  <div>
-                    <p className="font-medium text-slate-800">
-                      {user?.displayName}
-                    </p>
-                    <p className="text-xs text-slate-500">Artifact Explorer</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <NavLink
-                    to="/my-artifacts"
-                    className={({ isActive }) =>
-                      ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
-                        isActive ? "text-amber-600" : "text-slate-600"
-                      }`
-                    }
-                  >
-                    My Artifacts
-                  </NavLink>
-                  <NavLink
-                    to="/liked-artifacts"
-                    className={({ isActive }) =>
-                      ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
-                        isActive ? "text-amber-600" : "text-slate-600"
-                      }`
-                    }
-                  >
-                    Liked Artifacts
-                  </NavLink>
-                  <Button
-                    variant="ghost"
-                    className="justify-start p-0 text-red-600 hover:text-red-700 hover:bg-transparent"
-                    onClick={() => {
-                      handleLogOut();
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    Logout
-                  </Button>
-                </div>
-              </div>
-            )}
-          </nav>
-        </motion.div>
-      )} */}
-
-      {/* new sytles */}
 
       {isMenuOpen && (
         <>
@@ -373,17 +303,6 @@ export default function Navbar() {
           </motion.div>
         </>
       )}
-
-      {/* Add overlay when menu is open */}
-      {/* {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black z-40 lg:hidden"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )} */}
     </motion.header>
   );
 }
