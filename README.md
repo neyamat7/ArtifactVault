@@ -52,7 +52,8 @@ ArtifactVault is a modern web application that brings history to life by allowin
 ### **Backend & Database**
 
 - **Node.js & Express** - Server-side runtime and web framework
-- **Firebase** - Authentication, database, and hosting
+- **MongoDB** - Database management
+- **Firebase** - Authentication, and hosting
 - **Axios** - HTTP client for API requests
 
 ### **Enhanced User Experience**

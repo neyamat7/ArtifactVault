@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import useAuth from "../context/AuthContext/AuthContext";
 
 const axiosInstance = axios.create({
@@ -7,7 +8,7 @@ const axiosInstance = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { user } = useAuth();
+  const { user, signOutUser } = useAuth();
   useEffect(() => {
     const requestInterceptor = axiosInstance.interceptors.request.use(
       (config) => {
@@ -24,8 +25,18 @@ const useAxiosSecure = () => {
         return response;
       },
       (error) => {
-        console.log("error in axios interceptor", error);
-        Promise.reject(error);
+        if (error.status === 401 || error.status === 403) {
+          signOutUser()
+            .then(() => {
+              toast.error(
+                "You have been logged out due to unauthorized access. Please login again."
+              );
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+        return Promise.reject(error);
       }
     );
 
@@ -33,7 +44,7 @@ const useAxiosSecure = () => {
       axiosInstance.interceptors.request.eject(requestInterceptor);
       axiosInstance.interceptors.response.eject(responseInterceptor);
     };
-  }, [user]);
+  }, [user, signOutUser]);
 
   return axiosInstance;
 };
