@@ -287,7 +287,7 @@ export default function ArtifactDetails() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                  className={`flex items-center gap-2 px-2 min-[360px]:px-3 sm:px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                     activeTab === tab.id
                       ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg"
                       : "text-slate-300 hover:text-white hover:bg-white/10"

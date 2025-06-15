@@ -47,7 +47,7 @@ export default function MysteryArtifacts() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {mysteryArtifacts.map((artifact, index) => (
             <motion.div
               key={artifact.id}
