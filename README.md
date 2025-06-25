@@ -78,6 +78,62 @@ ArtifactVault is a modern web application that brings history to life by allowin
 - Manage personal contributions
 - Access exclusive features and content
 
+
+# Getting Started
+
+## Prerequisites
+
+Before running this project, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (version 14 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
+
+## Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/neyamat7/ArtifactVault.git
+cd ArtifactVault
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+## Running the Project
+
+### Development Mode
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will run on `http://localhost:5173` (default Vite port)
+
+### Production Build
+
+Build the project for production:
+
+```bash
+npm run build
+
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint (if configured)
+
+
+
 ## 📞 Contact
 
 For questions, suggestions, or collaboration opportunities, please reach out:
