@@ -1,14 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { HiClock, HiGlobeAlt, HiSparkles } from "react-icons/hi";
+import { useNavigate } from "react-router";
 import { timelineData } from "../../data/timelineData";
 import Button from "../Button/Button";
 
 export default function TimeCapsule() {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
 
+  const navigate = useNavigate();
+
   return (
-    <section className="py-20 text-white bg-gradient-to-br from-slate-900 to-slate-800">
+    <section
+      id="timeline"
+      className="py-20 text-white bg-gradient-to-br from-slate-900 to-slate-800"
+    >
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -132,7 +138,10 @@ export default function TimeCapsule() {
                   </div>
                 </div>
 
-                <Button>
+                <Button
+                  className="cursor-pointer"
+                  onClick={() => navigate("/artifacts")}
+                >
                   Explore {timelineData[selectedPeriod].civilization}
                 </Button>
               </motion.div>

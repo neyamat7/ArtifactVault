@@ -2,12 +2,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { IoIosLogOut } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
 import { Link, NavLink, useLocation } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../../context/AuthContext/AuthContext.jsx";
 import Button from "../Button/Button.jsx";
-import CrossIcon from "../Icons/CrossIcon.jsx";
 import Logo from "../Logo/Logo.jsx";
+import ThemeToggle from "../ThemeToggle/ThemeToggle.jsx";
 import { Avatar, AvatarImage } from "./Avatar.jsx";
 import {
   DropdownMenu,
@@ -33,20 +34,28 @@ export default function Navbar() {
 
   const links = (
     <>
-      {navLinks.map((link) => (
-        <NavLink
-          key={link.id}
-          to={link.to}
-          end
-          className={({ isActive }) =>
-            ` hover:text-amber-600 transition-colors text-sm font-medium ${
-              isActive ? "text-amber-600" : "text-slate-600"
-            }`
-          }
-        >
-          {link.text}
-        </NavLink>
-      ))}
+      {navLinks.map((link) => {
+        if (!user && link.to === "/add-artifact") {
+          return;
+        }
+
+        return (
+          <NavLink
+            key={link.id}
+            to={link.to}
+            end
+            className={({ isActive }) =>
+              ` hover:text-amber-600 transition-colors text-sm font-medium ${
+                isActive
+                  ? "text-amber-600 dark:text-amber-400"
+                  : "text-slate-600 dark:text-slate-200"
+              }`
+            }
+          >
+            {link.text}
+          </NavLink>
+        );
+      })}
     </>
   );
 
@@ -65,7 +74,7 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="sticky top-0 z-50 w-full border-b border-amber-200 bg-white/95 backdrop-blur"
+      className="sticky top-0 z-50 w-full border-b border-amber-200 bg-white/95 backdrop-blur dark:bg-slate-900/80 dark:border-slate-600"
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <motion.div
@@ -78,6 +87,8 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
           {links}
+
+          <ThemeToggle />
 
           {!user ? (
             <div className="flex items-center gap-3">
@@ -118,10 +129,10 @@ export default function Navbar() {
                     >
                       <div className="flex items-center justify-start gap-2 p-3">
                         <div className="flex flex-col space-y-1 leading-none">
-                          <p className="font-medium text-slate-800">
+                          <p className="font-medium text-slate-800 dark:text-slate-300">
                             {user?.displayName}
                           </p>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-300">
                             Artifact Explorer
                           </p>
                         </div>
@@ -132,7 +143,9 @@ export default function Navbar() {
                           to="/my-artifacts"
                           className={({ isActive }) =>
                             ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
-                              isActive ? "text-amber-600" : "text-slate-600"
+                              isActive
+                                ? "text-amber-600 dark:text-amber-500"
+                                : "text-slate-600 dark:text-slate-300"
                             }`
                           }
                         >
@@ -144,7 +157,9 @@ export default function Navbar() {
                           to="/liked-artifacts"
                           className={({ isActive }) =>
                             ` hover:text-amber-600 transition-colors text-sm font-medium w-full  py-1 ${
-                              isActive ? "text-amber-600" : "text-slate-600"
+                              isActive
+                                ? "text-amber-600 dark:text-amber-500"
+                                : "text-slate-600 dark:text-slate-300"
                             }`
                           }
                         >
@@ -173,7 +188,7 @@ export default function Navbar() {
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden text-slate-700"
+          className="lg:hidden text-slate-700 dark:text-slate-200"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? (
@@ -203,19 +218,26 @@ export default function Navbar() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-auto max-h-screen w-80 bg-white shadow-2xl z-50 lg:hidden rounded-l-3xl"
+            className="fixed top-0 right-0 h-auto max-h-screen w-80 bg-white dark:bg-slate-900 shadow-2xl z-50 lg:hidden rounded-l-3xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 py-4 border-b border-black/20">
+            <div className="flex items-center justify-between p-6 py-4 border-b border-black/20 dark:border-white/10">
               <div className="flex items-center gap-3">
-                <h2 className="font-bold text-xl">ArtifactVault</h2>
+                <h2 className="font-bold text-xl text-slate-800 dark:text-slate-100">
+                  ArtifactVault
+                </h2>
               </div>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <CrossIcon />
-              </button>
+
+              <div>
+                <ThemeToggle />
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 ml-1 hover:bg-black/10 dark:hover:bg-slate-300 rounded-lg transition-color dark:text-slate-100
+                  dark:hover:text-slate-900"
+                >
+                  <RxCross2 size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Content */}
@@ -224,15 +246,15 @@ export default function Navbar() {
                 <div className="space-y-2 flex flex-col gap-5">{links}</div>
 
                 {!user ? (
-                  <div className="pt-6 border-t border-white/20">
+                  <div className="pt-6 border-t border-black/10 dark:border-white/10">
                     <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                       <Button variant="outline">Login</Button>
                     </Link>
                   </div>
                 ) : (
-                  <div className="mt-2 border-t border-white/20">
+                  <div className="mt-2 border-t border-black/10 dark:border-white/10">
                     {/* User Profile */}
-                    <div className="flex items-center gap-4 my-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                    <div className="flex items-center gap-4 my-4  dark:bg-white/5 backdrop-blur-sm rounded-2xl ">
                       <Avatar className="h-12 w-12 ring-2 ring-amber-400/50">
                         <AvatarImage
                           src={user?.photoURL}
@@ -240,7 +262,7 @@ export default function Navbar() {
                         />
                       </Avatar>
                       <div className="flex-1">
-                        <p className="font-semibold text-black text-base">
+                        <p className="font-semibold text-slate-800 dark:text-slate-100 text-base">
                           {user?.displayName}
                         </p>
                         <p className="text-sm text-amber-400 font-medium">
@@ -257,8 +279,8 @@ export default function Navbar() {
                         className={({ isActive }) =>
                           `flex items-center gap-3 w-full py-1 rounded-xl font-medium transition-all duration-200 ${
                             isActive
-                              ? "text-amber-500 borde"
-                              : "text-slate-500 hover:text-amber-600"
+                              ? "text-amber-500"
+                              : "text-slate-500 dark:text-slate-200 hover:text-amber-600"
                           }`
                         }
                       >
@@ -271,8 +293,8 @@ export default function Navbar() {
                         className={({ isActive }) =>
                           `flex items-center gap-3 w-full rounded-xl font-medium transition-all duration-200 py-1 ${
                             isActive
-                              ? "text-amber-400  "
-                              : "text-slate-500  hover:text-amber-600"
+                              ? "text-amber-400"
+                              : "text-slate-500 dark:text-slate-200 hover:text-amber-600"
                           }`
                         }
                       >
@@ -285,7 +307,7 @@ export default function Navbar() {
 
               {/* Footer */}
               {user && (
-                <div className="border-t border-white/20 pl-6 pb-6">
+                <div className="border-t border-black/10 dark:border-white/10 pl-6 pb-6">
                   <Button
                     variant="outline"
                     onClick={() => {

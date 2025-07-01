@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 import { socialLinks } from "../../data/socialLinks";
 import Button from "../Button/Button";
 import Logo from "../Logo/Logo";
@@ -9,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="text-white bg-gradient-to-br from-slate-900 to-slate-800">
       <div className="container mx-auto px-4 md:px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Brand Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -51,28 +52,42 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "All Artifacts", to: "/artifacts" },
-                { name: "Featured Collection", to: "/" },
-                { name: "Timeline Explorer", to: "/" },
-                { name: "Mystery Artifacts", to: "/" },
-                { name: "Discovery Map", to: "/" },
-                { name: "Categories", to: "/" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.to}
-                    className="text-slate-300 hover:text-amber-400 transition-colors duration-300 flex items-center group"
-                  >
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">
-                      {link.name}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+                { name: "Featured Collection", to: "#featured" },
+                { name: "Timeline Explorer", to: "#timeline" },
+                { name: "Mystery Artifacts", to: "/#mystery" },
+              ].map((link) => {
+                if (link.to === "/artifacts") {
+                  return (
+                    <li key={link.name}>
+                      <Link
+                        to={link.to}
+                        className="text-slate-300 hover:text-amber-400 transition-colors duration-300 flex items-center group"
+                      >
+                        <span className="group-hover:translate-x-1 transition-transform duration-300">
+                          {link.name}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={link.name}>
+                    <a
+                      href={link.to}
+                      className="text-slate-300 hover:text-amber-400 transition-colors duration-300 flex items-center group"
+                    >
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">
+                        {link.name}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </motion.div>
 
           {/* Community */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -101,7 +116,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </motion.div> */}
 
           {/* Contact Info */}
           <motion.div
@@ -144,7 +159,12 @@ export default function Footer() {
                 Subscribe to our newsletter for the latest discoveries and
                 updates.
               </p>
-              <Button className="w-full">Subscribe Now</Button>
+              <Button
+                className="w-full cursor-pointer"
+                onClick={() => toast.success("Thanks for subscribing! 🎉")}
+              >
+                Subscribe Now
+              </Button>
             </div>
           </motion.div>
         </div>
@@ -156,11 +176,11 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="border-t border-slate-700 mt-12 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-slate-400 text-sm">
               © {new Date().getFullYear()} ArtifactVault. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
+            {/* <div className="flex gap-6 text-sm">
               <Link
                 to="/"
                 className="text-slate-400 hover:text-amber-400 transition-colors"
@@ -185,7 +205,7 @@ export default function Footer() {
               >
                 Accessibility
               </Link>
-            </div>
+            </div> */}
           </div>
         </motion.div>
       </div>

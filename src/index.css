@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 @theme {
   --color-dark-clr: #141a22;
@@ -16,3 +21,9 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #171010 inset !important;
   -webkit-text-fill-color: #e5e7eb !important;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+ 

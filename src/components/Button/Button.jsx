@@ -17,7 +17,7 @@ export default function Button({
     secondary:
       "bg-gradient-to-r from-slate-700 to-slate-800 text-white hover:from-slate-800 hover:to-slate-900 focus:ring-slate-500 shadow-lg hover:shadow-xl",
     outline:
-      "border-2 border-amber-200 text-slate-700 hover:bg-amber-50 focus:ring-amber-500",
+      "border-2 border-amber-200 dark:border-amber-800 text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-800 focus:ring-amber-500",
     ghost:
       "text-slate-600 hover:text-amber-600 hover:bg-amber-50 focus:ring-amber-500",
   };

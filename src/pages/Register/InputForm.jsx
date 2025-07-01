@@ -17,7 +17,7 @@ const InputForm = ({
     <div>
       <label
         htmlFor={inputName}
-        className="block text-sm font-medium text-slate-700 mb-2"
+        className="block text-sm font-medium text-slate-700 dark:text-slate-400 mb-2"
       >
         {label}
       </label>
@@ -31,7 +31,7 @@ const InputForm = ({
           name={inputName}
           value={value}
           onChange={onChange}
-          className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
+          className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors dark:bg-dark-clr dark:text-slate-300 ${
             error ? "border-red-300 bg-red-50" : "border-slate-300 bg-white"
           }`}
           placeholder={placeholder}

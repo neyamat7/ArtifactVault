@@ -8,7 +8,7 @@ const Logo = ({ privateClasses }) => {
         <HiCollection className="h-6 w-6 text-white" />
       </div>
       <div>
-        <h1 className={`text-xl font-bold ${privateClasses}`}>ArtifactVault</h1>
+        <h1 className={`text-xl font-bold ${privateClasses} dark:text-white`}>ArtifactVault</h1>
       </div>
     </Link>
   );

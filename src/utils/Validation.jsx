@@ -8,7 +8,7 @@ const errorMsg = (text) => (
   <motion.p
     initial={{ opacity: 0, y: -5 }}
     animate={{ opacity: 1, y: 0 }}
-    className="mt-2 text-sm text-red-600"
+    className="mt-2 text-sm text-red-600 dark:text-red-400"
   >
     {text}
   </motion.p>

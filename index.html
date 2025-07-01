@@ -5,8 +5,21 @@
     <link rel="icon" type="image/jpeg" href="/artifact.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArtifactVault</title>
+    <script>
+      // Prevent flash of wrong theme
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body class="dark:bg-slate-900">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -135,7 +135,7 @@ export default function AddArtifact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 dark:from-slate-800 dark:via-slate-800 dark:to-slate-950">
       <title>Add | ArtifactVault</title>
 
       <div className="container mx-auto px-4 py-12">
@@ -152,16 +152,16 @@ export default function AddArtifact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center rounded-full px-4 py-2 text-amber-800 text-sm font-medium mb-6 bg-gradient-to-r from-amber-100 to-amber-200"
+                className="inline-flex items-center rounded-full px-4 py-2 text-amber-800 dark:text-amber-200 text-sm font-medium mb-6 bg-gradient-to-r from-amber-100 to-amber-200 dark:from-amber-700 dark:to-amber-800"
               >
                 <HiPlus className="mr-2 h-4 w-4" />
                 Contribute to History
               </motion.div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">
                 Add New <span className="text-amber-600">Artifact</span>
               </h1>
-              <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+              <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                 Share your archaeological discoveries with the world. Help
                 preserve history for future generations.
               </p>
@@ -176,11 +176,11 @@ export default function AddArtifact() {
               />
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-amber-200">
-              <h3 className="text-lg font-semibold text-slate-800 mb-4">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-amber-200 dark:border-slate-700">
+              <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">
                 Submission Guidelines
               </h3>
-              <ul className="space-y-3 text-slate-600">
+              <ul className="space-y-3 text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-amber-600 rounded-full mt-2 flex-shrink-0"></div>
                   <span>Provide accurate historical information</span>
@@ -207,19 +207,19 @@ export default function AddArtifact() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-8">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-500 p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Artifact Name */}
                 <div>
                   <label
                     htmlFor="artifactName"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Artifact Name
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <HiCollection className="h-5 w-5 text-slate-400" />
+                      <HiCollection className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <input
                       type="text"
@@ -227,10 +227,10 @@ export default function AddArtifact() {
                       name="artifactName"
                       value={formData.artifactName}
                       onChange={handleInputChange}
-                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
                         errors.artifactName
-                          ? "border-red-300 bg-red-50"
-                          : "border-slate-300 bg-white"
+                          ? "border-red-300 bg-red-50 dark:bg-red-900/20"
+                          : "border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                       }`}
                       placeholder="Enter artifact name"
                     />
@@ -242,13 +242,13 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="artifactImage"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Artifact Image URL
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <HiPhotograph className="h-5 w-5 text-slate-400" />
+                      <HiPhotograph className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <input
                       type="url"
@@ -256,10 +256,10 @@ export default function AddArtifact() {
                       name="artifactImage"
                       value={formData.artifactImage}
                       onChange={handleInputChange}
-                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
                         errors.artifactImage
-                          ? "border-red-300 bg-red-50"
-                          : "border-slate-300 bg-white"
+                          ? "border-red-300 bg-red-50 dark:bg-red-200/10"
+                          : "border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                       }`}
                       placeholder="https://example.com/artifact-image.jpg"
                     />
@@ -271,28 +271,28 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="artifactType"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Artifact Type
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <HiTag className="h-5 w-5 text-slate-400" />
+                      <HiTag className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <button
                       type="button"
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                       className={`block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm text-left focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors ${
                         errors.artifactType
-                          ? "border-red-300 bg-red-50"
-                          : "border-slate-300 bg-white"
+                          ? "border-red-300 bg-red-50 dark:bg-red-200/10"
+                          : "border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                       }`}
                     >
                       <span
                         className={
                           formData.artifactType
-                            ? "text-slate-900"
-                            : "text-slate-400"
+                            ? "text-slate-900 dark:text-slate-100"
+                            : "text-slate-400 dark:text-slate-500"
                         }
                       >
                         {formData.artifactType || "Select artifact type"}
@@ -300,7 +300,7 @@ export default function AddArtifact() {
                     </button>
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <HiChevronDown
-                        className={`h-5 w-5 text-slate-400 transition-transform ${
+                        className={`h-5 w-5 text-slate-400 dark:text-slate-500 transition-transform ${
                           isDropdownOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -310,14 +310,14 @@ export default function AddArtifact() {
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="absolute z-10 mt-1 w-full bg-white border border-slate-300 rounded-lg shadow-lg max-h-60 overflow-auto"
+                        className="absolute z-10 mt-1 w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg shadow-lg max-h-60 overflow-auto"
                       >
                         {artifactTypes.map((type) => (
                           <button
                             key={type}
                             type="button"
                             onClick={() => handleTypeSelect(type)}
-                            className="w-full px-4 py-3 text-left hover:bg-amber-50 hover:text-amber-700 transition-colors border-b border-slate-100 last:border-b-0"
+                            className="w-full px-4 py-3 text-left hover:bg-amber-50 dark:hover:bg-slate-700 hover:text-amber-700 transition-colors border-b border-slate-100 dark:border-slate-700 last:border-b-0"
                           >
                             {type}
                           </button>
@@ -332,7 +332,7 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="historicalContext"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Historical Context
                   </label>
@@ -342,10 +342,10 @@ export default function AddArtifact() {
                     value={formData.historicalContext}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none ${
+                    className={`block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none ${
                       errors.historicalContext
-                        ? "border-red-300 bg-red-50"
-                        : "border-slate-300 bg-white"
+                        ? "border-red-300 bg-red-50 dark:bg-red-200/10"
+                        : "border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                     }`}
                     placeholder="Describe the historical period, civilization, and cultural significance..."
                   />
@@ -364,13 +364,13 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="shortDescription"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Short Description
                   </label>
                   <div className="relative">
                     <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
-                      <HiDocumentText className="h-5 w-5 text-slate-400" />
+                      <HiDocumentText className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <textarea
                       id="shortDescription"
@@ -378,10 +378,10 @@ export default function AddArtifact() {
                       value={formData.shortDescription}
                       onChange={handleInputChange}
                       rows={3}
-                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none ${
+                      className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none ${
                         errors.shortDescription
-                          ? "border-red-300 bg-red-50"
-                          : "border-slate-300 bg-white"
+                          ? "border-red-300 bg-red-50 dark:bg-red-200/10"
+                          : "border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                       }`}
                       placeholder="Brief description of the artifact..."
                     />
@@ -394,13 +394,13 @@ export default function AddArtifact() {
                   <div>
                     <label
                       htmlFor="createdAt"
-                      className="block text-sm font-medium text-slate-700 mb-2"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                     >
                       Created At
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <HiCalendar className="h-5 w-5 text-slate-400" />
+                        <HiCalendar className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                       </div>
                       <input
                         type="text"
@@ -408,7 +408,7 @@ export default function AddArtifact() {
                         name="createdAt"
                         value={formData.createdAt}
                         onChange={handleInputChange}
-                        className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                        className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 dark:bg-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                         placeholder="e.g., 100 BC"
                       />
                     </div>
@@ -418,13 +418,13 @@ export default function AddArtifact() {
                   <div>
                     <label
                       htmlFor="discoveredAt"
-                      className="block text-sm font-medium text-slate-700 mb-2"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                     >
                       Discovered At
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <HiCalendar className="h-5 w-5 text-slate-400" />
+                        <HiCalendar className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                       </div>
                       <input
                         type="text"
@@ -432,7 +432,7 @@ export default function AddArtifact() {
                         name="discoveredAt"
                         value={formData.discoveredAt}
                         onChange={handleInputChange}
-                        className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                        className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 dark:bg-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                         placeholder="e.g., 1799"
                       />
                     </div>
@@ -444,13 +444,13 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="discoveredBy"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Discovered By
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <HiUser className="h-5 w-5 text-slate-400" />
+                      <HiUser className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <input
                       type="text"
@@ -458,7 +458,7 @@ export default function AddArtifact() {
                       name="discoveredBy"
                       value={formData.discoveredBy}
                       onChange={handleInputChange}
-                      className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                      className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 dark:bg-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                       placeholder="Name of discoverer or expedition"
                     />
                   </div>
@@ -469,13 +469,13 @@ export default function AddArtifact() {
                 <div>
                   <label
                     htmlFor="presentLocation"
-                    className="block text-sm font-medium text-slate-700 mb-2"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2"
                   >
                     Present Location
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <HiLocationMarker className="h-5 w-5 text-slate-400" />
+                      <HiLocationMarker className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                     </div>
                     <input
                       type="text"
@@ -483,7 +483,7 @@ export default function AddArtifact() {
                       name="presentLocation"
                       value={formData.presentLocation}
                       onChange={handleInputChange}
-                      className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                      className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                       placeholder="Current museum or location"
                     />
                   </div>
@@ -491,41 +491,42 @@ export default function AddArtifact() {
                 </div>
 
                 {/* Adder Information (Read-only) */}
-                <div className="bg-slate-50 rounded-lg p-6 border border-slate-200">
-                  <h3 className="text-sm font-medium text-slate-700 mb-4">
+                {/* Adder Information (Read-only) */}
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                  <h3 className="text-sm font-medium text-slate-700 dark:text-slate-200 mb-4">
                     Contributor Information
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-600 mb-2">
+                      <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
                         Name
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <HiUser className="h-5 w-5 text-slate-400" />
+                          <HiUser className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                         </div>
                         <input
                           type="text"
                           value={formData.adderName || ""}
                           readOnly
-                          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-lg bg-slate-100 text-slate-600 cursor-not-allowed"
+                          className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-not-allowed"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-600 mb-2">
+                      <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
                         Email
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <HiMail className="h-5 w-5 text-slate-400" />
+                          <HiMail className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                         </div>
                         <input
                           type="email"
                           value={formData.adderEmail || ""}
                           readOnly
-                          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-lg bg-slate-100 text-slate-600 cursor-not-allowed"
+                          className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-not-allowed"
                         />
                       </div>
                     </div>

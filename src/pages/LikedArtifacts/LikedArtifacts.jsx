@@ -36,21 +36,21 @@ export default function LikedArtifacts() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
       <title>Liked Artifacts | ArtifactVault</title>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-500 to-orange-500 py-12 px-4">
+      <div className="bg-gradient-to-r from-amber-500 to-orange-500 dark:from-slate-800 dark:to-orange-900 py-12 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="flex items-center gap-3 mb-4">
             <HiHeart className="h-10 w-10 text-white" />
-            <h1 className="text-4xl font-bold text-white">Liked Artifacts</h1>
+            <h1 className="text-4xl font-bold text-white dark:text-slate-200">Liked Artifacts</h1>
           </div>
-          <p className="text-amber-100 text-lg max-w-3xl">
+          <p className="text-amber-100 dark:text-amber-200 text-lg max-w-3xl">
             Your collection of favorite historical artifacts from around the
             world.
           </p>
-          <div className="mt-4 text-amber-100">
+          <div className="mt-4 text-amber-100 dark:text-amber-200">
             <span className="text-2xl font-semibold">{artifacts.length}</span>{" "}
             artifacts in your favorites
           </div>
@@ -60,11 +60,11 @@ export default function LikedArtifacts() {
       {/* Main Content */}
       <div className="container mx-auto max-w-7xl py-8 px-4">
         {artifacts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 text-center">
+            <div className="w-20 h-20 bg-amber-100 dark:bg-amber-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <HiHeart className="h-10 w-10 text-amber-500" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">
               No liked artifacts yet
             </h2>
 
@@ -80,9 +80,9 @@ export default function LikedArtifacts() {
             {artifacts.map((artifact) => (
               <div
                 key={artifact._id}
-                className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200 hover:shadow-lg transition-shadow"
+                className="bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow"
               >
-                <div className="aspect-video bg-slate-200 relative overflow-hidden">
+                <div className="aspect-video bg-slate-200 dark:bg-slate-700 relative overflow-hidden">
                   <img
                     src={artifact.artifactImage}
                     alt={artifact.artifactName}
@@ -98,25 +98,25 @@ export default function LikedArtifacts() {
                 </div>
 
                 <div className="p-5">
-                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">
                     {artifact.artifactName}
                   </h3>
-                  <p className="text-slate-600 text-sm mb-4 overflow-hidden line-clamp-2">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 overflow-hidden line-clamp-2">
                     {artifact.shortDescription}
                   </p>
 
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-slate-500">
+                    <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
                       <HiCalendar className="h-4 w-4 mr-2 text-amber-500" />
                       <span>Created: {artifact.createdAt}</span>
                     </div>
-                    <div className="flex items-center text-sm text-slate-500">
+                    <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
                       <HiLocationMarker className="h-4 w-4 mr-2 text-amber-500" />
                       <span className="truncate">
                         {artifact.presentLocation}
                       </span>
                     </div>
-                    <div className="flex items-center text-sm text-slate-500">
+                    <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
                       <HiUser className="h-4 w-4 mr-2 text-amber-500" />
                       <span className="truncate">
                         Added by {artifact.adderName}
@@ -124,11 +124,11 @@ export default function LikedArtifacts() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-4 border-t border-slate-200">
+                  <div className="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700">
                     <div className="flex space-x-2">
                       <Link
                         to={`/artifacts/${artifact._id}`}
-                        className="flex items-center justify-center p-2 px-4 bg-amber-200 text-amber-700 rounded-md hover:bg-amber-200 transition-colors font-bold"
+                        className="flex items-center justify-center p-2 px-4 bg-amber-200 dark:bg-amber-900 text-amber-700 dark:text-amber-300 rounded-md hover:bg-amber-200 dark:hover:bg-amber-800 transition-colors font-bold"
                         aria-label={`View ${artifact.artifactName}`}
                       >
                         View Details

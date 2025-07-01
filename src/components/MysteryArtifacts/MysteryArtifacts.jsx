@@ -5,6 +5,7 @@ import {
   HiLightBulb,
   HiQuestionMarkCircle,
 } from "react-icons/hi";
+import { useNavigate } from "react-router";
 import { mysteryArtifacts } from "../../data/mysteryArtifactsData";
 import Badge from "../Badge/Badge";
 import Button from "../Button/Button";
@@ -25,8 +26,12 @@ const getStatusStyle = (status) => {
 };
 
 export default function MysteryArtifacts() {
+  const navigate = useNavigate();
   return (
-    <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+    <section
+      id="mystery"
+      className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"
+    >
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -34,14 +39,14 @@ export default function MysteryArtifacts() {
           transition={{ duration: 0.3 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center rounded-full px-4 py-2 text-purple-800 text-sm font-medium mb-4 bg-gradient-to-r from-purple-100 to-purple-200">
+          <div className="inline-flex items-center rounded-full px-4 py-2 text-purple-800 dark:text-purple-200 text-sm font-medium mb-4 bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800">
             <HiQuestionMarkCircle className="mr-2 h-4 w-4" />
             Unsolved Mysteries
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">
             Mystery <span className="text-amber-600">Artifacts</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Explore artifacts that continue to puzzle researchers and
             archaeologists. Join the discussion and share your theories.
           </p>
@@ -56,7 +61,7 @@ export default function MysteryArtifacts() {
               transition={{ duration: 0.2, delay: index * 0.2 }}
               whileHover={{ y: -5 }}
             >
-              <div className=" rounded-lg border border-slate-200 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white group">
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-800 group">
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <img
                     src={artifact.image}
@@ -79,12 +84,12 @@ export default function MysteryArtifacts() {
                   </div>
                 </div>
                 <div className="p-6 pb-3">
-                  <p className="text-slate-600 line-clamp-2 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                     {artifact.mystery}
                   </p>
                 </div>
                 <div className="p-6 pt-0">
-                  <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
+                  <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400 mb-4">
                     <div className="flex items-center gap-1">
                       <HiLightBulb className="h-4 w-4" />
                       <span>{artifact.theories} theories</span>
@@ -94,7 +99,11 @@ export default function MysteryArtifacts() {
                       <span>{artifact.discussions} discussions</span>
                     </div>
                   </div>
-                  <Button variant="secondary" className="w-full">
+                  <Button
+                    onClick={() => navigate("/artifacts")}
+                    variant="secondary"
+                    className="w-full"
+                  >
                     <HiEye className="mr-2 h-4 w-4" />
                     Investigate Mystery
                   </Button>
@@ -104,22 +113,22 @@ export default function MysteryArtifacts() {
           ))}
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="rounded-2xl p-8 text-center bg-gradient-to-r from-amber-100 to-amber-200"
+          className="rounded-2xl p-8 text-center bg-gradient-to-r from-amber-100 to-amber-200 dark:from-slate-800 dark:to-amber-900"
         >
           <HiQuestionMarkCircle className="h-16 w-16 text-amber-600 mx-auto mb-4" />
-          <h3 className="text-2xl font-bold text-slate-800 mb-2">
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">
             Have a Theory?
           </h3>
-          <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-2xl mx-auto">
             Join our community of researchers and amateur archaeologists. Share
             your insights and help solve these ancient mysteries.
           </p>
-          <Button size="lg">Join the Discussion</Button>
-        </motion.div>
+          <Button onClick={() => navigate("/artifacts")} size="lg">Join the Discussion</Button>
+        </motion.div> */}
       </div>
     </section>
   );

@@ -29,10 +29,10 @@ export default function Featured() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center dark:bg-slate-900">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-700 text-xl">
+          <p className="text-slate-700 dark:text-slate-400 text-xl">
             Loading featured artifacts...
           </p>
         </div>
@@ -41,9 +41,7 @@ export default function Featured() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-slate-50">
-     
-
+    <section id="featured" className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -51,14 +49,17 @@ export default function Featured() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center rounded-full px-4 py-2 text-amber-800 text-sm font-medium mb-4 bg-gradient-to-r from-amber-100 to-amber-200">
+          <div className="inline-flex items-center rounded-full px-4 py-2 text-amber-800 dark:text-amber-400 text-sm font-medium mb-4 bg-gradient-to-r from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30">
             <HiHeart className="mr-2 h-4 w-4" />
             Most Loved Artifacts
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
-            Featured <span className="text-amber-600">Discoveries</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">
+            Featured{" "}
+            <span className="text-amber-600 dark:text-amber-500">
+              Discoveries
+            </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Explore our community's most beloved historical treasures, ranked by
             popularity and historical significance.
           </p>

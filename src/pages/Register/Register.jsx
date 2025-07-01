@@ -94,7 +94,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 dark:from-slate-800 dark:via-slate-900 dark:to-black flex items-center justify-center p-4">
       <title>Register | ArtifactVault</title>
 
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
@@ -108,24 +108,24 @@ export default function Register() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full max-w-md mx-auto"
         >
-          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-8">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8">
             {/* Mobile Header */}
             <div className="lg:hidden text-center mb-8">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="rounded-full p-2 shadow-lg bg-gradient-to-br from-amber-600 to-amber-700">
                   <HiOutlineCollection color="white" />
                 </div>
-                <h1 className="text-xl font-bold text-slate-800">
+                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">
                   ArtifactVault
                 </h1>
               </div>
             </div>
 
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-slate-800 mb-2">
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">
                 Create Account
               </h2>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-400">
                 Join us and start exploring history!
               </p>
             </div>
@@ -135,15 +135,16 @@ export default function Register() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+                className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500 rounded-lg"
               >
-                <p className="text-red-600 text-sm">{errors.general}</p>
+                <p className="text-red-600 dark:text-red-400 text-sm">
+                  {errors.general}
+                </p>
               </motion.div>
             )}
 
             <form onSubmit={handleRegister} className="space-y-6">
               {/* Name Field */}
-
               <InputForm
                 label="Name"
                 inputName="name"
@@ -153,11 +154,10 @@ export default function Register() {
                 placeholder="Enter your name"
                 error={errors.name}
               >
-                <HiUser className="h-5 w-5 text-slate-400" />
+                <HiUser className="h-5 w-5 text-slate-400 dark:text-slate-400" />
               </InputForm>
 
               {/* Email Field */}
-
               <InputForm
                 label="Email"
                 inputName="email"
@@ -167,11 +167,10 @@ export default function Register() {
                 placeholder="Enter your email"
                 error={errors.email}
               >
-                <HiMail className="h-5 w-5 text-slate-400" />
+                <HiMail className="h-5 w-5 text-slate-400 dark:text-slate-400" />
               </InputForm>
 
               {/* Photo URL Field */}
-
               <InputForm
                 label="Photo URL"
                 inputName="photoURL"
@@ -181,11 +180,10 @@ export default function Register() {
                 placeholder="Enter your photo URL"
                 error={errors.photoURL}
               >
-                <HiPhotograph className="h-5 w-5 text-slate-400" />
+                <HiPhotograph className="h-5 w-5 text-slate-400 dark:text-slate-400" />
               </InputForm>
 
               {/* Password Field */}
-
               <InputForm
                 label="Password"
                 inputName="password"
@@ -197,11 +195,10 @@ export default function Register() {
                 showPassword={showPassword}
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <HiLockClosed className="h-5 w-5 text-slate-400" />
+                <HiLockClosed className="h-5 w-5 text-slate-400 dark:text-slate-400" />
               </InputForm>
 
               {/* Confirm Password Field */}
-
               <InputForm
                 label="Confirm Password"
                 inputName="confirmPassword"
@@ -213,7 +210,7 @@ export default function Register() {
                 showConfirmPassword={showConfirmPassword}
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                <HiLockClosed className="h-5 w-5 text-slate-400" />
+                <HiLockClosed className="h-5 w-5 text-slate-400 dark:text-slate-400" />
               </InputForm>
 
               {/* Terms Agreement */}
@@ -222,24 +219,26 @@ export default function Register() {
                   id="terms"
                   name="terms"
                   type="checkbox"
-                  className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-slate-300 rounded mt-1"
+                  className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-slate-300 dark:border-slate-600 dark:bg-slate-700 rounded mt-1"
                   onChange={handleInputChange}
                 />
                 <label
                   htmlFor="terms"
-                  className="ml-2 block text-sm text-slate-700"
+                  className="ml-2 block text-sm text-slate-700 dark:text-slate-300"
                 >
                   I agree to the{" "}
-                  <span className="text-amber-600 hover:text-amber-700 font-medium">
+                  <span className="text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400 font-medium">
                     Terms of Service
                   </span>{" "}
                   and{" "}
-                  <span className="text-amber-600 hover:text-amber-700 font-medium">
+                  <span className="text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400 font-medium">
                     Privacy Policy
                   </span>
                 </label>
               </div>
-              <div>{errors.terms && errors.terms}</div>
+              <div className="text-red-600  dark:text-red-300 text-sm">
+                {errors.terms && errors.terms}
+              </div>
 
               {/* Create Account Button */}
               <Button
@@ -252,10 +251,10 @@ export default function Register() {
               {/* Divider */}
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-300" />
+                  <div className="w-full border-t border-slate-300 dark:border-slate-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-slate-500">
+                  <span className="px-2 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400">
                     Or continue with
                   </span>
                 </div>
@@ -266,7 +265,7 @@ export default function Register() {
                 type="button"
                 variant="outline"
                 onClick={handleGoogleRegister}
-                className="w-full py-3 text-lg font-semibold border-2 border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300"
+                className="w-full py-3 text-lg font-semibold border-2 border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 text-slate-700 dark:text-slate-100"
               >
                 <FaGoogle className="mr-3 h-5 w-5 text-red-500" />
                 Sign up with Google
@@ -274,11 +273,11 @@ export default function Register() {
 
               {/* Login Link */}
               <div className="text-center">
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-400">
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="text-amber-600 hover:text-amber-700 font-semibold transition-colors"
+                    className="text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400 font-semibold transition-colors"
                   >
                     Sign in here
                   </Link>

@@ -1,18 +1,17 @@
 import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
 import { Link } from "react-router";
-import involvementData from "../../data/involvementData";
 import { missions } from "../../data/missionData";
 import statsData from "../../data/statsData";
 import { teamMembers } from "../../data/teamMembers";
 
 export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
       <title>About Us | ArtifactVault</title>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-amber-500 to-orange-600 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-amber-500 to-orange-600 dark:bg-gradient-to-br dark:from-slate-900 dark:to-orange-950 text-white overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-orange-400/20 rounded-full blur-3xl"></div>
           <div className="absolute top-1/3 -left-20 w-60 h-60 bg-amber-400/20 rounded-full blur-3xl"></div>
@@ -58,7 +57,7 @@ export default function AboutUs() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-slate-100 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-slate-100 dark:from-slate-900 to-transparent"></div>
       </section>
 
       {/* Our Mission Section */}
@@ -80,11 +79,13 @@ export default function AboutUs() {
               <span className="inline-block px-4 py-2 rounded-full bg-amber-100 text-amber-800 font-medium text-sm mb-4">
                 Our Mission
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
                 Why We Document{" "}
-                <span className="text-amber-600">Artifacts</span>
+                <span className="text-amber-600 dark:text-amber-500">
+                  Artifacts
+                </span>
               </h2>
-              <p className="text-lg text-slate-600">
+              <p className="text-lg text-slate-600 dark:text-slate-400">
                 We believe that understanding our past is essential to building
                 our future. Our mission is to preserve, document, and share the
                 world's historical artifacts with everyone.
@@ -98,15 +99,17 @@ export default function AboutUs() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="bg-white p-6 rounded-lg shadow-md border border-slate-200"
+                  className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-700"
                 >
-                  <div className="bg-amber-100 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                  <div className="bg-amber-100 dark:bg-amber-200 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
                     <mission.icon className="h-7 w-7 text-amber-600" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-3">
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-3">
                     {mission.title}
                   </h3>
-                  <p className="text-slate-600">{mission.description}</p>
+                  <p className="text-slate-600 dark:text-slate-400">
+                    {mission.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -115,7 +118,7 @@ export default function AboutUs() {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -133,23 +136,25 @@ export default function AboutUs() {
                 <span className="inline-block px-4 py-2 rounded-full bg-amber-100 text-amber-800 font-medium text-sm mb-4">
                   Our Story
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-6">
                   From Field Research to{" "}
-                  <span className="text-amber-600">Digital Archive</span>
+                  <span className="text-amber-600 dark:text-amber-500">
+                    Digital Archive
+                  </span>
                 </h2>
-                <p className="text-lg text-slate-600 mb-6">
+                <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
                   Our journey began in 2015 when a team of archaeologists and
                   digital preservationists came together with a shared vision:
                   to create a comprehensive digital archive of the world's most
                   significant historical artifacts.
                 </p>
-                <p className="text-lg text-slate-600 mb-6">
+                <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
                   What started as a small project documenting artifacts in local
                   museums has grown into a global initiative, partnering with
                   institutions across six continents and documenting over 10,000
                   artifacts.
                 </p>
-                <p className="text-lg text-slate-600">
+                <p className="text-lg text-slate-600 dark:text-slate-400">
                   Today, we continue to expand our collection, improve our
                   documentation techniques, and find new ways to share these
                   treasures with the world.
@@ -162,14 +167,14 @@ export default function AboutUs() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="relative"
               >
-                <div className="aspect-square bg-amber-100 rounded-lg overflow-hidden">
+                <div className="aspect-square bg-amber-100 dark:bg-amber-200 rounded-lg overflow-hidden">
                   <img
                     src="https://i.postimg.cc/bJqWM9Jp/premium-photo-1718146018236-d2a279125136-1.avif"
                     alt="Team at work"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 w-2/3 aspect-video bg-orange-100 rounded-lg overflow-hidden border-4 border-white shadow-xl">
+                <div className="absolute -bottom-6 -right-6 w-2/3 aspect-video bg-orange-100 dark:bg-orange-200 rounded-lg overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
                   <img
                     src="https://i.postimg.cc/26j9Tjc5/photo-1693328397193-b858f1b38c60.avif"
                     alt="Artifact documentation"
@@ -201,10 +206,13 @@ export default function AboutUs() {
               <span className="inline-block px-4 py-2 rounded-full bg-amber-100 text-amber-800 font-medium text-sm mb-4">
                 Our Team
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-                Meet the <span className="text-amber-600">Experts</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
+                Meet the{" "}
+                <span className="text-amber-600 dark:text-amber-500">
+                  Experts
+                </span>
               </h2>
-              <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
                 Our diverse team brings together expertise in archaeology,
                 history, digital preservation, and technology to create the most
                 comprehensive artifact documentation platform.
@@ -218,7 +226,7 @@ export default function AboutUs() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="bg-white rounded-lg overflow-hidden shadow-md border border-slate-200"
+                  className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md border border-slate-200 dark:border-slate-700"
                 >
                   <div className="aspect-square overflow-hidden">
                     <img
@@ -228,13 +236,15 @@ export default function AboutUs() {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-slate-800">
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">
                       {member.name}
                     </h3>
-                    <p className="text-amber-600 font-medium mb-3">
+                    <p className="text-amber-600 dark:text-amber-500 font-medium mb-3">
                       {member.role}
                     </p>
-                    <p className="text-slate-600 text-sm">{member.bio}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      {member.bio}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -244,7 +254,7 @@ export default function AboutUs() {
       </section>
 
       {/* Get Involved Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-amber-500 to-orange-600 text-white relative overflow-hidden">
+      {/* <section className="py-16 md:py-24 bg-gradient-to-br from-amber-500 to-orange-600 text-white relative overflow-hidden dark:from-amber-600 dark:to-orange-700">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-orange-400/20 rounded-full blur-3xl"></div>
           <div className="absolute top-1/3 -left-20 w-60 h-60 bg-amber-400/20 rounded-full blur-3xl"></div>
@@ -285,7 +295,7 @@ export default function AboutUs() {
               {involvementData.map((data) => (
                 <div
                   key={data.id}
-                  className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20"
+                  className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20 dark:border-white/30"
                 >
                   <data.icon className="h-10 w-10 text-amber-200 mb-4 mx-auto" />
                   <h3 className="text-xl font-bold mb-2">{data.title}</h3>
@@ -306,10 +316,10 @@ export default function AboutUs() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -321,13 +331,12 @@ export default function AboutUs() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {statsData.map((stat) => (
                 <div key={stat.id}>
-                  <div
-                    key={stat.id}
-                    className="text-4xl font-bold text-amber-600 mb-2"
-                  >
+                  <div className="text-4xl font-bold text-amber-600 mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-slate-600">{stat.label}</div>
+                  <div className="text-slate-600 dark:text-slate-400">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>

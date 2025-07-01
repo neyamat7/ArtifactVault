@@ -72,18 +72,21 @@ export default function ArtifactsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
       <title>MyArtifacts | ArtifactVault</title>
 
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 shadow-sm">
+      <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-800">
-                My <span className="text-amber-600">Artifacts</span>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">
+                My{" "}
+                <span className="text-amber-600 dark:text-amber-500">
+                  Artifacts
+                </span>
               </h1>
-              <p className="text-slate-600 mt-2">
+              <p className="text-slate-600 dark:text-slate-400 mt-2">
                 Manage your artifact collection
               </p>
             </div>
@@ -102,11 +105,11 @@ export default function ArtifactsPage() {
       <div className="container mx-auto px-4 py-8">
         {artifacts.length < 1 ? (
           <div className="text-center py-16">
-            <HiCollection className="mx-auto h-16 w-16 text-slate-400 mb-4" />
-            <h3 className="text-xl font-semibold text-slate-600 mb-2">
+            <HiCollection className="mx-auto h-16 w-16 text-slate-400 dark:text-slate-500 mb-4" />
+            <h3 className="text-xl font-semibold text-slate-600 dark:text-slate-400 mb-2">
               No artifacts found
             </h3>
-            <p className="text-slate-500 mb-6">
+            <p className="text-slate-500 dark:text-slate-400 mb-6">
               Start building your collection by adding your first artifact.
             </p>
             <Link
@@ -122,7 +125,7 @@ export default function ArtifactsPage() {
             {artifacts.map((artifact) => (
               <div
                 key={artifact._id}
-                className="bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow"
+                className="bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Image */}
@@ -140,34 +143,34 @@ export default function ArtifactsPage() {
                       {/* Header */}
                       <div className="flex-1">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                          <h3 className="text-xl md:text-2xl font-bold text-slate-800">
+                          <h3 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100">
                             {artifact.artifactName}
                           </h3>
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 self-start">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 self-start">
                             {artifact.artifactType}
                           </span>
                         </div>
 
                         {/* Details */}
                         <div className="space-y-2 mb-4">
-                          <div className="flex items-center text-sm text-slate-600">
+                          <div className="flex items-center text-sm text-slate-600 dark:text-slate-400">
                             <HiCalendar className="h-4 w-4 mr-2 text-amber-500" />
                             <span className="font-medium mr-2">Created:</span>
                             <span>{artifact.createdAt}</span>
                           </div>
-                          <div className="flex items-center text-sm text-slate-600">
+                          <div className="flex items-center text-sm text-slate-600 dark:text-slate-400">
                             <HiLocationMarker className="h-4 w-4 mr-2 text-amber-500" />
                             <span className="font-medium mr-2">Location:</span>
                             <span>{artifact.presentLocation}</span>
                           </div>
-                          <div className="flex items-start text-sm text-slate-600">
+                          <div className="flex items-start text-sm text-slate-600 dark:text-slate-400">
                             <HiCollection className="h-4 w-4 mr-2 mt-0.5 text-amber-500 flex-shrink-0" />
                             <span className="font-medium mr-2">
                               Discovered by:
                             </span>
                             <span>{artifact.discoveredBy}</span>
                           </div>
-                          <div className="flex items-start text-sm text-slate-600">
+                          <div className="flex items-start text-sm text-slate-600 dark:text-slate-400">
                             <AiFillLike className="h-4 w-4 mr-2 mt-0.5 text-amber-500 flex-shrink-0" />
                             <span className="font-medium mr-2">Likes:</span>
                             <span>{artifact.likes?.length}</span>
@@ -176,7 +179,7 @@ export default function ArtifactsPage() {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4 border-t border-slate-200">
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
                         <Link
                           to={`/update/${artifact._id}`}
                           className="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"

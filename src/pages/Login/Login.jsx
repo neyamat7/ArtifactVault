@@ -68,7 +68,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100 flex items-center justify-center p-4 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <title>Login | ArtifactVault</title>
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
         {/* Left Side - Animation and Branding */}
@@ -92,13 +92,13 @@ export default function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <h1 className="text-4xl font-bold text-slate-800 mb-4">
+            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-300 mb-4">
               Welcome Back to
             </h1>
             <h2 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-amber-700 bg-clip-text text-transparent mb-6">
               ArtifactVault
             </h2>
-            <p className="text-lg text-slate-600 max-w-md leading-relaxed">
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
               Continue your journey through history. Discover, catalog, and
               explore the world's most fascinating artifacts.
             </p>
@@ -112,7 +112,7 @@ export default function Login() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full max-w-md mx-auto"
         >
-          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-8">
+          <div className="bg-white dark:bg-slate-950 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-500 p-8">
             {/* Mobile Header */}
             <div className="lg:hidden text-center mb-8">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -126,10 +126,10 @@ export default function Login() {
             </div>
 
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-slate-800 mb-2">
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-300 mb-2">
                 Sign In
               </h2>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-200">
                 Welcome back! Please sign in to your account.
               </p>
             </div>
@@ -141,7 +141,9 @@ export default function Login() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
               >
-                <p className="text-red-600 text-sm">{errors}</p>
+                <p className="text-red-600 dark:text-red-400 text-sm">
+                  {errors}
+                </p>
               </motion.div>
             )}
 
@@ -150,7 +152,7 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-700 dark:text-slate-400 mb-2"
                 >
                   Email Address
                 </label>
@@ -164,7 +166,7 @@ export default function Login() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors`}
+                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors dark:focus:ring-amber-700 dark:focus:border-amber-700   transition-colors dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200`}
                     placeholder="Enter your email"
                   />
                 </div>
@@ -174,7 +176,7 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-700 dark:text-slate-400 mb-2"
                 >
                   Password
                 </label>
@@ -188,7 +190,8 @@ export default function Login() {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className={`block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors`}
+                    className={`block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 
+                 dark:focus:ring-amber-700 dark:focus:border-amber-700   transition-colors dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200`}
                     placeholder="Enter your password"
                   />
                   <button
@@ -229,7 +232,7 @@ export default function Login() {
                   <div className="w-full border-t border-slate-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-slate-500">
+                  <span className="px-2 bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400">
                     Or continue with
                   </span>
                 </div>
@@ -240,15 +243,19 @@ export default function Login() {
                 type="button"
                 variant="outline"
                 onClick={handleGoogleLogin}
-                className="w-full py-3 text-lg font-semibold border-2 border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300"
+                className="w-full py-3 text-lg font-semibold border-2 border-slate-300 hover:border-slate-400
+                  dark:bg-slate-900/80
+                hover:bg-slate-50 transition-all duration-300 cursor-pointer"
               >
                 <FaGoogle className="mr-3 h-5 w-5 text-red-500" />
-                Sign in with Google
+                <span className="text-black dark:text-white">
+                  Sign in with Google
+                </span>
               </Button>
 
               {/* Register Link */}
               <div className="text-center">
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-400">
                   Don't have an account?{" "}
                   <Link
                     to="/register"
@@ -263,7 +270,7 @@ export default function Login() {
 
           {/* Footer */}
           <div className="text-center mt-8">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               By signing in, you agree to our{" "}
               <span className="text-amber-600 hover:text-amber-700">
                 Terms of Service

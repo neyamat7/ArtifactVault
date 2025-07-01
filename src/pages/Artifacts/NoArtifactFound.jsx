@@ -16,11 +16,11 @@ const NoArtifactFound = () => {
 
         {/* Content */}
         <div className="mb-8">
-          <h3 className="text-2xl font-bold text-slate-800 mb-3">
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-300 mb-3">
             No Artifacts Found
           </h3>
 
-          <p className="text-slate-600 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             Wanna break the silence? Upload or tweak your search.
           </p>
         </div>

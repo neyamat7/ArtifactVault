@@ -1,5 +1,3 @@
- ;
-
 import { useEffect, useRef, useState } from "react";
 
 export function DropdownMenu({ children }) {
@@ -53,7 +51,7 @@ export function DropdownMenuContent({
 
   return (
     <div
-      className={`absolute top-full mt-2 ${alignClasses[align]} z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-200 bg-white p-1 shadow-lg ${className}`}
+      className={`absolute top-full mt-2 ${alignClasses[align]} z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-200 bg-white dark:bg-slate-800 p-1 shadow-lg ${className} dark:text-slate-200 dark:border-slate-600`}
       {...props}
     >
       {children}
@@ -70,7 +68,7 @@ export function DropdownMenuItem({
   return (
     <button
       onClick={onClick}
-      className={`relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-slate-100 focus:bg-slate-100 text-left ${className}`}
+      className={`relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 text-left ${className} dark:text-slate-200`}
       {...props}
     >
       {children}
@@ -80,6 +78,9 @@ export function DropdownMenuItem({
 
 export function DropdownMenuSeparator({ className = "", ...props }) {
   return (
-    <div className={`-mx-1 my-1 h-px bg-slate-200 ${className}`} {...props} />
+    <div
+      className={`-mx-1 my-1 h-px bg-slate-200 dark:bg-slate-500 ${className}`}
+      {...props}
+    />
   );
 }

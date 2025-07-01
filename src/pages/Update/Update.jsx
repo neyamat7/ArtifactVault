@@ -110,7 +110,7 @@ export default function Update() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 relative overflow-hidden">
       <title>Update | ArtifactVault</title>
 
       {/* Animated background elements */}
@@ -139,10 +139,10 @@ export default function Update() {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-slate-800">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-slate-800 dark:text-slate-100">
             Edit <span className="text-amber-600">Artifact</span>
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Update and refine your artifact information
           </p>
         </div>
@@ -151,19 +151,19 @@ export default function Update() {
         <div className="max-w-4xl mx-auto">
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden"
+            className="bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden"
           >
             <div className="p-8 space-y-8">
               {/* Basic Information Section */}
-              <div className="border-b border-amber-200 pb-8">
-                <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <div className="border-b border-amber-200 dark:border-slate-700 pb-8">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
                   <HiCollection className="h-6 w-6 text-amber-500" />
                   Basic Information
                 </h2>
                 <div className="space-y-6">
                   {/* Artifact Name */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Artifact Name *
                     </label>
                     <div className="relative">
@@ -175,7 +175,7 @@ export default function Update() {
                         name="artifactName"
                         value={formData.artifactName}
                         onChange={handleInputChange}
-                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                         placeholder="Enter artifact name"
                       />
                     </div>
@@ -183,7 +183,7 @@ export default function Update() {
 
                   {/* Artifact Image */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Artifact Image URL *
                     </label>
                     <input
@@ -191,14 +191,14 @@ export default function Update() {
                       name="artifactImage"
                       value={formData.artifactImage}
                       onChange={handleInputChange}
-                      className="block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                      className="block w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                       placeholder="https://example.com/artifact-image.jpg"
                     />
                   </div>
 
                   {/* Artifact Type */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Artifact Type *
                     </label>
                     <div className="relative">
@@ -208,7 +208,7 @@ export default function Update() {
                       <button
                         type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        className="block w-full pl-12 pr-12 py-3 bg-slate-50 border border-slate-300 rounded text-left text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                        className="block w-full pl-12 pr-12 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-left text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                       >
                         {formData.artifactType || "Select artifact type"}
                       </button>
@@ -221,13 +221,13 @@ export default function Update() {
                       </div>
 
                       {isDropdownOpen && (
-                        <div className="absolute z-10 mt-2 w-full bg-white border border-slate-300 rounded shadow-xl max-h-60 overflow-auto">
+                        <div className="absolute z-10 mt-2 w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded shadow-xl max-h-60 overflow-auto">
                           {artifactTypes.map((type) => (
                             <button
                               key={type}
                               type="button"
                               onClick={() => handleTypeSelect(type)}
-                              className="w-full px-4 py-3 text-left text-slate-800 hover:bg-amber-50 transition-colors border-b border-slate-200 last:border-b-0"
+                              className="w-full px-4 py-3 text-left text-slate-800 dark:text-slate-100 hover:bg-amber-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-200 dark:border-slate-600 last:border-b-0"
                             >
                               {type}
                             </button>
@@ -240,15 +240,15 @@ export default function Update() {
               </div>
 
               {/* Description Section */}
-              <div className="border-b border-amber-200 pb-8">
-                <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <div className="border-b border-amber-200 dark:border-slate-700 pb-8">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
                   <HiDocumentText className="h-6 w-6 text-orange-400" />
                   Description
                 </h2>
                 <div className="space-y-6">
                   {/* Short Description */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Short Description *
                     </label>
                     <textarea
@@ -256,14 +256,14 @@ export default function Update() {
                       value={formData.shortDescription}
                       onChange={handleInputChange}
                       rows={4}
-                      className="block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all resize-none"
+                      className="block w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all resize-none"
                       placeholder="Brief description of the artifact..."
                     />
                   </div>
 
                   {/* Historical Context */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Historical Context *
                     </label>
                     <textarea
@@ -271,7 +271,7 @@ export default function Update() {
                       value={formData.historicalContext}
                       onChange={handleInputChange}
                       rows={6}
-                      className="block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all resize-none"
+                      className="block w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all resize-none"
                       placeholder="Describe the historical period, civilization, and cultural significance..."
                     />
                   </div>
@@ -279,8 +279,8 @@ export default function Update() {
               </div>
 
               {/* Timeline & Discovery Section */}
-              <div className="border-b border-amber-200 pb-8">
-                <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <div className="border-b border-amber-200 dark:border-slate-700 pb-8">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
                   <HiCalendar className="h-6 w-6 text-slate-300" />
                   Timeline & Discovery
                 </h2>
@@ -288,7 +288,7 @@ export default function Update() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Created At */}
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-3">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                         Created At
                       </label>
                       <div className="relative">
@@ -300,7 +300,7 @@ export default function Update() {
                           name="createdAt"
                           value={formData.createdAt}
                           onChange={handleInputChange}
-                          className="block w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                          className="block w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                           placeholder="e.g., 100 BC"
                         />
                       </div>
@@ -308,7 +308,7 @@ export default function Update() {
 
                     {/* Discovered At */}
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-3">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                         Discovered At
                       </label>
                       <div className="relative">
@@ -320,7 +320,7 @@ export default function Update() {
                           name="discoveredAt"
                           value={formData.discoveredAt}
                           onChange={handleInputChange}
-                          className="block w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                          className="block w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                           placeholder="e.g., 1799"
                         />
                       </div>
@@ -329,7 +329,7 @@ export default function Update() {
 
                   {/* Discovered By */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Discovered By
                     </label>
                     <div className="relative">
@@ -341,7 +341,7 @@ export default function Update() {
                         name="discoveredBy"
                         value={formData.discoveredBy}
                         onChange={handleInputChange}
-                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                         placeholder="Name of discoverer or expedition"
                       />
                     </div>
@@ -349,7 +349,7 @@ export default function Update() {
 
                   {/* Present Location */}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Present Location
                     </label>
                     <div className="relative">
@@ -361,7 +361,7 @@ export default function Update() {
                         name="presentLocation"
                         value={formData.presentLocation}
                         onChange={handleInputChange}
-                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-300 rounded text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                        className="block w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-slate-800 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                         placeholder="Current museum or location"
                       />
                     </div>
@@ -371,13 +371,13 @@ export default function Update() {
 
               {/* Contributor Information Section */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
                   <HiUser className="h-6 w-6 text-slate-300" />
                   Contributor Information
                 </h2>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Name
                     </label>
                     <div className="relative">
@@ -388,13 +388,13 @@ export default function Update() {
                         type="text"
                         value={formData.adderName}
                         readOnly
-                        className="block w-full pl-12 pr-4 py-3 bg-slate-100 border border-slate-200 rounded text-slate-600 cursor-not-allowed"
+                        className="block w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded text-slate-600 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                       Email
                     </label>
                     <div className="relative">
@@ -405,7 +405,7 @@ export default function Update() {
                         type="email"
                         value={formData.adderEmail}
                         readOnly
-                        className="block w-full pl-12 pr-4 py-3 bg-slate-100 border border-slate-200 rounded text-slate-600 cursor-not-allowed"
+                        className="block w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded text-slate-600 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                   </div>
