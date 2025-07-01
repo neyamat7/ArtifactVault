@@ -14,6 +14,8 @@ export default function Artifacts() {
 
   const [artifacts, setArtifacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("desc");
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,6 +47,14 @@ export default function Artifacts() {
     return <Loading message="Unearthing treasures from the archives..." />;
   }
 
+  const sortedArtifacts = [...artifacts].sort((a, b) => {
+    if (sortOrder === "asc") {
+      return Number(a.discoveredAt || 0) - Number(b.discoveredAt || 0);
+    } else {
+      return Number(b.discoveredAt || 0) - Number(a.discoveredAt || 0);
+    }
+  });
+
   return (
     <div className="min-h-screen bg-slate-100">
       <title>All Artifacts | ArtifactVault</title>
@@ -71,12 +81,12 @@ export default function Artifacts() {
               the world
             </motion.p>
 
-            {/* Search Box */}
+            {/* Search and sort */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2, delay: 0.1 }}
-              className="max-w-md mx-auto"
+              className="container mx-auto flex flex-col gap-3 md:flex-row justify-between items-center"
             >
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -104,6 +114,23 @@ export default function Artifacts() {
                   )}
                 </AnimatePresence>
               </div>
+
+              {/* Sort Dropdown */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className="flex justify-center"
+              >
+                <select
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                  className="border border-slate-300 rounded-lg px-4 py-2 text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                >
+                  <option value="desc">Newest First</option>
+                  <option value="asc">Oldest First</option>
+                </select>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -112,7 +139,7 @@ export default function Artifacts() {
       {/* Artifacts Grid */}
       <div className="container mx-auto px-4 py-8">
         <AnimatePresence mode="wait" exitBeforeEnter={false}>
-          {artifacts.length > 0 ? (
+          {sortedArtifacts.length > 0 ? (
             <motion.div
               key="artifacts-grid"
               initial={{ opacity: 0 }}
@@ -120,7 +147,7 @@ export default function Artifacts() {
               transition={{ duration: 0.2 }}
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {artifacts.map((artifact, index) => (
+                {sortedArtifacts.map((artifact, index) => (
                   <motion.div
                     key={artifact._id}
                     initial={{ opacity: 0, y: 20 }}
